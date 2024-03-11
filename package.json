@@ -12,7 +12,8 @@
   "dependencies": {
     "lottie-react": "^2.4.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
     "@types/postcss-pxtorem": "^6.0.3",

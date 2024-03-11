@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.less'
-import flexible from './flexible.ts'
+import flexible from './utils/flexible.ts'
 
 flexible(window, document);
 

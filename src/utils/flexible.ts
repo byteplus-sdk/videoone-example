@@ -1,6 +1,5 @@
 // @ts-ignore
 function flexible(window, document) {
-  debugger
   const docEl = document.documentElement;
   const dpr = window.devicePixelRatio || 1;
   window.flexible = flexible;
