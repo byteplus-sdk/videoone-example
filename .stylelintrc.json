@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/stylelintrc.json",
+  "extends": "stylelint-config-standard",
+  "plugins": ["stylelint-prettier"],
+  "customSyntax": "postcss-less",
+  "rules": {
+    "selector-class-pattern": null,
+    "unit-allowed-list": ["%", "deg", "px", "rem", "ms", "vh"]
+  }
+}

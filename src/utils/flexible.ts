@@ -1,5 +1,4 @@
-// @ts-ignore
-function flexible(window, document) {
+function flexible(window: Window, document: Document) {
   const docEl = document.documentElement;
   const dpr = window.devicePixelRatio || 1;
   window.flexible = flexible;
@@ -26,7 +25,6 @@ function flexible(window, document) {
 
   // reset rem unit on page resize
   window.addEventListener('resize', setRemUnit);
-  // @ts-ignore
   window.addEventListener('pageshow', e => {
     if (e.persisted) {
       setRemUnit();

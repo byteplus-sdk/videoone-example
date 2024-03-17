@@ -1,3 +1,3 @@
 interface Window {
-    flexible: any;
+  flexible: any;
 }
