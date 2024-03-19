@@ -1,0 +1,146 @@
+.loading {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.topArea {
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+  background-color: #000;
+  position: relative;
+  z-index: 2;
+
+  .back {
+    position: absolute;
+    top: 40px;
+  }
+
+  .unmute {
+    position: absolute;
+    top: 80px;
+    display: flex;
+    width: 98px;
+    height: 36px;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    z-index: 10;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #fff 0%, #c7ccd6 100%);
+    color: #000;
+
+    .unmute-bt {
+      display: flex;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      text-align: left;
+      pointer-events: auto;
+
+      &:hover {
+        background-color: rgb(0 0 0 / 30%);
+        border: 0.5px #3370ff solid;
+        color: #3370ff;
+      }
+
+      &:active {
+        background-color: rgb(0 0 0 / 30%);
+      }
+    }
+  }
+
+  .infoWrapper {
+    display: flex;
+    align-items: center;
+
+    .info {
+      padding-left: 14px;
+
+      p.tit {
+        font-size: 12px;
+        line-height: 16px;
+        margin-bottom: 0;
+      }
+
+      p.desc {
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 14px;
+      }
+    }
+  }
+
+  .btn {
+    width: 47px;
+    height: 22px;
+    left: 310px;
+    font-size: 12px;
+    border-radius: 11px;
+    background: #0b84ff;
+    text-align: center;
+    line-height: 22px;
+  }
+}
+
+.veplayer-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100vw;
+  pointer-events: none;
+  opacity: 1;
+}
+
+.veplayer-wrapper-top {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100%;
+  pointer-events: none;
+  opacity: 1;
+}
+
+.veplayer-top {
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+}
+
+.veplayer {
+  width: 100%;
+  height: 100%;
+}
+
+:global {
+  .xgplayer-unmute {
+    display: none;
+  }
+}
+
+.guide {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0/ 50%);
+
+  img {
+    width: 120px;
+  }
+
+  span {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #fff;
+  }
+}

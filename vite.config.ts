@@ -3,15 +3,16 @@ import react from '@vitejs/plugin-react';
 import postCssPxToRem from 'postcss-pxtorem';
 import autoprefixer from 'autoprefixer';
 import path from 'path';
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), svgr()],
   server: {
     port: 8000,
   },
   define: {
-    __API_URL__: JSON.stringify('https://videocloud.byteplusapi.com/videoone'),
+    __API_URL__: JSON.stringify('https://rtc-sg-test.bytedance.com/videoone'),
   },
   resolve: {
     alias: {
@@ -20,6 +21,9 @@ export default defineConfig({
     extensions: ['.ts', '.tsx', '.js'],
   },
   css: {
+    modules: {
+      localsConvention: 'camelCase',
+    },
     postcss: {
       plugins: [
         postCssPxToRem({

@@ -1,3 +1,3 @@
 export const API_PATH = {
-  GetPlayListDetail: '/vod/v1/getPlayListDetail',
+  GetFeedStreamWithPlayAuthToken: '/vod/v1/getFeedStreamWithPlayAuthToken',
 };

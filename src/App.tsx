@@ -1,6 +1,4 @@
-import groovyWalkAnimation from '@/assets/lottie/groovyWalk.json';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { useLottie } from 'lottie-react';
 import Home from '@/pages/home';
 import TTShow from '@/pages/ttshow';
 import { configure } from 'axios-hooks';
@@ -24,16 +22,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const { View } = useLottie({
-    animationData: groovyWalkAnimation,
-    loop: true,
-  });
-
-  return (
-    <div id="app">
-      <RouterProvider router={router} />
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
