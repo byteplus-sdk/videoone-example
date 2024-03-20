@@ -16,8 +16,7 @@ node -v
 yarn config set registry http://bnpm.byted.org/
 yarn
 
-export BUILD_PATH=dist
 yarn build
 
 mkdir $OUTPUT_PATH
-cp -r dist $OUTPUT_PATH
+cp -r dist/ $OUTPUT_PATH
