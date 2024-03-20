@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e
 
-PROJ_PATH=$(pwd)
-OUTPUT_PATH="${PROJ_PATH}/output"
-
 # 切换node版本
 source /etc/profile
 nvm install 18
@@ -17,6 +14,3 @@ yarn config set registry http://bnpm.byted.org/
 yarn
 
 yarn build
-
-mkdir $OUTPUT_PATH
-cp -r dist/ $OUTPUT_PATH

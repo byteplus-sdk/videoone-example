@@ -13,6 +13,9 @@ export default defineConfig({
   server: {
     port: 8000,
   },
+  build: {
+    outDir: 'output',
+  },
   define: {
     __API_URL__: JSON.stringify('https://rtc-sg-test.bytedance.com/videoone'),
   },
