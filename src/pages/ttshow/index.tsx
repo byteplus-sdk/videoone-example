@@ -17,7 +17,7 @@ const TTShow: React.FC = () => {
   const playerSDKins = useRef<any>();
   const refSwiper = useRef<any>();
   const indexRef = useRef<number>();
-  const [{ data, loading, error }] = useAxios({
+  const [{ data, loading }] = useAxios({
     url: API_PATH.GetFeedStreamWithPlayAuthToken,
     method: 'POST',
     data: {
