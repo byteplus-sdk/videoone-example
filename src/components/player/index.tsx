@@ -18,8 +18,7 @@ const Player: React.FC<IPlayer> = ({ isActive, isTouch, data }) => {
             </div>
           </div>
           <div className={style.like}>
-            <Like />
-            <span>{data.like}</span>
+            <Like {...data} />
           </div>
           <div className={style.comment}>
             <Comment />

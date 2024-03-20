@@ -15,6 +15,7 @@ import t from '@/utils/translation';
 const TTShow: React.FC = () => {
   const playerSDKins = useRef<any>();
   const refSwiper = useRef<any>();
+  const indexRef = useRef<number>();
   const [{ data, loading, error }] = useAxios({
     url: API_PATH.GetFeedStreamWithPlayAuthToken,
     method: 'POST',
@@ -68,16 +69,23 @@ const TTShow: React.FC = () => {
   }
 
   function playNext(activeIndex: number) {
-    if (playerSDKins.current) {
+    if (playerSDKins.current && activeIndex !== indexRef.current) {
       const next = list[activeIndex];
       const { playAuthToken = '' } = next;
-      playerSDKins.current.playNext({
-        autoplay: true,
-        getVideoByToken: {
-          playAuthToken,
-          defaultDefinition: '480p',
-        },
-      });
+      indexRef.current = activeIndex;
+      playerSDKins.current
+        .playNext({
+          autoplay: true,
+          getVideoByToken: {
+            playAuthToken,
+            defaultDefinition: '480p',
+          },
+        })
+        .then(() => {
+          setTouch(false);
+        });
+    } else {
+      setTouch(false);
     }
   }
 
@@ -149,17 +157,12 @@ const TTShow: React.FC = () => {
             preventClicksPropagation={false}
             loop={true}
             onSlideChange={swiper => {
-              console.log(1111222, swiper.realIndex);
               if (isFirstSlide && swiper.realIndex === 1) {
                 setFirstSlide(false);
               }
               playNext(swiper.realIndex);
             }}
-            onTouchEnd={() => {
-              setTouch(false);
-            }}
             onTouchMove={() => {
-              console.log(1111);
               setTouch(true);
             }}
           >
