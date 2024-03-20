@@ -5,7 +5,6 @@
   "customSyntax": "postcss-less",
   "rules": {
     "selector-class-pattern": null,
-    "unit-allowed-list": ["%", "deg", "px", "rem", "ms", "vh", "vw"],
     "selector-pseudo-class-no-unknown": [
       true,
       {

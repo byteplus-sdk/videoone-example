@@ -11,6 +11,7 @@ import NavIcon from '@/assets/svgr/navIcon.svg?react';
 import BackIcon from '@/assets/svgr/back.svg?react';
 import { useNavigate } from 'react-router-dom';
 import t from '@/utils/translation';
+import Loading from '@/components/loading';
 
 const TTShow: React.FC = () => {
   const playerSDKins = useRef<any>();
@@ -125,7 +126,7 @@ const TTShow: React.FC = () => {
   }
 
   return loading ? (
-    <div className={style.loading}>loading...</div>
+    <Loading />
   ) : (
     <>
       <div className={style.topArea}>
