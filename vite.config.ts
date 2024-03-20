@@ -8,7 +8,8 @@ import svgr from 'vite-plugin-svgr';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
-  base: '//mediaservice-fe.bytepluscdn.com/obj/vcloud-fe-sgcomm/video-one',
+  base:
+    process.env.NODE_ENV === 'production' ? '//mediaservice-fe.bytepluscdn.com/obj/vcloud-fe-sgcomm/video-one' : '/',
   server: {
     port: 8000,
   },

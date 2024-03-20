@@ -3,7 +3,7 @@ import Home from '@/pages/home';
 import TTShow from '@/pages/ttshow';
 import { configure } from 'axios-hooks';
 import Axios from 'axios';
-
+console.log('test');
 const axios = Axios.create({
   baseURL: __API_URL__,
 });
