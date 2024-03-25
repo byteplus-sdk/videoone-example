@@ -21,7 +21,7 @@ const translation = {
   },
   tt_nav_desc: {
     'zh-CN': '',
-    en: `Open it in "BytePlus VideoOne" App`,
+    en: 'Open it in "BytePlus VideoOne" App',
   },
   tt_unmute: {
     'zh-CN': '',
