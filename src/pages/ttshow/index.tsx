@@ -109,7 +109,7 @@ const TTShow: React.FC = () => {
   }
 
   function jumpToApp() {
-    console.log('jump app');
+    window.location.href = 'https://docs.byteplus.com/en/docs/byteplus-vos/docs-byteplus-videoone-demo-app_1';
   }
 
   function showUnmute() {

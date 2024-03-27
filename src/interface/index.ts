@@ -20,3 +20,11 @@ export interface IPlayer {
   index: number;
   data: IVideo;
 }
+
+export interface IComment {
+  content: string;
+  name: string;
+  uid: number;
+  createTime: Date;
+  like: number;
+}
