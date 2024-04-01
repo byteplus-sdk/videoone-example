@@ -6,8 +6,12 @@
   height: 40px;
   padding: 0 16px;
   background-color: #000;
-  position: relative;
+  position: absolute;
   z-index: 2;
+  left: 0;
+  right: 0;
+  margin: 0 constant(safe-area-inset-right) 0 constant(safe-area-inset-left);
+  margin: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
 
   .back {
     position: absolute;
@@ -87,6 +91,7 @@
   top: 0;
   bottom: 0;
   width: 100vw;
+  height: 100vh;
   pointer-events: none;
   opacity: 1;
   background-color: #000;
@@ -126,6 +131,7 @@
   align-items: center;
   justify-content: center;
   background: rgb(0 0 0/ 50%);
+  z-index: 999999;
 
   img {
     width: 120px;

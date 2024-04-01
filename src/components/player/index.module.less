@@ -33,13 +33,13 @@
 .right-slider {
   position: absolute;
   bottom: 16%;
-  right: 14px;
+  right: calc(14px + env(safe-area-inset-right));
+  right: calc(14px + constant(safe-area-inset-right));
   display: flex;
   z-index: 10000;
 }
 
 .btns {
-  width: 40px;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -76,12 +76,13 @@
 }
 
 .bottom {
-  width: 100%;
-  pointer-events: none;
   position: absolute;
-  bottom: 16px;
-  padding: 12px;
-  z-index: 100;
+  bottom: calc(20px + constant(safe-area-inset-bottom));
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  left: calc(12px + env(safe-area-inset-left));
+  left: calc(12px + constant(safe-area-inset-left));
+  right: calc(12px + env(safe-area-inset-right));
+  right: calc(12px + constant(safe-area-inset-right));
   color: #fff;
 
   .name {
@@ -89,125 +90,129 @@
     line-height: 24px;
   }
 
+  .boxMore {
+    float: right;
+    clear: both;
+    color: #94c2ff;
+    font-size: 14px;
+    cursor: pointer;
+    padding-left: 5px;
+
+    & + div {
+      line-height: 18px;
+    }
+  }
+
+  .title-container {
+    max-height: 50px;
+
+    &::before {
+      content: '';
+      float: right;
+      height: 21px;
+      width: 0;
+    }
+  }
+
+  .title-wrapper {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
   .title {
     font-size: 14px;
-    line-height: 20px;
     text-align: left;
+    vertical-align: top;
   }
 }
 
-.popup-mask {
-  z-index: 99;
+.caption-title {
+  font-size: 14px;
+  min-height: 300px;
+  padding-top: 16px;
+  line-height: 1.5;
 }
 
-.popup-body {
-  z-index: 100;
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 52px;
-    padding: 14px 16px;
+.comment-content {
+  .comment {
+    // height: 60px;
     box-sizing: border-box;
-    border-bottom: 1px solid rgb(22 24 35 / 20%);
+    padding: 12px 0;
+    display: flex;
+    margin-bottom: 16px;
 
-    .comment-num {
-      color: #0c0d0f;
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 24px;
+    .avatar {
+      height: 36px;
+      flex: 0 0 36px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+      }
     }
 
-    .close {
-      line-height: 24px;
-      height: 24px;
-      cursor: pointer;
-    }
-  }
-
-  .comment-content {
-    max-height: 385px;
-    overflow-y: scroll;
-
-    .comment {
-      // height: 60px;
-      box-sizing: border-box;
-      padding: 12px 12px 0 16px;
+    .content-wrapper {
       display: flex;
-      margin-bottom: 16px;
+      flex: 1;
+      flex-direction: column;
+      padding: 0 12px;
 
-      .avatar {
-        height: 36px;
-        flex: 0 0 36px;
-        border-radius: 50%;
-        overflow: hidden;
-
-        img {
-          width: 100%;
-        }
-      }
-
-      .content-wrapper {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        padding: 0 12px;
-
-        .name {
-          color: #80838a;
-          font-size: 12px;
-          font-weight: 400;
-          line-height: 16px;
-        }
-
-        .content {
-          color: #020814;
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 20px;
-          margin-bottom: 4px;
-        }
-
-        .time {
-          color: #80838a;
-          font-size: 12px;
-          font-weight: 400;
-          line-height: 16px;
-        }
-
-        .operation {
-          display: flex;
-
-          .del {
-            color: #4e5969;
-            font-size: 12px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 16px;
-            display: flex;
-            align-items: center;
-            padding-left: 12px;
-          }
-        }
-      }
-
-      .like {
-        flex: 0 0 32px; /* 固定宽度为50px */
+      .name {
         color: #80838a;
-        text-align: center;
         font-size: 12px;
-        font-style: normal;
         font-weight: 400;
         line-height: 16px;
+      }
 
-        &.un-like {
-          svg path {
-            fill: #fff !important;
-            stroke: #888B90;
-            stroke-width: 1.2px;
-            stroke-linejoin: round;
-          }
+      .content {
+        color: #020814;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        margin-bottom: 4px;
+      }
+
+      .time {
+        color: #80838a;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16px;
+      }
+
+      .operation {
+        display: flex;
+
+        .del {
+          color: #4e5969;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 16px;
+          display: flex;
+          align-items: center;
+          padding-left: 12px;
+        }
+      }
+    }
+
+    .like {
+      flex: 0 0 32px; /* 固定宽度为50px */
+      color: #80838a;
+      text-align: center;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 16px;
+
+      &.un-like {
+        svg path {
+          fill: #fff !important;
+          stroke: #888b90;
+          stroke-width: 1.2px;
+          stroke-linejoin: round;
         }
       }
     }

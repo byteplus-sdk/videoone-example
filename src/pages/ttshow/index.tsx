@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import useAxios from 'axios-hooks';
 import { API_PATH } from '@/service/path';
 import Player from '@/components/player';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react';
 import 'swiper/less';
 import style from './index.module.less';
 import { IVideo } from '@/interface';
@@ -15,23 +15,30 @@ import Loading from '@/components/loading';
 
 const TTShow: React.FC = () => {
   const playerSDKins = useRef<any>();
-  const refSwiper = useRef<any>();
+  const refSwiper = useRef<SwiperClass>();
+  const refTimer = useRef<number>();
   const indexRef = useRef<number>();
-  const [{ data, loading }] = useAxios({
-    url: API_PATH.GetFeedStreamWithPlayAuthToken,
-    method: 'POST',
-    data: {
-      params: {
-        offset: 0,
-        pageSize: 20,
-        videoType: 1,
+
+  const [{ data, loading }, executeGetVideos] = useAxios(
+    {
+      url: API_PATH.GetFeedStreamWithPlayAuthToken,
+      method: 'POST',
+      data: {
+        params: {
+          offset: 0,
+          pageSize: 50,
+          videoType: 1,
+        },
       },
     },
-  });
+    { manual: true },
+  );
+
   const list = (data?.response as IVideo[]) ?? [];
   const [isTouch, setTouch] = useState(false);
   const [isFirstSlide, setFirstSlide] = useState(true);
   const [showUnmuteBtn, setShowUnmuteBtn] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,6 +46,25 @@ const TTShow: React.FC = () => {
       initVePlayer();
     });
   }, [list]);
+
+  useEffect(() => {
+    if (isFirstSlide && !loading) {
+      setShowGuide(true);
+      refTimer.current = setTimeout(() => {
+        setShowGuide(false);
+      }, 5000);
+    } else {
+      setShowGuide(false);
+    }
+  }, [isFirstSlide, loading]);
+
+  useEffect(() => {
+    executeGetVideos();
+    return () => {
+      playerSDKins.current?.destroy();
+      refSwiper.current?.destroy();
+    };
+  }, []);
 
   function initVePlayer() {
     const { playAuthToken = '', coverUrl = '' } = list[0] || {};
@@ -51,6 +77,7 @@ const TTShow: React.FC = () => {
         },
         poster: coverUrl,
         autoplay: true,
+        loop: true,
         enableDegradeMuteAutoplay: true,
         closeVideoClick: false,
         closeVideoDblclick: true,
@@ -105,7 +132,7 @@ const TTShow: React.FC = () => {
   }
 
   function onEnded() {
-    refSwiper.current.slideNext();
+    // refSwiper.current?.slideNext();
   }
 
   function jumpToApp() {
@@ -123,6 +150,11 @@ const TTShow: React.FC = () => {
     const player = playerSDKins.current.player;
     player.muted = false;
     setShowUnmuteBtn(false);
+  }
+
+  function handleMaskClose() {
+    clearTimeout(refTimer.current);
+    setShowGuide(false);
   }
 
   return loading ? (
@@ -153,7 +185,7 @@ const TTShow: React.FC = () => {
         {list.length > 0 && (
           <Swiper
             onSwiper={swiper => (refSwiper.current = swiper)}
-            style={{ height: 'calc(100vh - 40px)' }}
+            style={{ height: '100vh' }}
             direction="vertical"
             preventClicksPropagation={false}
             loop={true}
@@ -163,7 +195,7 @@ const TTShow: React.FC = () => {
               }
               playNext(swiper.realIndex);
             }}
-            onTouchMove={() => {
+            onSliderMove={() => {
               setTouch(true);
             }}
           >
@@ -180,8 +212,8 @@ const TTShow: React.FC = () => {
       <div className={style.veplayerWrapper}>
         <div id="veplayerContainer" />
       </div>
-      {isFirstSlide && (
-        <div className={style.guide}>
+      {showGuide && (
+        <div className={style.guide} onClick={handleMaskClose} onTouchMove={handleMaskClose}>
           <img src={Gesture} alt="" />
           <span>{t('tt_guide')}</span>
         </div>

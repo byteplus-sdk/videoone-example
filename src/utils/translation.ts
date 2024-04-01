@@ -9,7 +9,7 @@ const translation = {
   },
   home_video_tit: {
     'zh-CN': '互动视频',
-    en: 'Interactive short video',
+    en: 'Interactive Video',
   },
   home_video_desc: {
     'zh-CN': '视频上下滑，丝滑播放，视频互动体验',
@@ -20,8 +20,8 @@ const translation = {
     en: 'BytePlus VideoOne',
   },
   tt_nav_desc: {
-    'zh-CN': '在BytePlus VideoOne App中打开',
-    en: 'Open it in "BytePlus VideoOne" App',
+    'zh-CN': '在App中获得完整体验',
+    en: 'Get the full experience on the app',
   },
   tt_unmute: {
     'zh-CN': '取消静音',
@@ -38,6 +38,10 @@ const translation = {
   c_delete_confirm: {
     'zh-CN': '确认删除？',
     en: 'Confirm deletion?',
+  },
+  c_more: {
+    'zh-CN': '更多',
+    en: 'More',
   },
   c_content_confirm: {
     'zh-CN': '当前评论内容删除后无法恢复，请确认操作。',

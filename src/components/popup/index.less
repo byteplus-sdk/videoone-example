@@ -7,11 +7,13 @@
     right: 0;
     bottom: 0;
     background-color: rgb(0 0 0 / 50%);
+    z-index: 99;
   }
 
-  &__content {
-    background: #fff;
+  &__wrapper {
     position: fixed;
+    z-index: 100;
+    background: #fff;
 
     &--top {
       top: 0;
@@ -21,8 +23,10 @@
 
     &--bottom {
       bottom: 0;
-      left: 0;
-      right: 0;
+      right: calc(0px + env(safe-area-inset-right));
+      right: calc(0px + constant(safe-area-inset-right));
+      left: calc(0px + env(safe-area-inset-left));
+      left: calc(0px + constant(safe-area-inset-left));
       border-radius: 5px 5px 0 0;
       max-height: 73%;
     }
@@ -45,6 +49,35 @@
       transform: translate(-50%, -50%);
     }
   }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 52px;
+    padding: 14px 16px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgb(22 24 35 / 7%);
+
+    &__title {
+      color: #0c0d0f;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+    }
+
+    &__close {
+      line-height: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+  }
+
+  &__content {
+    max-height: 385px;
+    overflow-y: scroll;
+    padding: 0 12px;
+  }
 }
 
 .top,
@@ -63,7 +96,7 @@
         transition: 0.3s all ease;
       }
 
-      .popup__content {
+      .popup__wrapper {
         transition: 0.3s all ease;
       }
     }
@@ -80,7 +113,7 @@
         transition: 0.3s all ease;
       }
 
-      .popup__content {
+      .popup__wrapper {
         transition: 0.3s all ease;
       }
     }
@@ -89,24 +122,24 @@
 
 .bottom {
   &-enter {
-    .popup__content {
+    .popup__wrapper {
       transform: translate(0, 100%);
     }
 
     &-active {
-      .popup__content {
+      .popup__wrapper {
         transform: translate(0, 0);
       }
     }
   }
 
   &-exit {
-    .popup__content {
+    .popup__wrapper {
       transform: translate(0, 0);
     }
 
     &-active {
-      .popup__content {
+      .popup__wrapper {
         transform: translate(0, 100%);
       }
     }
@@ -115,24 +148,24 @@
 
 .top {
   &-enter {
-    .popup__content {
+    .popup__wrapper {
       transform: translate(0, -100%);
     }
 
     &-active {
-      .popup__content {
+      .popup__wrapper {
         transform: translate(0, 0);
       }
     }
   }
 
   &-exit {
-    .popup__content {
+    .popup__wrapper {
       transform: translate(0, 0);
     }
 
     &-active {
-      .popup__content {
+      .popup__wrapper {
         transform: translate(0, -100%);
       }
     }
@@ -141,24 +174,24 @@
 
 .left {
   &-enter {
-    .popup__content {
+    .popup__wrapper {
       transform: translate(-100%, 0);
     }
 
     &-active {
-      .popup__content {
+      .popup__wrapper {
         transform: translate(0, 0);
       }
     }
   }
 
   &-exit {
-    .popup__content {
+    .popup__wrapper {
       transform: translate(0, 0);
     }
 
     &-active {
-      .popup__content {
+      .popup__wrapper {
         transform: translate(-100%, 0);
       }
     }
@@ -167,24 +200,24 @@
 
 .right {
   &-enter {
-    .popup__content {
+    .popup__wrapper {
       transform: translate(100%, 0);
     }
 
     &-active {
-      .popup__content {
+      .popup__wrapper {
         transform: translate(0, 0);
       }
     }
   }
 
   &-exit {
-    .popup__content {
+    .popup__wrapper {
       transform: translate(0, 0);
     }
 
     &-active {
-      .popup__content {
+      .popup__wrapper {
         transform: translate(100%, 0);
       }
     }
@@ -193,13 +226,13 @@
 
 .center {
   &-enter {
-    .popup__content {
+    .popup__wrapper {
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.7);
     }
 
     &-active {
-      .popup__content {
+      .popup__wrapper {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
       }
@@ -207,13 +240,13 @@
   }
 
   &-exit {
-    .popup__content {
+    .popup__wrapper {
       opacity: 1;
       transform: translate(-50%, -50%) scale(1);
     }
 
     &-active {
-      .popup__content {
+      .popup__wrapper {
         opacity: 0;
         transform: translate(-50%, -50%) scale(0.7);
       }
