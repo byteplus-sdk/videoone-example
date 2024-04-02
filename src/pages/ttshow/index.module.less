@@ -10,8 +10,8 @@
   z-index: 2;
   left: 0;
   right: 0;
-  margin: 0 constant(safe-area-inset-right) 0 constant(safe-area-inset-left);
-  margin: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
+  margin: constant(safe-area-inset-top) constant(safe-area-inset-right) 0 constant(safe-area-inset-left);
+  margin: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left);
 
   .back {
     position: absolute;
@@ -84,6 +84,12 @@
     line-height: 22px;
     padding: 0 10px;
   }
+}
+
+.my-swiper {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
 }
 
 .veplayer-wrapper {

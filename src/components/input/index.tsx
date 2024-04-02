@@ -11,7 +11,7 @@ const InputBar: React.FC<IProps> = props => {
   const [val, setVal] = useState('');
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && val.trim().length !== 0) {
       props.handleEnter(val);
       setVal('');
     }

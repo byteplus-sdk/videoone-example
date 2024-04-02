@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useImperativeHandle, useState } from 'react';
 import style from './index.module.less';
 import cn from 'classnames';
 import { IComment, IPlayer } from '@/interface';
@@ -16,8 +16,9 @@ import Dialog from '../dialog';
 import { formatDateTime } from '@/utils/util';
 import translation from '@/utils/translation';
 
-const Player: React.FC<IPlayer> = ({ isActive, isTouch, data, index }) => {
+const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, index }, ref) => {
   const [likeMap, setLikeMap] = useState<Map<number, boolean>>(new Map());
+  const likeRef = useRef();
   const [commentVisible, setCommentVisible] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [moreVisible, setMoreVisible] = useState(false);
@@ -32,6 +33,10 @@ const Player: React.FC<IPlayer> = ({ isActive, isTouch, data, index }) => {
     },
     { manual: true },
   );
+
+  useImperativeHandle(ref, () => ({
+    likeRef: likeRef,
+  }));
 
   useEffect(() => {
     setList((comments?.response as IComment[]) ?? []);
@@ -83,7 +88,7 @@ const Player: React.FC<IPlayer> = ({ isActive, isTouch, data, index }) => {
             </div>
           </div>
           <div className={style.like}>
-            <LikeComp {...data} />
+            <LikeComp {...data} ref={likeRef} />
           </div>
           <div
             className={style.comment}
@@ -113,9 +118,9 @@ const Player: React.FC<IPlayer> = ({ isActive, isTouch, data, index }) => {
             </div>
           )}
           <div className={style.titleWrapper}>
-            <span className={style.title} id={`title${index}`}>
+            <div className={style.title} id={`title${index}`}>
               {data.caption}
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -212,6 +217,6 @@ const Player: React.FC<IPlayer> = ({ isActive, isTouch, data, index }) => {
       </Popup>
     </div>
   );
-};
+});
 
 export default Player;

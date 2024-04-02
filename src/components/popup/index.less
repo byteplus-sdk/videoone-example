@@ -28,7 +28,6 @@
       left: calc(0px + env(safe-area-inset-left));
       left: calc(0px + constant(safe-area-inset-left));
       border-radius: 5px 5px 0 0;
-      max-height: 73%;
     }
 
     &--left {
@@ -74,7 +73,14 @@
   }
 
   &__content {
-    max-height: 385px;
+    @media screen and (orientation: portrait) {
+      max-height: 385px;
+    }
+
+    @media screen and (orientation: landscape) {
+      max-height: 185px;
+    }
+
     overflow-y: scroll;
     padding: 0 12px;
   }

@@ -16,8 +16,10 @@ import Loading from '@/components/loading';
 const TTShow: React.FC = () => {
   const playerSDKins = useRef<any>();
   const refSwiper = useRef<SwiperClass>();
+  const playerRef = useRef<any>(null);
   const refTimer = useRef<number>();
   const indexRef = useRef<number>();
+  const [oncePlay, setOncePlay] = useState(false);
 
   const [{ data, loading }, executeGetVideos] = useAxios(
     {
@@ -48,7 +50,7 @@ const TTShow: React.FC = () => {
   }, [list]);
 
   useEffect(() => {
-    if (isFirstSlide && !loading) {
+    if (isFirstSlide && oncePlay) {
       setShowGuide(true);
       refTimer.current = setTimeout(() => {
         setShowGuide(false);
@@ -56,7 +58,7 @@ const TTShow: React.FC = () => {
     } else {
       setShowGuide(false);
     }
-  }, [isFirstSlide, loading]);
+  }, [isFirstSlide, oncePlay]);
 
   useEffect(() => {
     executeGetVideos();
@@ -65,6 +67,24 @@ const TTShow: React.FC = () => {
       refSwiper.current?.destroy();
     };
   }, []);
+
+  const handleClick = (function () {
+    let times = 0;
+    const timeout = 300;
+    return () => {
+      times++;
+      if (times === 1) {
+        setTimeout(function () {
+          if (times === 1) {
+            pauseOrPlay();
+          } else {
+            playerRef.current?.likeRef.current.handleLike();
+          }
+          times = 0;
+        }, timeout);
+      }
+    };
+  })();
 
   function initVePlayer() {
     const { playAuthToken = '', coverUrl = '' } = list[0] || {};
@@ -75,14 +95,20 @@ const TTShow: React.FC = () => {
           playAuthToken,
           defaultDefinition: '480p',
         },
-        poster: coverUrl,
+        poster: {
+          poster: coverUrl,
+          hideCanplay: true,
+        },
         autoplay: true,
         loop: true,
         enableDegradeMuteAutoplay: true,
         closeVideoClick: false,
         closeVideoDblclick: true,
         controls: false,
-        ignores: ['moreButtonPlugin'],
+        ignores: ['moreButtonPlugin', 'enter', 'start'],
+        start: {
+          disableAnimate: true,
+        },
         vodLogOpts: {
           vtype: 'MP4',
           tag: 'normal',
@@ -91,7 +117,10 @@ const TTShow: React.FC = () => {
         },
       });
       playerSDKins.current.on('ended', onEnded);
-      playerSDKins.current.once('play', showUnmute);
+      playerSDKins.current.once('play', () => {
+        setOncePlay(true);
+        showUnmute();
+      });
       playerSDKins.current.once('autoplay_was_prevented', showUnmute);
     }
   }
@@ -99,8 +128,9 @@ const TTShow: React.FC = () => {
   function playNext(activeIndex: number) {
     if (playerSDKins.current && activeIndex !== indexRef.current) {
       const next = list[activeIndex];
-      const { playAuthToken = '' } = next;
+      const { playAuthToken = '', coverUrl } = next;
       indexRef.current = activeIndex;
+      playerSDKins.current?.player.plugins.poster.update(coverUrl);
       playerSDKins.current
         .playNext({
           autoplay: true,
@@ -117,7 +147,7 @@ const TTShow: React.FC = () => {
     }
   }
 
-  function handleClick() {
+  function pauseOrPlay() {
     if (playerSDKins.current) {
       const player = playerSDKins.current.player;
       if (player.muted) {
@@ -181,11 +211,11 @@ const TTShow: React.FC = () => {
           {t('tt_nav_btn')}
         </div>
       </div>
-      <div onClick={handleClick}>
+      <div onClick={handleClick} className={style.mySwiper}>
         {list.length > 0 && (
           <Swiper
             onSwiper={swiper => (refSwiper.current = swiper)}
-            style={{ height: '100vh' }}
+            style={{ height: '100%' }}
             direction="vertical"
             preventClicksPropagation={false}
             loop={true}
@@ -202,7 +232,15 @@ const TTShow: React.FC = () => {
             {list.map((item: any, i: number) => {
               return (
                 <SwiperSlide key={i}>
-                  {({ isActive }) => <Player data={item} index={i} isTouch={isTouch} isActive={isActive} />}
+                  {({ isActive }) => (
+                    <Player
+                      ref={isActive ? playerRef : null}
+                      data={item}
+                      index={i}
+                      isTouch={isTouch}
+                      isActive={isActive}
+                    />
+                  )}
                 </SwiperSlide>
               );
             })}
