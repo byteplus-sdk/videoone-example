@@ -18,7 +18,7 @@ const TTShow: React.FC = () => {
   const refSwiper = useRef<SwiperClass>();
   const playerRef = useRef<any>(null);
   const refTimer = useRef<number>();
-  const indexRef = useRef<number>();
+  const indexRef = useRef<number>(0);
   const [oncePlay, setOncePlay] = useState(false);
 
   const [{ data, loading }, executeGetVideos] = useAxios(
@@ -105,9 +105,10 @@ const TTShow: React.FC = () => {
         closeVideoClick: false,
         closeVideoDblclick: true,
         controls: false,
-        ignores: ['moreButtonPlugin', 'enter', 'start'],
+        ignores: ['moreButtonPlugin', 'enter'],
         start: {
           disableAnimate: true,
+          isShowPause: true,
         },
         vodLogOpts: {
           vtype: 'MP4',

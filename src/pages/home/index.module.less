@@ -3,7 +3,8 @@
   background-size: 100% auto;
   background-color: #f6fafd;
   height: 100vh;
-  padding: 16px;
+  padding: 16px calc(16px + constant(safe-area-inset-right)) 16px calc(16px + constant(safe-area-inset-left));
+  padding: 16px calc(16px + env(safe-area-inset-right)) 16px calc(16px + env(safe-area-inset-left));
   color: #fff !important;
 
   .logo {

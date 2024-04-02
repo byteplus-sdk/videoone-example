@@ -16,7 +16,15 @@ function flexible(window: Window, document: Document) {
   function setRemUnit() {
     const width = docEl.getBoundingClientRect().width || docEl.clientWidth;
     const height = docEl.getBoundingClientRect().height || docEl.clientHeight;
-    const realWidth = Math.min(width, height); // 兼容手机横屏case
+    let realWidth;
+
+    if (window.mySize) {
+      realWidth = window.mySize;
+    } else {
+      realWidth = Math.min(width, height); // 兼容手机横屏case
+      // 记录下当前适配值，用于解决软键盘弹起等场景导致上面计算发生变化
+      window.mySize = realWidth;
+    }
     const rem = (realWidth * 100) / 375;
     docEl.style.fontSize = rem + 'px';
   }

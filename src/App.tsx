@@ -3,6 +3,7 @@ import Home from '@/pages/home';
 import TTShow from '@/pages/ttshow';
 import { configure } from 'axios-hooks';
 import Axios from 'axios';
+import { useEffect } from 'react';
 console.log('test');
 const axios = Axios.create({
   baseURL: __API_URL__,
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  useEffect(() => {
+    if (window.VConsole) {
+      new window.VConsole();
+    }
+  }, []);
   return <RouterProvider router={router} />;
 }
 
