@@ -72,10 +72,12 @@ const translation = {
 type ILang = 'zh-CN' | 'en' | 'zh';
 
 export default (key: keyof typeof translation, placeholder?: number) => {
-  let lang: ILang = window.navigator.language as ILang;
-  if (lang === 'zh') {
+  let lang: any = window.navigator.language as ILang;
+  if (/zh/i.test(lang)) {
     lang = 'zh-CN';
   }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const finalTrans = translation[key]?.[lang] || translation[key]?.en;
   if (typeof placeholder === 'number') {
     return finalTrans.replace('placeholder', placeholder.toString());

@@ -64,8 +64,8 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, i
 
   function calcTopComment() {
     try {
-      const containerHeight = document.getElementById(`titleContainer${index}`)?.clientHeight || 0;
-      const content = document.getElementById(`title${index}`)?.getBoundingClientRect()?.height || 0;
+      const containerHeight = document.getElementById(`titleContainer${index}`)?.offsetHeight || 0;
+      const content = document.getElementById(`title${index}`)?.offsetHeight || 0;
 
       if (content > containerHeight) {
         setShowMore(true);
