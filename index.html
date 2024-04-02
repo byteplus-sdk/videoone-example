@@ -52,15 +52,5 @@
   <script src="https://sf-unpkg.bytepluscdn.com/obj/byteplusfe-sg/sdk/@byteplus/veplayer/1.8.3/index.min.js"></script>
   <script type="module" src="/src/main.tsx"></script>
 </body>
-<script>
-  const params = new URLSearchParams(window.location.search);
-
-  if (params.get('vconsole') === '1') {
-    const scriptElement = document.createElement('script');
-    scriptElement.src = '//unpkg.byted-static.com/vconsole/3.14.6/dist/vconsole.min.js';
-    scriptElement.type = 'text/javascript';
-    document.body.appendChild(scriptElement);
-}
-</script>
 
 </html>
