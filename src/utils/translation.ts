@@ -15,23 +15,23 @@ const translation = {
     'zh-CN': '视频上下滑，丝滑播放，视频互动体验',
     en: 'Swipe up video, smooth playback, and video interaction experience',
   },
-  tt_nav_tit: {
+  show_nav_tit: {
     'zh-CN': 'BytePlus VideoOne',
     en: 'BytePlus VideoOne',
   },
-  tt_nav_desc: {
+  show_nav_desc: {
     'zh-CN': '在App中获得完整体验',
     en: 'Get the full experience on the app',
   },
-  tt_unmute: {
+  show_unmute: {
     'zh-CN': '取消静音',
     en: 'Unmute',
   },
-  tt_nav_btn: {
+  show_nav_btn: {
     'zh-CN': '获取应用',
     en: 'Get app',
   },
-  tt_guide: {
+  show_guide: {
     'zh-CN': '上滑查看更多视频',
     en: 'Slide up to view more videos',
   },

@@ -195,7 +195,7 @@ const TTShow: React.FC = () => {
       <div className={style.topArea}>
         {showUnmuteBtn && (
           <div className={style.unmute} onClick={onUnmuteClick}>
-            <div className={style.unmuteBt}>{t('tt_unmute')}</div>
+            <div className={style.unmuteBt}>{t('show_unmute')}</div>
           </div>
         )}
         <div className={style.back} onClick={() => navigate('/')}>
@@ -204,12 +204,12 @@ const TTShow: React.FC = () => {
         <div className={style.infoWrapper}>
           <NavIcon />
           <div className={style.info}>
-            <p className={style.tit}>{t('tt_nav_tit')}</p>
-            <p className={style.desc}>{t('tt_nav_desc')}</p>
+            <p className={style.tit}>{t('show_nav_tit')}</p>
+            <p className={style.desc}>{t('show_nav_desc')}</p>
           </div>
         </div>
         <div className={style.btn} onClick={jumpToApp}>
-          {t('tt_nav_btn')}
+          {t('show_nav_btn')}
         </div>
       </div>
       <div onClick={handleClick} className={style.mySwiper}>
@@ -254,7 +254,7 @@ const TTShow: React.FC = () => {
       {showGuide && (
         <div className={style.guide} onClick={handleMaskClose} onTouchMove={handleMaskClose}>
           <img src={Gesture} alt="" />
-          <span>{t('tt_guide')}</span>
+          <span>{t('show_guide')}</span>
         </div>
       )}
     </>

@@ -5,11 +5,11 @@ import autoprefixer from 'autoprefixer';
 import path from 'path';
 import svgr from 'vite-plugin-svgr';
 
+const isProd = process.env.NODE_ENV === 'production';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
-  base:
-    process.env.NODE_ENV === 'production' ? '//mediaservice-fe.bytepluscdn.com/obj/vcloud-fe-sgcomm/video-one' : '/',
+  base: isProd ? '//mediaservice-fe.bytepluscdn.com/obj/vcloud-fe-sgcomm/video-one' : '/',
   server: {
     port: 8000,
   },
@@ -17,7 +17,9 @@ export default defineConfig({
     outDir: 'output',
   },
   define: {
-    __API_URL__: JSON.stringify('https://rtc-sg-test.bytedance.com/videoone'),
+    __API_URL__: JSON.stringify(
+      isProd ? 'https://videocloud.byteplusapi.com/videoone' : 'https://rtc-sg-test.bytedance.com/videoone',
+    ),
   },
   resolve: {
     alias: {
