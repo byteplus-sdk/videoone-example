@@ -5,7 +5,14 @@
 
 html,
 body {
-  height: 100vh;
+  @media screen and (orientation: portrait) {
+    height: 100vh;
+  }
+
+  @media screen and (orientation: landscape) {
+    height: 100%;
+  }
+
   margin: 0;
 }
 
