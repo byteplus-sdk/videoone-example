@@ -174,6 +174,8 @@ const TTShow: React.FC = () => {
     const player = playerSDKins.current.player;
     if (player.muted || player.video.muted) {
       setShowUnmuteBtn(true);
+    } else {
+      setShowUnmuteBtn(false);
     }
   }
 
