@@ -15,6 +15,7 @@ import InputBar from '../input';
 import Dialog from '../dialog';
 import { formatDateTime } from '@/utils/util';
 import translation from '@/utils/translation';
+import Loading from '../loading';
 
 const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, index }, ref) => {
   const [likeMap, setLikeMap] = useState<Map<number, boolean>>(new Map());
@@ -23,7 +24,7 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, i
   const [showMore, setShowMore] = useState(false);
   const [moreVisible, setMoreVisible] = useState(false);
   const [list, setList] = useState<IComment[]>([]);
-  const [{ data: comments }, executeGetComments] = useAxios(
+  const [{ data: comments, loading }, executeGetComments] = useAxios(
     {
       url: API_PATH.GetVideoComments,
       method: 'GET',
@@ -33,6 +34,8 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, i
     },
     { manual: true },
   );
+
+  console.log(loading);
 
   useImperativeHandle(ref, () => ({
     likeRef: likeRef,
@@ -147,73 +150,78 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, i
         }}
         title={translation('c_comment_num', list.length ?? 0)}
       >
-        {/* {loading && <Loading />} */}
-        <div className={style.commentContent}>
-          <InputBar
-            handleEnter={val => {
-              // mock评论添加
-              setList([
-                {
-                  content: val,
-                  name: 'xshellv',
-                  uid: new Date().valueOf(),
-                  like: 0,
-                  createTime: new Date(),
-                },
-                ...list,
-              ]);
-            }}
-          />
-          {list.map(comment => {
-            return (
-              <div className={style.comment} key={comment.uid}>
-                <div className={style.avatar}>
-                  <div>
-                    <img src={Avatar} alt="" />
-                  </div>
-                </div>
-                <div className={style.contentWrapper}>
-                  <div className={style.name}>{comment.name}</div>
-                  <div className={style.content}>{comment.content}</div>
-                  <div className={style.operation}>
-                    <div className={style.time}>{formatDateTime(new Date(comment.createTime))}</div>
-                    <div
-                      className={style.del}
-                      onClick={() => {
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
-                        Dialog.confirm({
-                          title: translation('c_delete_confirm'),
-                          content: translation('c_content_confirm'),
-                          onCancel: () => {
-                            console.log('cancel');
-                          },
-                          onConfirm: () => {
-                            setList(list.filter(item => item.uid !== comment.uid));
-                          },
-                        });
-                      }}
-                    >
-                      <Delete />
-                      &nbsp;
-                      <span>{translation('c_comment_del')}</span>
+        {loading ? (
+          <div className={style.loading}>
+            <Loading />
+          </div>
+        ) : (
+          <div className={style.commentContent}>
+            <InputBar
+              handleEnter={val => {
+                // mock评论添加
+                setList([
+                  {
+                    content: val,
+                    name: 'xshellv',
+                    uid: new Date().valueOf(),
+                    like: 0,
+                    createTime: new Date(),
+                  },
+                  ...list,
+                ]);
+              }}
+            />
+            {list.map(comment => {
+              return (
+                <div className={style.comment} key={comment.uid}>
+                  <div className={style.avatar}>
+                    <div>
+                      <img src={Avatar} alt="" />
                     </div>
                   </div>
+                  <div className={style.contentWrapper}>
+                    <div className={style.name}>{comment.name}</div>
+                    <div className={style.content}>{comment.content}</div>
+                    <div className={style.operation}>
+                      <div className={style.time}>{formatDateTime(new Date(comment.createTime))}</div>
+                      <div
+                        className={style.del}
+                        onClick={() => {
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          // @ts-ignore
+                          Dialog.confirm({
+                            title: translation('c_delete_confirm'),
+                            content: translation('c_content_confirm'),
+                            onCancel: () => {
+                              console.log('cancel');
+                            },
+                            onConfirm: () => {
+                              setList(list.filter(item => item.uid !== comment.uid));
+                            },
+                          });
+                        }}
+                      >
+                        <Delete />
+                        &nbsp;
+                        <span>{translation('c_comment_del')}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className={cn(style.like, { [style.unLike]: !likeMap.get(comment.uid) })}
+                    onClick={() => {
+                      likeMap.set(comment.uid, !likeMap.get(comment.uid));
+                      setLikeMap(new Map(likeMap));
+                    }}
+                  >
+                    <Like />
+                    {likeMap.get(comment.uid) ? comment.like + 1 : comment.like}
+                  </div>
                 </div>
-                <div
-                  className={cn(style.like, { [style.unLike]: !likeMap.get(comment.uid) })}
-                  onClick={() => {
-                    likeMap.set(comment.uid, !likeMap.get(comment.uid));
-                    setLikeMap(new Map(likeMap));
-                  }}
-                >
-                  <Like />
-                  {likeMap.get(comment.uid) ? comment.like + 1 : comment.like}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </Popup>
     </div>
   );

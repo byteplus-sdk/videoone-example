@@ -189,7 +189,9 @@ const TTShow: React.FC = () => {
   }
 
   return loading ? (
-    <Loading />
+    <div className={style.loadingWrapper}>
+      <Loading />
+    </div>
   ) : (
     <>
       <div className={style.topArea}>
