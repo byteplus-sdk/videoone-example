@@ -151,9 +151,9 @@ const TTShow: React.FC = () => {
   function pauseOrPlay() {
     if (playerSDKins.current) {
       const player = playerSDKins.current.player;
-      if (player.muted) {
-        return;
-      }
+      // if (player.muted) {
+      //   return;
+      // }
       if (player.paused) {
         player.play();
       } else {
