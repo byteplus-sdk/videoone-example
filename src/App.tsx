@@ -27,9 +27,13 @@ function importVconsole() {
   const params = new URLSearchParams(window.location.search);
 
   if (params.get('vconsole') === '1') {
-    loadScript('//unpkg.byted-static.com/vconsole/3.14.6/dist/vconsole.min.js').then(() => {
-      new window.VConsole();
-    });
+    import('vconsole')
+      .then(v => {
+        new v.default();
+      })
+      .catch(() => {
+        return;
+      });
   }
 }
 
