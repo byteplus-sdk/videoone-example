@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useImperativeHandle, useState } from 'react';
+import React, { useEffect, useRef, useImperativeHandle, useState, useCallback } from 'react';
 import style from './index.module.less';
 import cn from 'classnames';
 import { IComment, IPlayer } from '@/interface';
@@ -16,6 +16,7 @@ import Dialog from '../dialog';
 import { formatDateTime } from '@/utils/util';
 import translation from '@/utils/translation';
 import Loading from '../loading';
+import { debounce } from 'lodash';
 
 const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, index }, ref) => {
   const [likeMap, setLikeMap] = useState<Map<number, boolean>>(new Map());
@@ -35,7 +36,7 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, i
     { manual: true },
   );
 
-  console.log(loading);
+  const throttledCalcCaption = useCallback(debounce(calcCaption, 1000), []);
 
   useImperativeHandle(ref, () => ({
     likeRef: likeRef,
@@ -46,7 +47,8 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, i
   }, [comments]);
 
   useEffect(() => {
-    calcTopComment();
+    calcCaption();
+    window.addEventListener('resize', throttledCalcCaption);
   }, []);
 
   function renderCount(count: number) {
@@ -65,7 +67,7 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, i
       : count;
   }
 
-  function calcTopComment() {
+  function calcCaption() {
     try {
       const containerHeight = document.getElementById(`titleContainer${index}`)?.offsetHeight || 0;
       const content = document.getElementById(`title${index}`)?.offsetHeight || 0;
