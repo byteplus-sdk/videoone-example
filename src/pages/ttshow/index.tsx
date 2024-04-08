@@ -98,6 +98,10 @@ const TTShow: React.FC = () => {
         poster: {
           poster: coverUrl,
           hideCanplay: true,
+          fillMode: 'contain',
+        },
+        mobile: {
+          gradient: 'none',
         },
         autoplay: true,
         loop: true,

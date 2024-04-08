@@ -4,8 +4,7 @@ import TTShow from '@/pages/ttshow';
 import { configure } from 'axios-hooks';
 import Axios from 'axios';
 import { useEffect } from 'react';
-import { loadScript } from './utils/util';
-console.log('test');
+
 const axios = Axios.create({
   baseURL: __API_URL__,
 });
