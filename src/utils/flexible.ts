@@ -21,8 +21,8 @@ function flexible(window: Window, document: Document) {
     if (window.mySize) {
       realWidth = window.mySize;
     } else {
-      realWidth = Math.min(width, height); // 兼容手机横屏case
-      // 记录下当前适配值，用于解决软键盘弹起等场景导致上面计算发生变化
+      realWidth = Math.min(width, height); // Compatible with mobile phone horizontal screen case
+      // Record the current adaptation value to solve the problem of changes in the above calculation caused by scenarios such as the soft keyboard popping up.
       window.mySize = realWidth;
     }
     const rem = (realWidth * 100) / 375;

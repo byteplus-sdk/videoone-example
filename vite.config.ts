@@ -38,10 +38,9 @@ export default defineConfig({
           propList: ['*', '!font-size'],
           exclude: /(node_module)/,
           mediaQuery: false,
-          minPixelValue: 3, //设置要替换的最小像素值(3px会被转rem)。 默认 0
+          minPixelValue: 3,
         }),
         autoprefixer({
-          // 自动添加前缀 的浏览器
           overrideBrowserslist: ['Android 4.1', 'iOS 7.1', 'Chrome > 31', 'ie >= 8', 'last 2 versions'],
           grid: true,
         }),

@@ -160,7 +160,7 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, i
           <div className={style.commentContent}>
             <InputBar
               handleEnter={val => {
-                // mock评论添加
+                // mock comments
                 setList([
                   {
                     content: val,
