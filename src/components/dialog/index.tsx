@@ -19,7 +19,7 @@ interface IProps {
   content: ReactNode;
   root: Root;
 }
-const Dialog: React.FC<IProps> = memo((props: IProps) => {
+const Dialog: any = memo((props: IProps) => {
   const { visible, maskClassName, contentClassName, footerClassName, headerClassName } = props;
 
   const maskClass = cn('dialog__mask', maskClassName);
@@ -68,9 +68,7 @@ const Dialog: React.FC<IProps> = memo((props: IProps) => {
   );
 });
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-Dialog.confirm = config => {
+Dialog.confirm = (config: Partial<IProps>) => {
   let node = document.getElementById('my-dialog');
   if (!node) {
     node = document.createElement('div');

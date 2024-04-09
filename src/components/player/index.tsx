@@ -39,7 +39,7 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, i
   const throttledCalcCaption = useCallback(debounce(calcCaption, 1000), []);
 
   useImperativeHandle(ref, () => ({
-    likeRef: likeRef,
+    likeRef,
   }));
 
   useEffect(() => {
@@ -189,8 +189,6 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, i
                       <div
                         className={style.del}
                         onClick={() => {
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                          // @ts-ignore
                           Dialog.confirm({
                             title: translation('c_delete_confirm'),
                             content: translation('c_content_confirm'),

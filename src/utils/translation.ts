@@ -69,16 +69,17 @@ const translation = {
   },
 };
 
-type ILang = 'zh-CN' | 'en' | 'zh';
+type ILang = 'zh-CN' | 'en' | 'zh' | 'zh-Hans-CN';
 
 export default (key: keyof typeof translation, placeholder?: number) => {
-  let lang: any = window.navigator.language as ILang;
+  let lang = window.navigator.language as ILang;
   if (/zh/i.test(lang)) {
     lang = 'zh-CN';
+  } else {
+    lang = 'en';
   }
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const finalTrans = translation[key]?.[lang] || translation[key]?.en;
+
+  const finalTrans = translation[key][lang];
   if (typeof placeholder === 'number') {
     return finalTrans.replace('placeholder', placeholder.toString());
   } else {

@@ -25,7 +25,7 @@ const InputBar: React.FC<IProps> = props => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setVal(e.target.value);
         }}
-        enterKeyHint={'send'}
+        enterKeyHint="send"
         onKeyDown={handleKeyDown}
       />
       <div className={style.emojiWrapper}>
