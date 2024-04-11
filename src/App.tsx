@@ -11,16 +11,19 @@ const axios = Axios.create({
 
 configure({ axios });
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />,
-  },
-  {
-    path: '/ttshow',
-    element: <TTShow />,
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <Home />,
+    },
+    {
+      path: '/ttshow',
+      element: <TTShow />,
+    },
+  ],
+  { basename: '/videoone' },
+);
 
 function importVconsole() {
   const params = new URLSearchParams(window.location.search);
