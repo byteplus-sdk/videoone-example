@@ -4,6 +4,7 @@ import TTShow from '@/pages/ttshow';
 import { configure } from 'axios-hooks';
 import Axios from 'axios';
 import { useEffect } from 'react';
+import DramaGround from './pages/dramaGround';
 
 const axios = Axios.create({
   baseURL: __API_URL__,
@@ -20,6 +21,10 @@ const router = createBrowserRouter(
     {
       path: '/ttshow',
       element: <TTShow />,
+    },
+    {
+      path: '/drama',
+      element: <DramaGround />,
     },
   ],
   { basename: '/videoone' },

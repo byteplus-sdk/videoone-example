@@ -11,9 +11,17 @@ const translation = {
     'zh-CN': '互动视频',
     en: 'Interactive Video',
   },
+  home_drama_tit: {
+    'zh-CN': '短剧',
+    en: 'Short drama',
+  },
   home_video_desc: {
     'zh-CN': '视频上下滑，丝滑播放，视频互动体验',
     en: 'Swipe up video, smooth playback, and video interaction experience',
+  },
+  home_drama_desc: {
+    'zh-CN': '精彩的短剧集、视频播放和广告插入',
+    en: 'Exciting short drama episodes, Video playback and Ad insertions',
   },
   show_nav_tit: {
     'zh-CN': 'BytePlus VideoOne',

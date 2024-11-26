@@ -1,0 +1,121 @@
+.loadingWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0;
+  background-color: #000;
+  position: fixed;
+  inset: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 9;
+}
+
+.dramaGroundContainer {
+  .back {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 16px;
+    padding-top: 16px;
+  }
+
+  .carousel {
+    width: 100%;
+    position: relative;
+
+    .slickDots {
+      display: flex !important;
+      justify-content: center;
+
+      & > li {
+        list-style: none;
+
+        &::last-child {
+          .dotWrapper {
+            margin-right: 0;
+          }
+        }
+      }
+
+      :global {
+        .slick-active {
+          .dotWrapper {
+            width: 20px;
+            opacity: 1;
+          }
+        }
+
+        .dotWrapper {
+          width: 12px;
+          height: 4px;
+          border-radius: 2px;
+          opacity: 0.2;
+          background: #fff;
+          margin: 0 5px;
+          transition: all 0.5s ease-in-out;
+        }
+      }
+    }
+
+    :global {
+      .carouselItemWrapper {
+        position: relative;
+        height: 362px;
+        width: 270px;
+        background-size: cover !important;
+        background-position: center !important;
+        transform: scale(0.8);
+        transition: transform 0.5s ease-in-out;
+        border-radius: 10px;
+        overflow: hidden;
+
+        .btn {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: 25px;
+          line-height: 32px;
+          padding: 0 20px;
+          z-index: 1;
+          border-radius: 4px;
+          background: linear-gradient(to right, #ff1764, #ed3596);
+          width: fit-content;
+          font-size: 14px;
+          font-weight: 500;
+          color: #fff;
+        }
+
+        &::after {
+          content: ' ';
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          background: linear-gradient(
+            to top,
+            rgb(22 24 35) 1%,
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.8)
+          );
+          transition: background 0.5s ease-in-out;
+        }
+      }
+
+      .slick-center {
+        .carouselItemWrapper {
+          // 模拟底层遮罩效果
+          &::after {
+            background: linear-gradient(to top, rgb(22 24 35) 1%, transparent, transparent, transparent);
+          }
+          transform: scale(0.962);
+        }
+      }
+    }
+  }
+}
