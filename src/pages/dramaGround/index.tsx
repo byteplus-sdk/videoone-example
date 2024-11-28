@@ -9,6 +9,7 @@ import { IVideo } from '@/interface';
 import Gesture from '@/assets/images/gesture.png';
 import PlayIcon from '@/assets/svgr/iconPlay.svg?react';
 import BackIcon from '@/assets/svgr/back.svg?react';
+import FireIcon from '@/assets/svgr/iconFire.svg?react';
 
 import { useNavigate } from 'react-router-dom';
 import t from '@/utils/translation';
@@ -57,6 +58,8 @@ const DramaGround: React.FC = () => {
 
   // const { (loop as ILoop[]), trending, new: _new, recommend } = data.response;
   const loopData = (data?.response?.loop as ILoop[]) ?? [];
+  const trending = (data?.response?.trending as ILoop[]) ?? [];
+  const recommend = (data?.response?.recommend as ILoop[]) ?? [];
   return loading ? (
     <div className={styles.loadingWrapper}>
       <Loading />
@@ -82,10 +85,57 @@ const DramaGround: React.FC = () => {
             );
           })}
         </Slider>
-        {/* 模拟底层遮罩效果 */}
-        <div className={styles.bottomShadow}></div>
       </div>
-      {/*  */}
+      {/* 趋势 */}
+      <div className={styles.trendingWrapper}>
+        <h1 className={styles.tit}>Most trending 🔥</h1>
+        <div className={styles.trendingContentWrapper}>
+          {trending.map((item, index) => {
+            return (
+              <div key={item.drama_id} className={styles.trendingItemWrapper}>
+                <div className={styles.coverWrapper}>
+                  <img src={item.drama_cover_url} />
+                  {index < 3 ? (
+                    <span className={styles.tagTop}>TOP{index + 1}</span>
+                  ) : (
+                    <span className={styles.tagNum}>{index + 1}</span>
+                  )}
+                </div>
+                <div className={styles.contentWrapper}>
+                  <h2>{item.drama_title}</h2>
+                  <div className={styles.popularity}>
+                    <FireIcon />
+                    <span className={styles.num}>920.6w</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      {/* 趋势 */}
+      <div className={styles.recommendWrapper}>
+        <h1 className={styles.tit}>New release</h1>
+        <div className={styles.recommendContentWrapper}>
+          {recommend.map((item, index) => {
+            return (
+              <div key={item.drama_id} className={styles.recommendItemWrapper}>
+                <div className={styles.coverWrapper}>
+                  <img src={item.drama_cover_url} />
+                  {index === 0 && <div className={styles.newTag}>NEW</div>}
+                  <div className={styles.playNum}>
+                    <PlayIcon />
+                    <span>29.3w</span>
+                  </div>
+                </div>
+                <div className={styles.contentWrapper}>
+                  <h2>{item.drama_title}</h2>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };

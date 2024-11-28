@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'DINCond-Black';
+  src:
+    local('DINCond-Black'),
+    url(@/assets/fonts/DINCond-Black-Regular.otf) format('opentype');
+}
+
 .loadingWrapper {
   display: flex;
   justify-content: center;
@@ -13,6 +20,15 @@
 }
 
 .dramaGroundContainer {
+  h1.tit {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: left;
+    color: #ffffff;
+    padding-bottom: 12px;
+  }
+
   .back {
     width: 20px;
     height: 20px;
@@ -26,6 +42,7 @@
   .carousel {
     width: 100%;
     position: relative;
+    margin-bottom: 48px;
 
     .slickDots {
       display: flex !important;
@@ -71,7 +88,6 @@
         transform: scale(0.8);
         transition: transform 0.5s ease-in-out;
         border-radius: 10px;
-        overflow: hidden;
 
         .btn {
           position: absolute;
@@ -92,10 +108,11 @@
         &::after {
           content: ' ';
           position: absolute;
-          left: 0;
-          right: 0;
+          // -1px解决scale产生四周白边的问题
+          left: -1px;
+          right: -1px;
           top: 0;
-          bottom: 0;
+          bottom: -1px;
           background: linear-gradient(
             to top,
             rgb(22 24 35) 1%,
@@ -114,6 +131,200 @@
             background: linear-gradient(to top, rgb(22 24 35) 1%, transparent, transparent, transparent);
           }
           transform: scale(0.962);
+        }
+      }
+    }
+  }
+
+  .trendingWrapper {
+    padding: 16px;
+    background: linear-gradient(165deg, transparent 70%, #521135);
+    margin-bottom: 32px;
+
+    .trendingContentWrapper {
+      display: grid;
+      grid-auto-flow: column; /* 优先纵向排列 */
+      grid-template-rows: repeat(3, 1fr); /* 每列 3 个 */
+      grid-template-columns: repeat(2, 1fr); /* 每行 2 个 */
+
+      .trendingItemWrapper {
+        height: fit-content;
+        display: flex;
+        margin-bottom: 12px;
+
+        .coverWrapper {
+          height: 90px;
+          width: 67.5px;
+          margin-right: 8px;
+          overflow: hidden;
+          border-radius: 8px;
+          border-top-left-radius: 2px;
+          position: relative;
+
+          .tagTop {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(#ffdf5a, #ffbd0b);
+            font-family: DINCond-Black;
+            font-size: 12px;
+            font-weight: 400;
+            text-align: center;
+            min-width: 32px;
+            left: 0;
+            top: 0;
+            position: absolute;
+            line-height: 16px;
+            height: 16px;
+            color: #a3442c;
+            text-shadow: 0.6px 0.6px 0px #fade73;
+            border-bottom-right-radius: 2px;
+            overflow: hidden;
+          }
+
+          .tagNum {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(#fe3bd3, #f50067);
+            border-bottom-right-radius: 2px;
+            font-family: DINCond-Black;
+            font-size: 12px;
+            font-weight: 400;
+            min-width: 16px;
+            line-height: 16px;
+            height: 16px;
+            color: #fff;
+            left: 0;
+            top: 0;
+            position: absolute;
+          }
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .contentWrapper {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          h2 {
+            line-height: 20px;
+            font-size: 14px;
+            color: #fff;
+          }
+          .popularity {
+            display: flex;
+            align-items: center;
+            .num {
+              font-size: 12px;
+              line-height: 16px;
+              color: #737a87;
+              margin-left: 2px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .recommendWrapper {
+    padding: 16px;
+
+    .recommendContentWrapper {
+      display: flex;
+      width: 100%;
+      overflow-x: scroll;
+
+      .recommendItemWrapper {
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        margin-right: 16px;
+
+        &::last-child {
+          margin-right: 0;
+        }
+
+        .coverWrapper {
+          width: 100px;
+          height: 133px;
+          overflow: hidden;
+          border-radius: 8px;
+          position: relative;
+          margin-bottom: 8px;
+
+          &::after {
+            content: ' ';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.5));
+          }
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+
+          .newTag {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fb107e;
+            font-family: DINCond-Black;
+            font-size: 12px;
+            font-weight: 400;
+            text-align: center;
+            min-width: 32px;
+            left: 0;
+            top: 0;
+            position: absolute;
+            line-height: 16px;
+            height: 16px;
+            color: #fff;
+            border-bottom-right-radius: 8px;
+            overflow: hidden;
+          }
+
+          .playNum {
+            position: absolute;
+            left: 4px;
+            bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 16px;
+            color: #ffffff;
+            z-index: 1;
+
+            span {
+              margin-left: 4px;
+            }
+          }
+        }
+
+        .contentWrapper {
+          h2 {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            text-align: left;
+            color: #fff;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+          }
         }
       }
     }
