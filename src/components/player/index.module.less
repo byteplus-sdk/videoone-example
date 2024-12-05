@@ -30,7 +30,7 @@
   background: #000;
 }
 
-.right-slider {
+.rightSlider {
   position: absolute;
   bottom: 16%;
   right: calc(14px + env(safe-area-inset-right));
@@ -126,101 +126,16 @@
   }
 }
 
-.caption-title {
+.captionTitle {
   font-size: 14px;
   min-height: 300px;
-  padding-top: 16px;
+  padding: 16px 12px 0;
   line-height: 1.5;
 }
 
-.loading{
+.loading {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 300px;
-}
-
-.comment-content {
-  .comment {
-    // height: 60px;
-    box-sizing: border-box;
-    padding: 12px 0;
-    display: flex;
-    margin-bottom: 16px;
-
-    .avatar {
-      height: 36px;
-      flex: 0 0 36px;
-      border-radius: 50%;
-      overflow: hidden;
-
-      img {
-        width: 100%;
-        vertical-align: top;
-      }
-    }
-
-    .content-wrapper {
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      padding: 0 12px;
-
-      .name {
-        color: #80838a;
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 16px;
-      }
-
-      .content {
-        color: #020814;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20px;
-        margin-bottom: 4px;
-      }
-
-      .time {
-        color: #80838a;
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 16px;
-      }
-
-      .operation {
-        display: flex;
-
-        .del {
-          color: #4e5969;
-          font-size: 12px;
-          font-style: normal;
-          font-weight: 500;
-          line-height: 16px;
-          display: flex;
-          align-items: center;
-          padding-left: 12px;
-        }
-      }
-    }
-
-    .like {
-      flex: 0 0 32px; /* 固定宽度为50px */
-      color: #80838a;
-      text-align: center;
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 16px;
-
-      &.un-like {
-        svg path {
-          fill: #fff !important;
-          stroke: #888b90;
-          stroke-width: 1.2px;
-          stroke-linejoin: round;
-        }
-      }
-    }
-  }
 }

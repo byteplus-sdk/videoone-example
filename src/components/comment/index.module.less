@@ -1,0 +1,137 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 52px;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgb(22 24 35 / 7%);
+  position: relative;
+
+  .title {
+    color: #0c0d0f;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  .close {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.body {
+  @media screen and (orientation: portrait) {
+    height: calc(73vh - 52px);
+  }
+
+  @media screen and (orientation: landscape) {
+    max-height: 185px;
+  }
+  overflow-y: scroll;
+
+  &.isLoading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .commentContent {
+    overflow-y: scroll;
+    padding: 0 12px;
+
+    .comment {
+      // height: 60px;
+      box-sizing: border-box;
+      padding: 12px 0;
+      display: flex;
+      margin-bottom: 16px;
+
+      .avatar {
+        height: 36px;
+        flex: 0 0 36px;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          vertical-align: top;
+        }
+      }
+
+      .content-wrapper {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 0 12px;
+
+        .name {
+          color: #80838a;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 16px;
+        }
+
+        .content {
+          color: #020814;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 20px;
+          margin-bottom: 4px;
+        }
+
+        .time {
+          color: #80838a;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 16px;
+        }
+
+        .operation {
+          display: flex;
+
+          .del {
+            color: #4e5969;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+            padding-left: 12px;
+          }
+        }
+      }
+
+      .like {
+        flex: 0 0 32px; /* 固定宽度为50px */
+        color: #80838a;
+        text-align: center;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &.un-like {
+          svg path {
+            fill: #fff !important;
+            stroke: #888b90;
+            stroke-width: 1.2px;
+            stroke-linejoin: round;
+          }
+        }
+      }
+    }
+  }
+}

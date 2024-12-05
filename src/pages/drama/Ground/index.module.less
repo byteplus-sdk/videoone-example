@@ -19,7 +19,7 @@
   z-index: 9;
 }
 
-.dramaGroundContainer {
+.GroundContainer {
   h1.tit {
     font-size: 18px;
     font-weight: 700;
@@ -137,7 +137,7 @@
   }
 
   .trendingWrapper {
-    padding: 16px;
+    padding: 4px 16px;
     background: linear-gradient(165deg, transparent 70%, #521135);
     margin-bottom: 32px;
 
@@ -233,15 +233,16 @@
     }
   }
 
-  .recommendWrapper {
+  .releaseWrapper {
     padding: 16px;
+    margin-bottom: 32px;
 
-    .recommendContentWrapper {
+    .releaseContentWrapper {
       display: flex;
       width: 100%;
       overflow-x: scroll;
 
-      .recommendItemWrapper {
+      .releaseItemWrapper {
         height: fit-content;
         display: flex;
         flex-direction: column;
@@ -324,6 +325,74 @@
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
+          }
+        }
+      }
+    }
+  }
+
+  .recommendWrapper {
+    padding: 16px;
+
+    .recommendContentWrapper {
+      display: flex;
+      flex-wrap: wrap;
+
+      .recommendItemWrapper {
+        margin-bottom: 16px;
+        margin-right: 8px;
+
+        &:nth-child(2n) {
+          margin-right: 0;
+        }
+
+        .coverWrapper {
+          width: 166px;
+          height: 234px;
+          border-radius: 8px;
+          position: relative;
+          overflow: hidden;
+          margin-bottom: 10px;
+
+          &::after {
+            content: ' ';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.5));
+          }
+
+          .playNum {
+            position: absolute;
+            left: 4px;
+            bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 18px;
+            color: #fff;
+            z-index: 1;
+
+            span {
+              margin-left: 4px;
+            }
+          }
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .contentWrapper {
+          h2 {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            text-align: left;
           }
         }
       }

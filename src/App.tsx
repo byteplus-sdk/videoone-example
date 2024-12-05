@@ -4,7 +4,9 @@ import TTShow from '@/pages/ttshow';
 import { configure } from 'axios-hooks';
 import Axios from 'axios';
 import { useEffect } from 'react';
-import DramaGround from './pages/dramaGround';
+import Drama from './pages/drama';
+import VePlayer from '@byteplus/veplayer';
+import ChannelDetail from './pages/drama/ChannelDetail';
 
 const axios = Axios.create({
   baseURL: __API_URL__,
@@ -23,8 +25,12 @@ const router = createBrowserRouter(
       element: <TTShow />,
     },
     {
-      path: '/drama',
-      element: <DramaGround />,
+      path: '/dramaGround',
+      element: <Drama />,
+    },
+    {
+      path: '/dramaDetail',
+      element: <ChannelDetail />,
     },
   ],
   { basename: '/videoone' },
@@ -47,6 +53,13 @@ function importVconsole() {
 function App() {
   useEffect(() => {
     importVconsole();
+    VePlayer.prepare({
+      appId: 597335, // 从视频点播控制台-点播SDK-应用管理 获取，如果没有应用则创建
+      strategies: {
+        preload: true,
+        adaptRange: true,
+      },
+    });
   }, []);
   return <RouterProvider router={router} />;
 }

@@ -7,11 +7,12 @@ import 'swiper/less';
 import style from './index.module.less';
 import { IVideo } from '@/interface';
 import Gesture from '@/assets/images/gesture.png';
-import NavIcon from '@/assets/svgr/navIcon.svg?react';
-import BackIcon from '@/assets/svgr/back.svg?react';
+import IconNav from '@/assets/svgr/iconNavIcon.svg?react';
+import IconBack from '@/assets/svgr/iconBack.svg?react';
 import { useNavigate } from 'react-router-dom';
 import t from '@/utils/translation';
 import Loading from '@/components/loading';
+import VePlayer from '@/player';
 
 const TTShow: React.FC = () => {
   const playerSDKins = useRef<any>();
@@ -92,8 +93,8 @@ const TTShow: React.FC = () => {
   function initVePlayer() {
     const { playAuthToken = '', coverUrl = '' } = list[0] || {};
     if (!playerSDKins.current && playAuthToken) {
-      playerSDKins.current = new window.VePlayer({
-        el: document.querySelector('#veplayerContainer'),
+      playerSDKins.current = new VePlayer({
+        el: document.querySelector('#veplayerContainer') as HTMLElement,
         getVideoByToken: {
           playAuthToken,
           defaultDefinition: '480p',
@@ -219,10 +220,10 @@ const TTShow: React.FC = () => {
           </div>
         )}
         <div className={style.back} onClick={() => navigate('/')}>
-          <BackIcon />
+          <IconBack />
         </div>
         <div className={style.infoWrapper}>
-          <NavIcon />
+          <IconNav />
           <div className={style.info}>
             <p className={style.tit}>{t('show_nav_tit')}</p>
             <p className={style.desc}>{t('show_nav_desc')}</p>

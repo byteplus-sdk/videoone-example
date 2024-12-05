@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Emoji from '@/assets/svgr/emoji.svg?react';
+import Emoji from '@/assets/svgr/iconEmoji.svg?react';
 import style from './index.module.less';
 import translation from '@/utils/translation';
 

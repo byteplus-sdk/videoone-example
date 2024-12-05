@@ -1,0 +1,96 @@
+.main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  .swiper-container {
+    height: calc(100% - constant(safe-area-inset-bottom));
+    height: calc(100% - env(safe-area-inset-bottom));
+  }
+}
+
+.recommend-main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  .swiper-container {
+    height: calc(100% - constant(safe-area-inset-bottom));
+    height: calc(100% - env(safe-area-inset-bottom));
+  }
+}
+
+.swiper-container {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  .my-swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  :global {
+    .xgplayer-unmute {
+      display: none !important;
+    }
+
+    .xgplayer {
+      background-color: transparent;
+
+      .xg-pos {
+        left: calc(18px + constant(safe-area-inset-left));
+        left: calc(18px + env(safe-area-inset-left));
+        right: calc(18px + constant(safe-area-inset-right));
+        right: calc(18px + env(safe-area-inset-right));
+      }
+    }
+
+    .xgplayer .xgplayer-poster {
+      background-size: 100% auto;
+      background-color: transparent !important;
+    }
+
+    .xgplayer .xgplayer-start {
+      transform: translate3d(0, 0, 0);
+      translate: -50% -50%;
+    }
+
+    .xgplayer .xgplayer-controls {
+      transform: translate3d(0, 0, 0);
+    }
+
+    .xgplayer-mobile .xgplayer-progress .xgplayer-progress-btn {
+      background-color: rgba(255, 255, 255, 0) !important;
+      box-shadow: none;
+    }
+
+    .swiper-slide {
+      overflow: hidden;
+    }
+
+    // 进度条位于底部的时候
+    .xgplayer.xgplayer-mobile .xgplayer-progress-bottom {
+      &.active {
+        .xgplayer-progress-outer {
+          height: 6px;
+          margin-bottom: 3px;
+          transition:
+            height 0.3s ease,
+            margin-bottom 0.3s ease;
+        }
+        .xgplayer-progress-btn {
+          transform: translate(-50%, -50%) scale(1);
+        }
+        .inner-focus-point {
+          &:before,
+          &:after {
+            width: 6px;
+          }
+        }
+      }
+    }
+  }
+}

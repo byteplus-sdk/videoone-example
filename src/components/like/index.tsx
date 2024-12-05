@@ -3,9 +3,16 @@ import { useLottie } from 'lottie-react';
 import likeAni from '@/assets/lottie/like.json';
 import unlikeAni from '@/assets/lottie/unLike.json';
 import style from './index.module.less';
-import { IVideo } from '@/interface';
 
-const Like: React.FC<IVideo> = forwardRef((props, ref) => {
+export interface IRef {
+  handleLike: () => void;
+}
+
+interface IProps {
+  like: number;
+}
+
+const Like = React.forwardRef<IRef, IProps>((props, ref) => {
   const [isLike, setLike] = useState(false);
   const { View: like, goToAndPlay: likePlay } = useLottie({
     animationData: likeAni,
