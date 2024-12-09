@@ -7,16 +7,18 @@ import { Viewer } from '@volcengine/imagex-react';
 // import FavActiveIcon from '@/assets/svg/fav-active.svg?react';
 // import DIcon from '@/assets/svg/d.svg?react';
 
-import { IVideoDataWithModel } from '@/@types';
+import { IDramaDetailListItem } from '@/@types';
 
 import style from './index.module.less';
+import classNames from 'classnames';
 
 interface ISliderItemProps extends PropsWithChildren {
   isActive: boolean;
   activeIndex: number;
-  data: IVideoDataWithModel;
+  data: IDramaDetailListItem['video_meta'];
   index: number;
-  isRecommend?: boolean;
+  isChannel?: boolean;
+  isLandScapeMode: boolean;
   otherComponent: React.ReactNode;
   getCurrentTime: () => number;
   playNextStatus: string;
@@ -30,8 +32,9 @@ const SliderItem: React.FC<ISliderItemProps> = ({
   activeIndex,
   data,
   index,
-  isRecommend,
+  isChannel,
   getCurrentTime,
+  isLandScapeMode,
   otherComponent,
   children,
 }) => {
@@ -70,7 +73,7 @@ const SliderItem: React.FC<ISliderItemProps> = ({
     <div className={style.wrapper}>
       {shouldRenderContent && (
         <>
-          <div className={`${style.poster}`}>
+          <div className={classNames(style.poster, { [style.isLandScapeMode]: isLandScapeMode })}>
             <Viewer
               layout="raw"
               placeholder="skeleton"
@@ -86,7 +89,12 @@ const SliderItem: React.FC<ISliderItemProps> = ({
           </div>
           <div id={`swiper-video-container-${index}`} className={style.videoContainer}>
             <div className="veplayer-cus-gradient-wrapper" />
-            {children}
+            <div
+              className={classNames(style.videoWithRotateBtn, { [style.isLandScapeMode]: isLandScapeMode })}
+              id={`videoWithRotateBtn${index}`}
+            >
+              {children}
+            </div>
           </div>
           {otherComponent}
         </>

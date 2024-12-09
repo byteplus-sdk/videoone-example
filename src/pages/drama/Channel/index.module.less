@@ -28,7 +28,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 5px;
+    bottom: 15px;
     z-index: 999999;
 
     .laneWrapper {
@@ -84,21 +84,6 @@
           margin-bottom: 16px;
           position: relative;
 
-          .close {
-            position: absolute;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            right: 0;
-            top: 0;
-
-            path {
-              fill: #fff;
-            }
-          }
-
           .btn {
             display: flex;
             justify-content: center;
@@ -145,6 +130,12 @@
                 line-height: 20px;
                 display: flex;
                 align-items: center;
+
+                svg {
+                  path {
+                    stroke: #fff;
+                  }
+                }
 
                 .num {
                   margin-left: 5px;

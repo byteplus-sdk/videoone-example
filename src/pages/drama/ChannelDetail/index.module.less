@@ -36,7 +36,7 @@
 
   .rightLane {
     position: absolute;
-    bottom: 12%;
+    bottom: 0;
     right: calc(14px + env(safe-area-inset-right));
     right: calc(14px + constant(safe-area-inset-right));
     display: flex;
@@ -79,6 +79,81 @@
         line-height: 20px;
         text-align: center;
         margin-bottom: 14px;
+      }
+    }
+  }
+
+  .body {
+    height: calc(100% - 48px);
+  }
+
+  .footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 48px;
+    background-color: #07080a;
+    color: #bababa;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+
+    .button {
+      font-size: 14px;
+      flex: 1;
+      height: 36px;
+      line-height: 36px;
+      padding: 0px 16px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      background-color: #ffffff1a;
+      justify-content: space-between;
+      margin-right: 16px;
+
+      .info {
+        display: flex;
+        align-items: center;
+        .title {
+          margin-left: 6px;
+        }
+      }
+    }
+
+    .playbackRateBtn {
+      font-size: 14px;
+      line-height: 16px;
+      white-space: nowrap;
+    }
+  }
+}
+
+.popupBodyClass {
+  background: #000000;
+  text-align: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  color: #ffffffe5;
+
+  .head {
+    height: 40px;
+    font-size: 14px;
+    padding: 12px 16px;
+    box-sizing: border-box;
+    margin-bottom: 24px;
+  }
+
+  .body {
+    font-size: 16px;
+
+    .item {
+      margin-bottom: 8px;
+      line-height: 48px;
+
+      &.selected {
+        background: #ffffff1f;
       }
     }
   }

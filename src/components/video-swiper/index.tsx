@@ -5,20 +5,24 @@ import { useNavigate } from 'react-router-dom';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import VePlayer, { Events, IPlayerConfig, PlayerCore } from '@/player';
 import { formatPreloadStreamList } from '@/utils/preload';
+import IconUnmute from '@/assets/svgr/iconUnmute.svg?react';
 import { Toast } from 'antd-mobile';
-import { IVideoDataWithModel } from '@/@types';
+import { IDramaDetailListItem } from '@/@types';
 import { os, selectDef } from '@/utils';
+import IconRotate from '@/assets/svgr/iconRotate.svg?react';
 import '@byteplus/veplayer/index.min.css';
+import classNames from 'classnames';
 
 const getClass: (player: PlayerCore) => HTMLDivElement = (player: PlayerCore) =>
   player.root?.getElementsByClassName('xgplayer-start')[0];
 
 interface IVideoSwiperProps {
-  videoDataList: IVideoDataWithModel[];
+  videoDataList: IDramaDetailListItem['video_meta'][];
   isChannel?: boolean;
   isChannelActive?: boolean;
   isSliderMoving?: boolean;
   startTime?: number;
+  playbackRate?: number;
   otherComponent: React.ReactNode;
   onChange: (v: number) => any;
   onProgressDrag?: () => void;
@@ -32,6 +36,7 @@ const VideoSwiper: React.FC<IVideoSwiperProps> = ({
   isChannelActive,
   isSliderMoving,
   startTime = 0,
+  playbackRate = 1,
   onChange,
   onProgressDrag,
   onProgressDragend,
@@ -44,9 +49,10 @@ const VideoSwiper: React.FC<IVideoSwiperProps> = ({
   const sdkRef = useRef<VePlayer>();
   const [playNextStatus, setPlayNextStatus] = useState<string>('');
   const [showUnmuteBtn, setShowUnmuteBtn] = useState<boolean>(false);
-
+  const [playerReady, setPlayerReady] = useState<boolean>(false);
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const currentVideoData: IVideoDataWithModel = videoDataList?.[activeIndex];
+  const currentVideoData = videoDataList?.[activeIndex];
+  const isLandScapeMode = currentVideoData.height < currentVideoData.width;
   const navigate = useNavigate();
 
   /**
@@ -67,6 +73,12 @@ const VideoSwiper: React.FC<IVideoSwiperProps> = ({
       setShowUnmuteBtn(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (sdkRef.current?.player) {
+      sdkRef.current.player.playbackRate = playbackRate;
+    }
+  }, [playbackRate]);
 
   const hideStartIcon = useCallback((player?: PlayerCore) => {
     if (!player?.root) {
@@ -186,7 +198,7 @@ const VideoSwiper: React.FC<IVideoSwiperProps> = ({
           'enter',
           'fullscreen',
           'volume',
-          'progress',
+          // 'progress',
           'play',
           'time',
           'pip',
@@ -198,6 +210,7 @@ const VideoSwiper: React.FC<IVideoSwiperProps> = ({
           // 播放完成部分进度条底色
           playedColor: '#ffffff',
         },
+        fullscreen: { rotateFullscreen: true },
         controls: {
           mode: 'bottom',
         },
@@ -212,14 +225,6 @@ const VideoSwiper: React.FC<IVideoSwiperProps> = ({
           enable: true,
           minCacheDuration: 15,
           maxCacheDuration: 40,
-        },
-        progress: {
-          onMoveStart: () => {
-            sdkRef.current?.player?.plugins?.progress.focus();
-          },
-          onMoveEnd: () => {
-            sdkRef.current?.player?.plugins?.progress.blur();
-          },
         },
         sdkErrorPlugin: {
           isNeedRefreshButton: false,
@@ -244,6 +249,7 @@ const VideoSwiper: React.FC<IVideoSwiperProps> = ({
       const playerSdk = new VePlayer(options as IPlayerConfig);
       window.playerSdk = playerSdk;
       playerSdk.once(Events.COMPLETE, () => {
+        setPlayerReady(true);
         const player = playerSdk.player;
         if (isChannel) {
           // 通过插件实例调用
@@ -273,6 +279,7 @@ const VideoSwiper: React.FC<IVideoSwiperProps> = ({
       playerSdk.on(Events.ENDED, onEnded);
 
       sdkRef.current = playerSdk;
+      window.playerSdk = sdkRef.current;
     }
   }, [currentVideoData, isChannel, onEnded, onProgressDrag, onProgressDragend, showUnmute, startTime]);
 
@@ -315,9 +322,12 @@ const VideoSwiper: React.FC<IVideoSwiperProps> = ({
     }
     onChange(activeIndex);
     const playerDom = sdkRef.current?.playerContainer;
-    const insertParentNode = document.getElementById(`swiper-video-container-${activeIndex}`);
-    if (insertParentNode && playerDom) {
-      insertParentNode?.insertBefore(playerDom, null);
+    const insertParentNode = document.getElementById(`videoWithRotateBtn${activeIndex}`);
+    if (insertParentNode && playerDom && playerDom.parentNode) {
+      playerDom.parentNode!.style.height = !isLandScapeMode
+        ? '100%'
+        : `calc(${currentVideoData.height / currentVideoData.width} * 100vw)`;
+      insertParentNode?.insertBefore(playerDom.parentNode, null);
     }
   }, [activeIndex, onChange]);
 
@@ -367,11 +377,56 @@ const VideoSwiper: React.FC<IVideoSwiperProps> = ({
                       playNextStatus={playNextStatus}
                       isActive={isActive}
                       activeIndex={activeIndex}
+                      isLandScapeMode={isLandScapeMode}
                       otherComponent={otherComponent}
-                      //   isRecommend={isRecommend}
                       getCurrentTime={getCurrentTime}
                     >
-                      {activeIndex === 0 && <div id="veplayer-container" className="veplayer-container"></div>}
+                      <>
+                        <div
+                          className={classNames(styles.rotateBtn, {
+                            [styles.hide]: !(isLandScapeMode && playerReady),
+                          })}
+                          style={{
+                            top: isLandScapeMode
+                              ? `calc(${currentVideoData.height / currentVideoData.width} * 100vw)`
+                              : 0,
+                          }}
+                          onClick={() => {
+                            sdkRef.current?.player?.getFullscreen();
+                          }}
+                        >
+                          <IconRotate />
+                          <span>Full screen</span>
+                        </div>
+                        {showUnmuteBtn && (
+                          <div
+                            className={styles.unmute}
+                            onClick={onUnmuteClick}
+                            style={{
+                              top: isLandScapeMode
+                                ? `calc(${currentVideoData.height / currentVideoData.width} * 50vw)`
+                                : 0,
+                            }}
+                          >
+                            <div className={styles.unmuteBtn}>
+                              <IconUnmute className={styles.unmuteIcon} />
+                              <span>点击取消静音</span>
+                            </div>
+                          </div>
+                        )}
+                        {activeIndex === 0 && (
+                          <div
+                            id="veplayer-container"
+                            className="veplayer-container"
+                            style={{
+                              width: '100%',
+                              height: isLandScapeMode
+                                ? `calc(${currentVideoData.height / currentVideoData.width} * 100vw)`
+                                : '100%',
+                            }}
+                          ></div>
+                        )}
+                      </>
                     </SliderItem>
                   )}
                 </SwiperSlide>

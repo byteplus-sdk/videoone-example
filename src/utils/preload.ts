@@ -1,7 +1,7 @@
-import { IVideoDataWithModel } from '@/@types';
+import { IDramaDetailListItem } from '@/@types';
 import { selectDef } from './';
 
-export const formatPreloadStreamList = (list: Array<IVideoDataWithModel>): any => {
+export const formatPreloadStreamList = (list: Array<IDramaDetailListItem['video_meta']>): any => {
   return list
     ?.map(item => {
       const target = selectDef(item.videoModel?.PlayInfoList ?? []);

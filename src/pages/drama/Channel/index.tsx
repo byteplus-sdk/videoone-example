@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Popup } from 'antd-mobile';
 import type { ToastHandler } from 'antd-mobile/es/components/toast/methods';
 import useUrlState from '@ahooksjs/use-url-state';
-import type { IDramaDetailListItem, IVideoDataWithModel } from '@/@types';
+import { CHANNEL_MODE, type IDramaDetailListItem } from '@/@types';
 import VideoSwiper from '@/components/video-swiper';
 import IconEnter from '@/assets/svgr/iconEnter.svg?react';
 import IconDrama from '@/assets/svgr/iconDrama.svg?react';
@@ -27,7 +27,7 @@ interface IRecommend {
   isSliderMoving: boolean;
   onProgressDrag: () => void;
   onProgressDragend: () => void;
-  videoDataList: IVideoDataWithModel[];
+  videoDataList: IDramaDetailListItem[];
   loading: boolean;
   isChannel: boolean;
   isChannelActive: boolean;
@@ -38,7 +38,7 @@ const Channel: React.FC<IRecommend> = ({
   isChannel,
   onProgressDrag,
   onProgressDragend,
-  videoDataList,
+  videoDataList = [],
   loading,
   isChannelActive,
 }) => {
@@ -48,12 +48,11 @@ const Channel: React.FC<IRecommend> = ({
   const [activeIndex, setActiveIndex] = useState(0);
   const [popupVisible, setPopupVisible] = useState(false);
   const [commentVisible, setCommentVisible] = useState(false);
-  const [showCard, setShowCard] = useState(true);
   const navigate = useNavigate();
 
-  const current: IVideoDataWithModel = videoDataList?.[activeIndex];
-  const { drama_length, name, drama_title, comment, like, drama_cover_url, drama_id, caption, vid, order, play_times } =
-    current ?? {};
+  const { drama_meta, video_meta }: IDramaDetailListItem = videoDataList[activeIndex] ?? {};
+  const { drama_length, drama_title, drama_cover_url, drama_id } = drama_meta ?? {};
+  const { name, comment, like, caption, vid, order, play_times, display_type } = video_meta ?? {};
 
   const [{ data: dramaDetailListData, loading: dramaDetailListLoading }, executeGetGetDramaList] = useAxios(
     {
@@ -80,7 +79,6 @@ const Channel: React.FC<IRecommend> = ({
 
   useEffect(() => {
     if (!!drama_id && isChannelActive && isChannel) {
-      setShowCard(true);
       executeGetGetDramaList({
         data: {
           drama_id,
@@ -122,7 +120,7 @@ const Channel: React.FC<IRecommend> = ({
         startTime={startTime}
         isChannelActive={isChannelActive}
         isChannel={isChannel}
-        videoDataList={videoDataList}
+        videoDataList={videoDataList.map(item => item.video_meta)}
         isSliderMoving={isSliderMoving}
         onChange={setActiveIndex}
         onProgressDrag={onProgressDrag}
@@ -131,7 +129,7 @@ const Channel: React.FC<IRecommend> = ({
           <div className={styles.channelBottom}>
             <div className={styles.laneWrapper}>
               <div className={styles.bottomLane}>
-                {activeIndex % 2 === 1 ? (
+                {display_type === CHANNEL_MODE.NORMAL ? (
                   <div className={styles.mode1}>
                     <div className={styles.briefWrapper}>
                       <IconDrama />
@@ -145,36 +143,26 @@ const Channel: React.FC<IRecommend> = ({
                     </div>
                   </div>
                 ) : (
-                  showCard && (
-                    <div className={styles.mode2}>
-                      <div className={styles.info}>
-                        <img src={drama_cover_url} />
-                        <div className={styles.title}>
-                          <h2>{drama_title}</h2>
-                          <span className={styles.popularity}>
-                            <IconFire />
-                            <span className={styles.num}>{renderCount(play_times)}</span>
-                          </span>
-                        </div>
+                  <div className={styles.mode2}>
+                    <div className={styles.info}>
+                      <img src={drama_cover_url} />
+                      <div className={styles.title}>
+                        <h2>{drama_title}</h2>
+                        <span className={styles.popularity}>
+                          <IconFire />
+                          <span className={styles.num}>{renderCount(play_times)}</span>
+                        </span>
                       </div>
-                      <div
-                        className={styles.btn}
-                        onClick={() => {
-                          navigate(`/dramaDetail?id=${drama_id}`);
-                        }}
-                      >
-                        Play Now
-                      </div>
-                      <span
-                        className={styles.close}
-                        onClick={() => {
-                          setShowCard(false);
-                        }}
-                      >
-                        <IconClose />
-                      </span>
                     </div>
-                  )
+                    <div
+                      className={styles.btn}
+                      onClick={() => {
+                        navigate(`/dramaDetail?id=${drama_id}`);
+                      }}
+                    >
+                      Play Now
+                    </div>
+                  </div>
                 )}
               </div>
               <div className={styles.rightLane}>
@@ -244,14 +232,20 @@ const Channel: React.FC<IRecommend> = ({
           {dramaDetailListLoading ? (
             <Loading />
           ) : (
-            (dramaDetailListData?.response as IDramaDetailListItem[])?.map(item => {
+            (dramaDetailListData?.response as IDramaDetailListItem['video_meta'][])?.map(item => {
               return (
-                <div className={classNames(styles.card, { [styles.selected]: item.order === order })}>
+                <div
+                  className={classNames(styles.card, { [styles.selected]: item.order === order })}
+                  key={item.vid}
+                  onClick={() => {
+                    navigate(`/dramaDetail?id=${item.drama_id}`);
+                  }}
+                >
                   <div className={styles.img}>
                     <img src={item.cover_url} alt="" />
                   </div>
                   <div className={styles.content}>
-                    <h2>{item.drama_title}</h2>
+                    <h2>{item.caption}</h2>
                     <div className={styles.info}>
                       <span className={styles.time}>{formatSecondsToTime(parseInt(String(item.duration)))}</span>
                       <span className={styles.popularity}>

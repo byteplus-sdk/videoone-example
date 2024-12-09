@@ -14,7 +14,7 @@ import classNames from 'classnames';
 import { Swiper, SwiperClass, SwiperRef, SwiperSlide } from 'swiper/react';
 import Ground from './Ground';
 import Channel from './Channel';
-import { IVideoDataWithModel } from '@/@types';
+import { IDramaDetailListItem } from '@/@types';
 import { canSupportPreload, formatPreloadStreamList, parseModel } from '@/utils';
 import VePlayer from '@/player';
 
@@ -67,12 +67,13 @@ const DramaGround: React.FC = () => {
     // PC&Android开启预加载
     if (!channelLoading && channelData?.response && canSupportPreload && !preloadOnceRef.current && activeIndex === 0) {
       const temp = new Set();
-      const list: IVideoDataWithModel[] = [];
-      channelData?.response.forEach((item: IVideoDataWithModel & { video_model?: string }) => {
-        if (!temp.has(item.drama_id) && item.video_model) {
-          temp.add(item.drama_id);
-          if (parseModel(item.video_model)?.PlayInfoList?.[0]?.MainPlayUrl) {
-            list.push({ ...item, videoModel: parseModel(item.video_model)! });
+      const list: IDramaDetailListItem['video_meta'][] = [];
+      channelData?.response.forEach((item: IDramaDetailListItem) => {
+        const { drama_meta, video_meta } = item;
+        if (!temp.has(drama_meta.drama_id) && video_meta.video_model) {
+          temp.add(drama_meta.drama_id);
+          if (parseModel(video_meta.video_model)?.PlayInfoList?.[0]?.MainPlayUrl) {
+            list.push({ ...item.video_meta, videoModel: parseModel(video_meta.video_model)! });
           }
         }
       });
@@ -82,6 +83,16 @@ const DramaGround: React.FC = () => {
       preloadOnceRef.current = true;
     }
   }, [channelData?.response, channelLoading, activeIndex]);
+
+  const videoDataList = (channelData?.response ?? [])
+    .map((item: IDramaDetailListItem) => ({
+      ...item,
+      video_meta: {
+        ...item.video_meta,
+        videoModel: parseModel(item.video_meta.video_model!)!,
+      },
+    }))
+    .filter((item: IDramaDetailListItem) => item?.video_meta.videoModel?.PlayInfoList?.[0]?.MainPlayUrl);
 
   return (
     <>
@@ -107,12 +118,7 @@ const DramaGround: React.FC = () => {
           <SwiperSlide>
             <div className={styles.channel} id="channel">
               <Channel
-                videoDataList={(channelData?.response ?? [])
-                  .map((item: IVideoDataWithModel & { video_model?: string }) => ({
-                    ...item,
-                    videoModel: parseModel(item.video_model!),
-                  }))
-                  .filter((item: IVideoDataWithModel) => item?.videoModel?.PlayInfoList?.[0]?.MainPlayUrl)}
+                videoDataList={videoDataList}
                 loading={channelLoading}
                 isChannelActive={activeIndex === 1}
                 isChannel

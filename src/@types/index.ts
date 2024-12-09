@@ -1,42 +1,6 @@
-export interface IDramaInfo {
-  dramaId: string;
-  dramaTitle: string;
-  description: string;
-  coverUrl: string;
-  totalEpisodeNumber: number;
-  latestEpisodeNumber: number;
-  authorId: string;
-}
-
-export interface IVideoData {
-  vid: string;
-  caption: string;
-  duration: number;
-  cover_url: string;
-  drama_id: string;
-  drama_title: string;
-  drama_length: number;
-  play_times: number;
-  subtitle: string;
-  create_time: string;
-  name: string;
-  like: number;
-  comment: number;
-  height: number;
-  width: number;
-  order: number;
-  drama_cover_url: string;
-  drama_play_times: number;
-}
-
-export interface IVideoDataWithToken extends IVideoData {
-  playAuthToken: string;
-}
-
-export interface IVideoDataWithModel extends IVideoData {
-  videoModel: IVideoModel;
-}
-
+/**
+ * 视频播放信息
+ */
 export interface IPlayInfoListItem {
   BackupPlayUrl: string;
   Bitrate: number;
@@ -53,21 +17,48 @@ export interface IPlayInfoListItem {
   Width: number;
 }
 
-export interface IDramaDetailListItem {
-  vid: string;
-  order: number;
-  video_model: string;
-  vip: boolean;
-  caption: string;
-  duration: number;
-  cover_url: string;
-  play_times: number;
-  drama_title: string;
-  drama_id: string;
-  height: number;
-  width: number;
+export enum CHANNEL_MODE {
+  NORMAL = 0,
+  CARD = 1,
 }
 
+/**
+ * 短剧列表页
+ */
+export interface IDramaDetailListItem {
+  drama_meta: {
+    drama_title: string;
+    drama_id: string;
+    drama_length: number;
+    drama_cover_url: string;
+    drama_play_times: number;
+    drama_video_orientation: number;
+  };
+
+  video_meta: {
+    vid: string;
+    order: number;
+    video_model: string;
+    drama_id: string;
+    vip: boolean;
+    caption: string;
+    duration: number;
+    cover_url: string;
+    name: string;
+    play_times: number;
+    display_type: CHANNEL_MODE;
+    height: number;
+    width: number;
+    like: number;
+    comment: number;
+
+    videoModel: IVideoModel;
+  };
+}
+
+/**
+ * 服务端返回video_model解析后
+ */
 export interface IVideoModel {
   Duration: number;
   FileType: string;
