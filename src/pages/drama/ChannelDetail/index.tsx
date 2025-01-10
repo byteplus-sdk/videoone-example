@@ -153,7 +153,7 @@ function ChannelDetail() {
   useEffect(() => {
     dispatch(setDetail(current ?? {}));
 
-    if (current) {
+    if (current.vid) {
       toastRef?.current?.close();
       executeGetComments({
         params: {
