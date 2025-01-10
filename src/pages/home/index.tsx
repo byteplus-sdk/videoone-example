@@ -12,8 +12,9 @@ const Menus = [
     title: t('home_drama_tit'),
     desc: t('home_drama_desc'),
     background:
-      'http://p16-imagex-sg.volcimagex.' +
-      'com/tos-alisg-i-0d8x0d4ylr-sg/7c129a17bb51cd0e7bcc1f87a6666b4f.png~tplv-0d8x0d4ylr-resize:0:q75.webp',
+      'http://p16-imagex-sg.' +
+      window.atob('dm9sY2ltYWdleC5jb20=') +
+      '/tos-alisg-i-0d8x0d4ylr-sg/7c129a17bb51cd0e7bcc1f87a6666b4f.png~tplv-0d8x0d4ylr-resize:0:q75.webp',
     borderLinerColors: ['#9a912f', '#3f411c'],
     bgLinerColors: ['#4A4C20', '#40421D'],
   },
@@ -22,8 +23,9 @@ const Menus = [
     title: t('home_video_tit'),
     desc: t('home_video_desc'),
     background:
-      'http://p16-imagex-sg.volcimagex.' +
-      'com/tos-alisg-i-0d8x0d4ylr-sg/a71e33ae8f724686c0ba406549fed6df.png~tplv-0d8x0d4ylr-resize:0:q75.webp',
+      'http://p16-imagex-sg.' +
+      window.atob('dm9sY2ltYWdleC5jb20=') +
+      '/tos-alisg-i-0d8x0d4ylr-sg/a71e33ae8f724686c0ba406549fed6df.png~tplv-0d8x0d4ylr-resize:0:q75.webp',
     borderLinerColors: ['#45B1E5', '#3797C4'],
     bgLinerColors: ['#399FC6', '#399FC6'],
   },

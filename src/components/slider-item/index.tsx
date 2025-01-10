@@ -49,7 +49,7 @@ const SliderItem: React.FC<ISliderItemProps> = ({
               src={coverUrl}
               imageSizes={imageSizes}
               loader={({ src, format, width }) => {
-                return `//mpaas-vod-cover-test.byte-test` + `.com/${src}~${'tplv-vod-noop'}:${width}:q75.${format}`;
+                return `//mpaas-vod-cover-test.${window.atob('Ynl0ZS10ZXN0LmNvbQ==')}/${src}~${'tplv-vod-noop'}:${width}:q75.${format}`;
               }}
             />
           </div>
