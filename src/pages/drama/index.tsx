@@ -7,7 +7,6 @@ import IconHomeSelected from '@/assets/svgr/iconHomeSelected.svg?react';
 import IconVideoSelected from '@/assets/svgr/iconVideoSelected.svg?react';
 import IconHome from '@/assets/svgr/iconHome.svg?react';
 import IconVideo from '@/assets/svgr/iconVideo.svg?react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import classNames from 'classnames';
@@ -34,15 +33,11 @@ const Tabs = [
 ];
 
 const DramaGround: React.FC = () => {
-  const location = useLocation();
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperRef>(null);
   const [isSliderMoving, setIsSliderMoving] = useState(false);
   const preloadOnceRef = useRef<boolean>(false);
   const [isProgressDragging, setProgressDragging] = useState(false);
-
-  const navigate = useNavigate();
-  const back = () => navigate('/');
 
   const [{ data: channelData, loading: channelLoading }] = useAxios({
     url: API_PATH.GetDramaFeed,

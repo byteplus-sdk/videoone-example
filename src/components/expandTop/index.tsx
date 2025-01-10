@@ -1,5 +1,5 @@
 import styles from './index.module.less';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/type';
 import { NavBar } from 'antd-mobile';
 import IconBack from '@/assets/svgr/iconBack.svg?react';

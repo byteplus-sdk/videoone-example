@@ -24,7 +24,7 @@ interface ILockAll {
 }
 
 const LockAll: React.FC<ILockAll> = React.memo(
-  ({ cover_url, caption, count, visible, list, vid, order, loading, setLockAllDrawerOpen, getLockData }) => {
+  ({ cover_url, caption, count, visible, list, order, loading, setLockAllDrawerOpen, getLockData }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
     const isHorizontal = useSelector((state: RootState) => state.player.horizontal);

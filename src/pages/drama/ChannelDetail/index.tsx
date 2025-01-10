@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Dialog, NavBar, Popup, Toast } from 'antd-mobile';
+import { Button, Dialog, NavBar, Toast } from 'antd-mobile';
 import { useSelector, useDispatch } from 'react-redux';
 import useUrlState from '@ahooksjs/use-url-state';
 import useAxios from 'axios-hooks';
