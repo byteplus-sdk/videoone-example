@@ -23,7 +23,7 @@ export default defineConfig({
   base: isProd ? '//mediaservice-fe.bytepluscdn.com/obj/vcloud-fe-sgcomm/video-one' : '/',
   server: {
     host: '0.0.0.0',
-    port: 8000,
+    port: 8001,
   },
   build: {
     outDir: 'output',
@@ -39,7 +39,7 @@ export default defineConfig({
   },
   define: {
     __API_URL__: JSON.stringify(
-      !isProd ? 'https://videocloud.byteplusapi.com/videoone' : 'https://videocloud.byteplusapi.com/videoone',
+      !isProd ? 'https://rtc-sg-test.bytedance.com/videoone' : 'https://videocloud.byteplusapi.com/videoone',
     ),
   },
   resolve: {

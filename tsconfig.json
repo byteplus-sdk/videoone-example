@@ -22,7 +22,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "typeRoots": [
-      "./src/@types",
+      "./src/@types"
     ],
     "baseUrl": "./",
     "paths": {

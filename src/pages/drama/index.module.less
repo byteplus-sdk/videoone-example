@@ -1,0 +1,68 @@
+@font-face {
+  font-family: 'DINCond-Black';
+  src:
+    local('DINCond-Black'),
+    url(@/assets/fonts/DINCond-Black-Regular.otf) format('opentype');
+}
+
+.loadingWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0;
+  background-color: #000;
+  position: fixed;
+  inset: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 9;
+}
+
+.content {
+  height: calc(100% - 48px);
+
+  .channel,
+  .ground {
+    height: 100%;
+  }
+
+  .ground {
+    overflow-y: scroll;
+  }
+
+  :global {
+    .swiper {
+      height: 100%;
+    }
+  }
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48px;
+  background-color: #07080a;
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 99;
+
+  .tab {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 4px;
+
+    span {
+      font-size: 12px;
+      line-height: 12px;
+      color: #ffffffb2;
+      padding-top: 4px;
+    }
+  }
+}
