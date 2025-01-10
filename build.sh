@@ -6,11 +6,9 @@ source /etc/profile
 nvm install 18
 nvm use 18
 
-npm install -g yarn@1.22.17 --registry=https://bnpm.byted.org/
-yarn --version
 node -v
-
-yarn config set registry http://bnpm.byted.org/
-yarn
-
-yarn build
+npm -v
+npm i -g pnpm@7.16
+pnpm -v
+pnpm install
+pnpm build
