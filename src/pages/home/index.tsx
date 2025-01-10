@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import t from '@/utils/translation';
 const Menus = [
   {
-    navigateUrl: '/dramaGround',
+    navigateUrl: '/dramaGround?device_id=001',
     title: t('home_drama_tit'),
     desc: t('home_drama_desc'),
     background:

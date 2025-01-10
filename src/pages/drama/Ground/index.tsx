@@ -95,7 +95,7 @@ const Ground: React.FC = () => {
                   <div
                     className="btn"
                     onClick={() => {
-                      navigate(`/dramaDetail?id=${item.drama_id}`);
+                      navigate(`/dramaDetail?id=${item.drama_id}&device_id=001`);
                     }}
                   >
                     <IconPlay style={{ marginRight: 6 }} />
@@ -120,7 +120,7 @@ const Ground: React.FC = () => {
                   key={item.drama_id}
                   className={styles.trendingItemWrapper}
                   onClick={() => {
-                    navigate(`/dramaDetail?id=${item.drama_id}`);
+                    navigate(`/dramaDetail?id=${item.drama_id}&device_id=001`);
                   }}
                 >
                   <div className={styles.coverWrapper}>
@@ -154,7 +154,7 @@ const Ground: React.FC = () => {
                 key={item.drama_id}
                 className={styles.releaseItemWrapper}
                 onClick={() => {
-                  navigate(`/dramaDetail?id=${item.drama_id}`);
+                  navigate(`/dramaDetail?id=${item.drama_id}&device_id=001`);
                 }}
               >
                 <div className={styles.coverWrapper}>
@@ -186,7 +186,7 @@ const Ground: React.FC = () => {
                   key={item.drama_id}
                   className={styles.recommendItemWrapper}
                   onClick={() => {
-                    navigate(`/dramaDetail?id=${item.drama_id}`);
+                    navigate(`/dramaDetail?id=${item.drama_id}&device_id=001`);
                   }}
                 >
                   <div className={styles.coverWrapper}>

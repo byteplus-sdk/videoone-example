@@ -251,7 +251,7 @@ function ChannelDetail() {
         left={<div className={styles.caption}>{current.caption}</div>}
         onBack={() => {
           dispatch(resetDetail());
-          navigate('/dramaGround');
+          navigate('/dramaGround?device_id=001');
         }}
       />
       <div className={styles.body}>

@@ -129,7 +129,7 @@ const Channel: React.FC<IRecommend> = ({
                     <div
                       className={styles.briefWrapper}
                       onClick={() => {
-                        navigate(`/dramaDetail?id=${drama_id}`);
+                        navigate(`/dramaDetail?id=${drama_id}&device_id=001`);
                       }}
                     >
                       <IconDrama />
@@ -162,7 +162,7 @@ const Channel: React.FC<IRecommend> = ({
                       onClick={() => {
                         const startTime = window.playerSdk?.player?.currentTime || 0;
                         const queryStartTime = `&startTime=${startTime}`;
-                        navigate(`/dramaDetail?id=${drama_id}&order=${order}${queryStartTime}`);
+                        navigate(`/dramaDetail?id=${drama_id}&order=${order}${queryStartTime}&device_id=001`);
                       }}
                     >
                       {t('d_play_now')}
@@ -246,7 +246,7 @@ const Channel: React.FC<IRecommend> = ({
                     const startTime = window.playerSdk?.player?.currentTime || 0;
                     queryStartTime = `&startTime=${startTime}`;
                   }
-                  navigate(`/dramaDetail?id=${item.drama_id}&order=${item.order}${queryStartTime}`);
+                  navigate(`/dramaDetail?id=${item.drama_id}&order=${item.order}${queryStartTime}&device_id=001`);
                 }}
               >
                 <div className={styles.img}>
