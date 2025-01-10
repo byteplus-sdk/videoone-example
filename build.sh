@@ -8,7 +8,7 @@ source /etc/profile
 
 node -v
 npm -v
-npm i -g pnpm@5.5
+npm i -g pnpm@9
 pnpm -v
-pnpm install
+pnpm install --registry=https://registry.npmjs.org
 pnpm build
