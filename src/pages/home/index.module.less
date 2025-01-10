@@ -2,7 +2,7 @@
   background: url('@/assets/images/homeBg.png') no-repeat;
   background-size: 100% auto;
   background-color: #f6fafd;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   padding: 16px calc(16px + constant(safe-area-inset-right)) 16px calc(16px + constant(safe-area-inset-left));
   padding: 16px calc(16px + env(safe-area-inset-right)) 16px calc(16px + env(safe-area-inset-left));
   color: #fff !important;
@@ -23,7 +23,7 @@
     text-align: left;
     margin: 12px 0;
 
-    & + p {
+    &+p {
       font-size: 14px;
       font-weight: 400;
       line-height: 20px;
@@ -31,6 +31,7 @@
       margin: 20px 0;
     }
   }
+
   .videoEntryCoverOuter {
     background: linear-gradient(to bottom, #9a912f, #3f411c);
     height: 250px;
