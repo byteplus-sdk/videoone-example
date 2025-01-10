@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Popup } from 'antd-mobile';
 import type { ToastHandler } from 'antd-mobile/es/components/toast/methods';
 import useUrlState from '@ahooksjs/use-url-state';
@@ -22,6 +22,9 @@ import { API_PATH } from '@/service/path';
 import classNames from 'classnames';
 import CommentComp from '@/components/comment';
 import { useNavigate } from 'react-router-dom';
+import t from '@/utils/translation';
+import { setDetail } from '@/redux/actions/dramaDetail';
+import { useDispatch } from 'react-redux';
 
 interface IRecommend {
   isSliderMoving: boolean;
@@ -49,18 +52,18 @@ const Channel: React.FC<IRecommend> = ({
   const [popupVisible, setPopupVisible] = useState(false);
   const [commentVisible, setCommentVisible] = useState(false);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const { drama_meta, video_meta }: IDramaDetailListItem = videoDataList[activeIndex] ?? {};
   const { drama_length, drama_title, drama_cover_url, drama_id } = drama_meta ?? {};
   const { name, comment, like, caption, vid, order, play_times, display_type } = video_meta ?? {};
 
-  const [{ data: dramaDetailListData, loading: dramaDetailListLoading }, executeGetGetDramaList] = useAxios(
-    {
-      url: API_PATH.GetDramaList,
-      method: 'POST',
-    },
-    { manual: true },
-  );
+  // const [{ data: dramaDetailListData, loading: dramaDetailListLoading }, executeGetGetDramaList] = useAxios(
+  //   {
+  //     url: API_PATH.GetDramaList,
+  //     method: 'POST',
+  //   },
+  //   { manual: true },
+  // );
 
   const [{ data: commentsData, loading: commentLoading }, executeGetComments] = useAxios(
     {
@@ -78,16 +81,8 @@ const Channel: React.FC<IRecommend> = ({
   }, []);
 
   useEffect(() => {
-    if (!!drama_id && isChannelActive && isChannel) {
-      executeGetGetDramaList({
-        data: {
-          drama_id,
-          play_info_type: 1,
-          user_id: '1',
-        },
-      });
-    }
-  }, [drama_id, isChannel, isChannelActive]);
+    dispatch(setDetail(video_meta ?? {}));
+  }, [video_meta]);
 
   // useEffect(() => {
   //   if (isRecommend) {
@@ -131,9 +126,17 @@ const Channel: React.FC<IRecommend> = ({
               <div className={styles.bottomLane}>
                 {display_type === CHANNEL_MODE.NORMAL ? (
                   <div className={styles.mode1}>
-                    <div className={styles.briefWrapper}>
+                    <div
+                      className={styles.briefWrapper}
+                      onClick={() => {
+                        navigate(`/dramaDetail?id=${drama_id}`);
+                      }}
+                    >
                       <IconDrama />
-                      <span className={styles.brief}>Short drama | {drama_title}</span>
+                      <span className={styles.brief}>
+                        {t('d_short_drama_placeholder', drama_title)}
+                        {}
+                      </span>
                     </div>
                     <div className={styles.info}>
                       <span className={styles.author}>@{name}</span>
@@ -157,10 +160,12 @@ const Channel: React.FC<IRecommend> = ({
                     <div
                       className={styles.btn}
                       onClick={() => {
-                        navigate(`/dramaDetail?id=${drama_id}`);
+                        const startTime = window.playerSdk?.player?.currentTime || 0;
+                        const queryStartTime = `&startTime=${startTime}`;
+                        navigate(`/dramaDetail?id=${drama_id}&order=${order}${queryStartTime}`);
                       }}
                     >
-                      Play Now
+                      {t('d_play_now')}
                     </div>
                   </div>
                 )}
@@ -197,7 +202,7 @@ const Channel: React.FC<IRecommend> = ({
             >
               <div className={styles.left}>
                 <IconRcm />
-                <span>Recommend for you · {drama_length} videos</span>
+                <span>{t('d_recommend_for_you')}</span>
               </div>
               <IconEnter />
             </div>
@@ -217,7 +222,7 @@ const Channel: React.FC<IRecommend> = ({
         <div className={styles.head}>
           <div className={styles.title}>
             <IconRcm />
-            <span>Recommend for you</span>
+            <span>{t('d_recommend_for_you')}</span>
           </div>
           <div
             className={styles.close}
@@ -228,36 +233,38 @@ const Channel: React.FC<IRecommend> = ({
             <IconClose />
           </div>
         </div>
-        <div className={classNames(styles.body, { [styles.isLoading]: dramaDetailListLoading })}>
-          {dramaDetailListLoading ? (
-            <Loading />
-          ) : (
-            (dramaDetailListData?.response as IDramaDetailListItem['video_meta'][])?.map(item => {
-              return (
-                <div
-                  className={classNames(styles.card, { [styles.selected]: item.order === order })}
-                  key={item.vid}
-                  onClick={() => {
-                    navigate(`/dramaDetail?id=${item.drama_id}`);
-                  }}
-                >
-                  <div className={styles.img}>
-                    <img src={item.cover_url} alt="" />
-                  </div>
-                  <div className={styles.content}>
-                    <h2>{item.caption}</h2>
-                    <div className={styles.info}>
-                      <span className={styles.time}>{formatSecondsToTime(parseInt(String(item.duration)))}</span>
-                      <span className={styles.popularity}>
-                        <IconFire />
-                        <span className={styles.num}>{renderCount(item.play_times)}</span>
-                      </span>
-                    </div>
+        <div className={classNames(styles.body)}>
+          {videoDataList?.map((video, index) => {
+            const item = video.video_meta ?? {};
+            return (
+              <div
+                className={classNames(styles.card, { [styles.selected]: index === activeIndex })}
+                key={item.vid}
+                onClick={() => {
+                  let queryStartTime = '';
+                  if (item.order === order) {
+                    const startTime = window.playerSdk?.player?.currentTime || 0;
+                    queryStartTime = `&startTime=${startTime}`;
+                  }
+                  navigate(`/dramaDetail?id=${item.drama_id}&order=${item.order}${queryStartTime}`);
+                }}
+              >
+                <div className={styles.img}>
+                  <img src={item.cover_url} alt="" />
+                </div>
+                <div className={styles.content}>
+                  <h2>{item.caption}</h2>
+                  <div className={styles.info}>
+                    <span className={styles.time}>{formatSecondsToTime(parseInt(String(item.duration)))}</span>
+                    <span className={styles.popularity}>
+                      <IconFire />
+                      <span className={styles.num}>{renderCount(item.play_times)}</span>
+                    </span>
                   </div>
                 </div>
-              );
-            })
-          )}
+              </div>
+            );
+          })}
         </div>
       </Popup>
 

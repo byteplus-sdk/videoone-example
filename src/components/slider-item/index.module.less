@@ -85,6 +85,26 @@
       top: 10%;
       height: auto;
       // videoFillMode不生效？
+
+      @media screen and (orientation: landscape) {
+        top: 0;
+      }
+
+
+      :global {
+        .xgplayer .xgplayer-poster {
+          background-size: 100% auto !important;
+        }
+      }
+
+      &.isFullScreen {
+        :global {
+          .xgplayer .xgplayer-poster {
+            background-size: auto 100% !important;
+          }
+        }
+      }
+
       :global {
         .xgplayer {
           video {

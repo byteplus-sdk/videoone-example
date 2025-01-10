@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import useAxios from 'axios-hooks';
 import { API_PATH } from '@/service/path';
 import Slider, { Settings } from 'react-slick';
@@ -12,6 +12,7 @@ import Loading from '@/components/loading';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import classNames from 'classnames';
+import t from '@/utils/translation';
 import { renderCount } from '@/utils/util';
 
 interface IData {
@@ -62,7 +63,7 @@ const Ground: React.FC = () => {
         data: {
           drama_id: drama_id,
           play_info_type: 1,
-          user_id: '1',
+          user_id: window.sessionStorage.getItem('user_id'),
         },
       });
       refPreloadSet.current.add(drama_id);
@@ -98,7 +99,7 @@ const Ground: React.FC = () => {
                     }}
                   >
                     <IconPlay style={{ marginRight: 6 }} />
-                    立即播放
+                    {t('d_play_now')}
                   </div>
                 </div>
               </div>
@@ -108,7 +109,7 @@ const Ground: React.FC = () => {
       </div>
       {/* 趋势 */}
       <div className={styles.trendingWrapper}>
-        <h1 className={styles.tit}>Most trending 🔥</h1>
+        <h1 className={styles.tit}>{t('d_most_trending')} 🔥</h1>
         <div className={styles.trendingContentWrapper}>
           {trending
             .filter((_item, index) => index < 6)
@@ -144,7 +145,7 @@ const Ground: React.FC = () => {
       </div>
       {/* 新发 */}
       <div className={styles.releaseWrapper}>
-        <h1 className={styles.tit}>New release</h1>
+        <h1 className={styles.tit}>{t('d_new_release')}</h1>
         <div className={classNames(styles.releaseContentWrapper, 'no-swipe')}>
           {release.map(item => {
             handlePreload(item.drama_id);
@@ -174,7 +175,7 @@ const Ground: React.FC = () => {
       </div>
       {/* 推荐 */}
       <div className={styles.recommendWrapper}>
-        <h1 className={styles.tit}>Recommended</h1>
+        <h1 className={styles.tit}>{t('d_recommended')}</h1>
         <div className={styles.recommendContentWrapper}>
           {recommend
             .filter((_item, index) => index < 6)

@@ -17,16 +17,18 @@ import Channel from './Channel';
 import { IDramaDetailListItem } from '@/@types';
 import { canSupportPreload, formatPreloadStreamList, parseModel } from '@/utils';
 import VePlayer from '@/player';
+import { IPreloadStream } from '@byteplus/veplayer';
+import t from '@/utils/translation';
 
 const Tabs = [
   {
     value: 0,
-    title: 'Home',
+    title: t('d_home'),
     renderIcon: (isSelected: boolean) => (isSelected ? <IconHomeSelected /> : <IconHome />),
   },
   {
     value: 1,
-    title: 'Channel',
+    title: t('d_for_you'),
     renderIcon: (isSelected: boolean) => (isSelected ? <IconVideoSelected /> : <IconVideo />),
   },
 ];
@@ -47,7 +49,7 @@ const DramaGround: React.FC = () => {
     method: 'POST',
     data: {
       offset: 0,
-      page_size: 100,
+      page_size: 5,
       play_info_type: 1,
     },
   });
@@ -79,7 +81,7 @@ const DramaGround: React.FC = () => {
       });
       VePlayer.preloader?.clearPreloadList(); // 切换模式前清空预加载列表
       VePlayer.setPreloadScene(0); // 更新为手动模式，注意：手动模式下直接全量加载所有待预加载资源
-      VePlayer.setPreloadList(formatPreloadStreamList(list)); // 设置手动模式待预加载列表
+      VePlayer.setPreloadList(formatPreloadStreamList(list) as IPreloadStream[]); // 设置手动模式待预加载列表
       preloadOnceRef.current = true;
     }
   }, [channelData?.response, channelLoading, activeIndex]);

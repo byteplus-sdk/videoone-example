@@ -20,8 +20,8 @@ const translation = {
     en: 'Swipe up video, smooth playback, and video interaction experience',
   },
   home_drama_desc: {
-    'zh-CN': '精彩的短剧集、视频播放和广告插入',
-    en: 'Exciting short drama episodes, Video playback and Ad insertions',
+    'zh-CN': '精彩短剧剧集，视频播放和商业变现',
+    en: 'Exciting short drama episodes, Video playback,and Monetization',
   },
   show_nav_tit: {
     'zh-CN': 'BytePlus VideoOne',
@@ -75,11 +75,96 @@ const translation = {
     'zh-CN': '添加评论...',
     en: 'Add comment...',
   },
+  // 短剧
+  d_play_now: {
+    'zh-CN': '立即播放',
+    en: 'Play Now',
+  },
+  d_most_trending: {
+    'zh-CN': '热门流行',
+    en: 'Most trending',
+  },
+  d_new_release: {
+    'zh-CN': '最新发布',
+    en: 'New release',
+  },
+  d_recommended: {
+    'zh-CN': '为你推荐',
+    en: 'Recommended',
+  },
+  d_home: {
+    'zh-CN': '首页',
+    en: 'Home',
+  },
+  d_for_you: {
+    'zh-CN': '猜你喜欢',
+    en: 'For you',
+  },
+  d_full_screen: {
+    'zh-CN': '进入全屏',
+    en: 'Full screen',
+  },
+  d_recommend_for_you: {
+    'zh-CN': '为你推荐',
+    en: 'Recommend for you',
+  },
+  d_short_drama_placeholder: {
+    'zh-CN': '短剧 | placeholder',
+    en: 'Short drama | placeholder',
+  },
+  d_for_free_to_1_episode: {
+    'zh-CN': '观看广告可免费解锁当前剧集',
+    en: 'For free to 1 episode',
+  },
+  d_watch_an_advertising_video: {
+    'zh-CN': '观看广告视频',
+    en: 'Watch an advertising video',
+  },
+  d_unlock_all_episodes: {
+    'zh-CN': '解锁全部剧集',
+    en: 'Unlock all',
+  },
+  d_episode: {
+    'zh-CN': '集',
+    en: 'Episode',
+  },
+  d_unlock_multiple_episodes: {
+    'zh-CN': '解锁多集',
+    en: 'Unlock multiple episodes',
+  },
+  d_all_episodes_placeholder: {
+    'zh-CN': '共 placeholder 集',
+    en: 'All episodes placeholder',
+  },
+  d_permanent_viewing: {
+    'zh-CN': ' 永久观看',
+    en: 'Permanent viewing',
+  },
+  d_no_refund: {
+    'zh-CN': '不退还',
+    en: 'No refund',
+  },
+  d_placeholder_episodes: {
+    'zh-CN': 'placeholder 集',
+    en: 'placeholder episodes',
+  },
+  d_all_episodes: {
+    'zh-CN': '全集',
+    en: 'All episodes',
+  },
+  d_pay_for_usd_placeholder: {
+    'zh-CN': '付款 $placeholder',
+    en: 'Pay for USD placeholder',
+  },
+  d_usd_placeholder: {
+    'zh-CN': '$placeholder',
+    en: 'USD placeholder',
+  },
 };
 
 type ILang = 'zh-CN' | 'en' | 'zh' | 'zh-Hans-CN';
 
-export default (key: keyof typeof translation, placeholder?: number) => {
+export default (key: keyof typeof translation, placeholder: number | string = '') => {
   let lang = window.navigator.language as ILang;
   if (/zh/i.test(lang)) {
     lang = 'zh-CN';
@@ -88,8 +173,8 @@ export default (key: keyof typeof translation, placeholder?: number) => {
   }
 
   const finalTrans = translation[key][lang];
-  if (typeof placeholder === 'number') {
-    return finalTrans.replace('placeholder', placeholder.toString());
+  if (typeof placeholder !== undefined) {
+    return finalTrans.replace('placeholder', placeholder!.toString());
   } else {
     return finalTrans;
   }

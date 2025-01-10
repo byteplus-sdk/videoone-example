@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 import Drama from './pages/drama';
 import VePlayer from '@byteplus/veplayer';
 import ChannelDetail from './pages/drama/ChannelDetail';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 const axios = Axios.create({
   baseURL: __API_URL__,
@@ -61,7 +63,11 @@ function App() {
       },
     });
   }, []);
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 }
 
 export default App;

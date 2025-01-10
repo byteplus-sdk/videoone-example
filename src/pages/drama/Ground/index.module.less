@@ -43,12 +43,13 @@
     width: 100%;
     position: relative;
     margin-bottom: 48px;
+    overflow: hidden;
 
     .slickDots {
       display: flex !important;
       justify-content: center;
 
-      & > li {
+      &>li {
         list-style: none;
 
         &::last-child {
@@ -72,7 +73,7 @@
           border-radius: 2px;
           opacity: 0.2;
           background: #fff;
-          margin: 0 5px;
+          margin: 0 2px;
           transition: all 0.5s ease-in-out;
         }
       }
@@ -113,23 +114,23 @@
           right: -1px;
           top: 0;
           bottom: -1px;
-          background: linear-gradient(
-            to top,
-            rgb(22 24 35) 1%,
-            rgba(0, 0, 0, 0.8),
-            rgba(0, 0, 0, 0.8),
-            rgba(0, 0, 0, 0.8)
-          );
+          background: linear-gradient(to top,
+              rgb(22 24 35) 1%,
+              rgba(0, 0, 0, 0.8),
+              rgba(0, 0, 0, 0.8),
+              rgba(0, 0, 0, 0.8));
           transition: background 0.5s ease-in-out;
         }
       }
 
       .slick-center {
         .carouselItemWrapper {
+
           // 模拟底层遮罩效果
           &::after {
             background: linear-gradient(to top, rgb(22 24 35) 1%, transparent, transparent, transparent);
           }
+
           transform: scale(0.962);
         }
       }
@@ -143,9 +144,12 @@
 
     .trendingContentWrapper {
       display: grid;
-      grid-auto-flow: column; /* 优先纵向排列 */
-      grid-template-rows: repeat(3, 1fr); /* 每列 3 个 */
-      grid-template-columns: repeat(2, 1fr); /* 每行 2 个 */
+      grid-auto-flow: column;
+      /* 优先纵向排列 */
+      grid-template-rows: repeat(3, 1fr);
+      /* 每列 3 个 */
+      grid-template-columns: repeat(2, 1fr);
+      /* 每行 2 个 */
 
       .trendingItemWrapper {
         height: fit-content;
@@ -212,15 +216,22 @@
           display: flex;
           flex-direction: column;
           justify-content: space-between;
+          flex: 1;
 
           h2 {
             line-height: 20px;
             font-size: 14px;
             color: #fff;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
           }
+
           .popularity {
             display: flex;
             align-items: center;
+
             .num {
               font-size: 12px;
               line-height: 16px;
@@ -247,8 +258,9 @@
         display: flex;
         flex-direction: column;
         margin-right: 16px;
+        width: 100px;
 
-        &::last-child {
+        &:last-child {
           margin-right: 0;
         }
 
@@ -341,6 +353,7 @@
       .recommendItemWrapper {
         margin-bottom: 16px;
         margin-right: 8px;
+        width: calc(50% - 4px);
 
         &:nth-child(2n) {
           margin-right: 0;
@@ -393,6 +406,10 @@
             font-weight: 500;
             line-height: 20px;
             text-align: left;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
           }
         }
       }

@@ -3,9 +3,29 @@
   width: 100%;
   height: 100%;
 
+  :global {
+    .xgplayer-is-fullscreen {
+      xg-controls {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.2) 50%, transparent);
+      }
+
+      xg-inner-controls {
+        height: auto;
+
+        .xg-center-grid {
+          top: -40px;
+        }
+      }
+    }
+  }
+
   .swiper-container {
     height: calc(100% - constant(safe-area-inset-bottom));
     height: calc(100% - env(safe-area-inset-bottom));
+
+    @media screen and (orientation: landscape) {
+      height: 100vh;
+    }
   }
 }
 
@@ -30,11 +50,23 @@
   .my-swiper {
     width: 100%;
     height: 100%;
+
+    &.hidePlayer {
+      :global {
+        #veplayer-container {
+          display: none;
+        }
+      }
+    }
   }
 
   :global {
     .xgplayer-unmute {
       display: none !important;
+    }
+
+    xg-poster {
+      background-size: cover !important;
     }
 
     .xgplayer {
@@ -49,7 +81,6 @@
     }
 
     .xgplayer .xgplayer-poster {
-      background-size: 100% auto;
       background-color: transparent !important;
     }
 
@@ -81,10 +112,13 @@
             height 0.3s ease,
             margin-bottom 0.3s ease;
         }
+
         .xgplayer-progress-btn {
           transform: translate(-50%, -50%) scale(1);
         }
+
         .inner-focus-point {
+
           &:before,
           &:after {
             width: 6px;
@@ -147,6 +181,7 @@
   &.hide {
     display: none;
   }
+
   color: #fff;
   display: flex;
   justify-content: center;

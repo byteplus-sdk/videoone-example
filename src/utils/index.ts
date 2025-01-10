@@ -112,3 +112,56 @@ export function hasScrollbar() {
 }
 
 export const canSupportPreload = os.isPc || os.isAndroid;
+
+/** 获取当前设备宽高的兼容写法 */
+export function getDeciceWidth(): { width: number; height: number } {
+  const docEl = document.documentElement;
+  const width =
+    docEl.clientWidth || docEl.getBoundingClientRect().width || document.body.clientWidth || window.screen.width || 0;
+  const height =
+    docEl.clientHeight ||
+    docEl.getBoundingClientRect().height ||
+    document.body.clientHeight ||
+    window.screen.height ||
+    0;
+
+  return {
+    width,
+    height,
+  };
+}
+
+// 获取当前手机是否是横向
+export const getIsLandscape = () => {
+  if (window.screen.orientation?.type) {
+    return window.screen.orientation?.type.includes('landscape');
+  }
+  // 旧的方向判断方案（兼容）
+  if (window.orientation) {
+    return [90, -90, '90', '-90'].includes(window.orientation);
+  }
+
+  // iframe及不支持orientation的浏览器（兼容）
+  const { width, height } = getDeciceWidth();
+  return width > height;
+};
+
+// hack
+export const isHitBlackList = () => {
+  // 1+手机自带浏览器  window.orientation window.screen.width 获取值存在问题，需要屏蔽
+  const blacklist = ['HeyTapBrowser', 'DingTalk'];
+  return blacklist.some(item => navigator.userAgent.includes(item));
+};
+
+// 屏幕旋转监听
+export const bindOrientationEvents = (isBind: boolean, fn: () => void) => {
+  if (isHitBlackList()) {
+    return;
+  }
+  const eventName = window.orientation !== undefined ? 'orientationchange' : 'resize';
+  if (isBind) {
+    window.addEventListener(eventName, fn);
+  } else {
+    window.removeEventListener(eventName, fn);
+  }
+};

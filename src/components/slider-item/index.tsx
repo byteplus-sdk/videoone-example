@@ -18,7 +18,8 @@ interface ISliderItemProps extends PropsWithChildren {
   data: IDramaDetailListItem['video_meta'];
   index: number;
   isChannel?: boolean;
-  isLandScapeMode: boolean;
+  isLandScapeMode?: boolean;
+  isFullScreen?: boolean;
   otherComponent: React.ReactNode;
   getCurrentTime: () => number;
   playNextStatus: string;
@@ -34,6 +35,7 @@ const SliderItem: React.FC<ISliderItemProps> = ({
   index,
   isChannel,
   getCurrentTime,
+  isFullScreen,
   isLandScapeMode,
   otherComponent,
   children,
@@ -90,7 +92,10 @@ const SliderItem: React.FC<ISliderItemProps> = ({
           <div id={`swiper-video-container-${index}`} className={style.videoContainer}>
             <div className="veplayer-cus-gradient-wrapper" />
             <div
-              className={classNames(style.videoWithRotateBtn, { [style.isLandScapeMode]: isLandScapeMode })}
+              className={classNames(style.videoWithRotateBtn, {
+                [style.isLandScapeMode]: isLandScapeMode,
+                [style.isFullScreen]: isFullScreen,
+              })}
               id={`videoWithRotateBtn${index}`}
             >
               {children}

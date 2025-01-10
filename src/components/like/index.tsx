@@ -1,7 +1,8 @@
-import React, { forwardRef, useState, useImperativeHandle } from 'react';
+import React, { useState, useImperativeHandle } from 'react';
 import { useLottie } from 'lottie-react';
 import likeAni from '@/assets/lottie/like.json';
 import unlikeAni from '@/assets/lottie/unLike.json';
+import IconUnLike from '@/assets/svgr/iconUnLike.svg?react';
 import style from './index.module.less';
 
 export interface IRef {
@@ -14,10 +15,15 @@ interface IProps {
 
 const Like = React.forwardRef<IRef, IProps>((props, ref) => {
   const [isLike, setLike] = useState(false);
+  const [hide, setHide] = useState(false);
+
   const { View: like, goToAndPlay: likePlay } = useLottie({
     animationData: likeAni,
     autoPlay: false,
     loop: false,
+    onComplete: () => {
+      !hide && setHide(true);
+    },
   });
 
   useImperativeHandle(ref, () => ({
@@ -37,6 +43,9 @@ const Like = React.forwardRef<IRef, IProps>((props, ref) => {
     animationData: unlikeAni,
     autoPlay: false,
     loop: false,
+    onComplete: () => {
+      !hide && setHide(true);
+    },
   });
 
   return (
@@ -48,8 +57,17 @@ const Like = React.forwardRef<IRef, IProps>((props, ref) => {
           handleLike();
         }}
       >
-        <div style={{ display: isLike ? 'block' : 'none' }}>{like}</div>
-        <div style={{ display: isLike ? 'none' : 'block' }}>{unLike}</div>
+        <div className={style.ani} style={{ display: isLike ? 'block' : 'none' }}>
+          {like}
+        </div>
+        <div className={style.ani} style={{ display: isLike ? 'none' : 'block' }}>
+          {unLike}
+        </div>
+        {!hide && (
+          <div className={style.staticSvg}>
+            <IconUnLike />
+          </div>
+        )}
       </div>
       <span>{isLike ? props.like + 1 : props.like}</span>
     </>

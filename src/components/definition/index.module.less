@@ -1,0 +1,33 @@
+.popupBodyClass {
+    background: #000000;
+    text-align: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    color: #ffffffe5;
+
+    &.isFullScreen {
+        width: 200px;
+        border-radius: 0;
+    }
+
+    .head {
+        height: 40px;
+        font-size: 14px;
+        padding: 12px 16px;
+        box-sizing: border-box;
+        margin-bottom: 24px;
+    }
+
+    .body {
+        font-size: 16px;
+
+        .item {
+            margin-bottom: 8px;
+            line-height: 48px;
+
+            &.selected {
+                background: #ffffff1f;
+            }
+        }
+    }
+}

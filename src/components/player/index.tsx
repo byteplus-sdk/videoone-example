@@ -8,7 +8,6 @@ import Avatar from '@/assets/images/avatar.png';
 import LikeComp, { IRef } from '../like';
 import useAxios from 'axios-hooks';
 import { API_PATH } from '@/service/path';
-
 import { renderCount } from '@/utils/util';
 import translation from '@/utils/translation';
 import { debounce } from 'lodash';

@@ -1,10 +1,10 @@
 import { IDramaDetailListItem } from '@/@types';
 import { selectDef } from './';
 
-export const formatPreloadStreamList = (list: Array<IDramaDetailListItem['video_meta']>): any => {
+export const formatPreloadStreamList = (list: Array<IDramaDetailListItem['video_meta']>, hasSelectedDef?: string) => {
   return list
     ?.map(item => {
-      const target = selectDef(item.videoModel?.PlayInfoList ?? []);
+      const target = selectDef(item.videoModel?.PlayInfoList ?? [], hasSelectedDef);
       if (!target) {
         return undefined;
       }

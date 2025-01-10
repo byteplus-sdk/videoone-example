@@ -23,6 +23,12 @@
     z-index: 200;
     color: #fff;
 
+    .caption {
+      max-width: 70vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     :global {
       .adm-nav-bar-back {
         margin-right: 6px;
@@ -54,7 +60,7 @@
         border-radius: 50%;
         margin-bottom: 20px;
 
-        & > div {
+        &>div {
           width: 45px;
           height: 45px;
           border-radius: 50%;
@@ -111,12 +117,20 @@
       align-items: center;
       background-color: #ffffff1a;
       justify-content: space-between;
-      margin-right: 16px;
+      max-width: 290px;
+      box-sizing: border-box;
+      overflow: hidden;
 
       .info {
         display: flex;
         align-items: center;
+        margin-right: 5px;
+        width: 100%;
+
         .title {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
           margin-left: 6px;
         }
       }
@@ -126,35 +140,96 @@
       font-size: 14px;
       line-height: 16px;
       white-space: nowrap;
+      padding: 0 16px;
     }
   }
 }
 
-.popupBodyClass {
-  background: #000000;
-  text-align: center;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  color: #ffffffe5;
+.lockAlertBody {
+  color: red;
+  overflow: visible;
+  background-color: #FFF9F1;
+  border-radius: 20px;
 
-  .head {
-    height: 40px;
-    font-size: 14px;
-    padding: 12px 16px;
-    box-sizing: border-box;
-    margin-bottom: 24px;
+  &.isFullScreen {
+    width: 240px;
+
+    .alertContent {
+      padding: 0 24px 20px;
+    }
   }
 
-  .body {
-    font-size: 16px;
+  :global {
+    .adm-dialog-header {
+      margin-top: -67px;
+    }
+  }
 
-    .item {
-      margin-bottom: 8px;
-      line-height: 48px;
+  .alertHeader {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: #51200C;
+    padding: 0 12px;
+    margin-bottom: 10px;
 
-      &.selected {
-        background: #ffffff1f;
+    h3 {
+      font-weight: 500 !important;
+      margin-top: -10px;
+    }
+
+    img {
+      width: 100px;
+    }
+  }
+
+  .alertContent {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #FE2C55;
+    text-align: center;
+    padding: 0 12px;
+
+    .title {
+      span {
+        &::before {
+          content: "1";
+          font-weight: 700;
+          font-size: 36px;
+        }
+      }
+    }
+
+    .btnGroups {
+      margin-top: 16px;
+
+      button {
+        padding: 5px 0;
+      }
+
+      span {
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      .watch {
+        background-color: #FE2C55;
+        color: #fff;
+        margin-bottom: 10px;
+      }
+
+      .unlock {
+        color: #FE2C55;
+        border: 1px solid #FE2C55 !important;
       }
     }
   }
+}
+
+.lockAlertMask {
+  backdrop-filter: blur(6px);
 }

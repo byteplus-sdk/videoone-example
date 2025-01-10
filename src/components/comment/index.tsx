@@ -11,10 +11,13 @@ import Delete from '@/assets/svgr/iconDelete.svg?react';
 import Like from '@/assets/svgr/iconLike.svg?react';
 import cn from 'classnames';
 import { IComment } from '@/interface';
+import classNames from 'classnames';
 
 interface IProps {
   list: IComment[];
   loading: boolean;
+  isFullScreen?: boolean;
+  isHorizontal?: boolean;
   commentVisible: boolean;
   setCommentVisible: (value: boolean) => void;
 }
@@ -27,7 +30,7 @@ const Comment: React.FC<IProps> = props => {
     if (props.list?.length > 0) {
       setList(props.list);
     }
-  }, [props.list?.length]);
+  }, [props.list]);
 
   return (
     <Popup
@@ -37,6 +40,11 @@ const Comment: React.FC<IProps> = props => {
       onClose={() => {
         props.setCommentVisible(false);
       }}
+      position={props.isFullScreen && props.isHorizontal ? 'right' : 'bottom'}
+      getContainer={props.isFullScreen ? window.playerSdk?.player?.root : document.body}
+      bodyClassName={classNames(styles.popupLockBodyClass, {
+        [styles.isFullScreen]: props.isFullScreen && props.isHorizontal,
+      })}
     >
       <div>
         <div className={styles.header}>
@@ -90,6 +98,10 @@ const Comment: React.FC<IProps> = props => {
                           onClick={() => {
                             Dialog.confirm({
                               title: translation('c_delete_confirm'),
+                              getContainer: props.isFullScreen ? window.playerSdk?.player?.root : document.body,
+                              bodyClassName: classNames(styles.confirmBody, {
+                                [styles.isFullScreen]: props.isFullScreen,
+                              }),
                               content: translation('c_content_confirm'),
                               cancelText: <span style={{ color: '#161823bf' }}>{translation('c_cancel')}</span>,
                               confirmText: <span style={{ color: '#161823bf' }}>{translation('c_confirm')}</span>,
