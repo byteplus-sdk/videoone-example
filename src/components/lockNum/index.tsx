@@ -24,6 +24,7 @@ const LockNum: React.FC<ILockNum> = React.memo(
   ({ cover_url, caption, activeIndex, list, clickCallBack, numArrList, setLockAllDrawerOpen }) => {
     const dispatch = useDispatch();
     const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
+    const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
     const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
     const pageIndex = useSelector((state: RootState) => state.controls.pageIndex);
     const visible = useSelector((state: RootState) => state.controls.lockNumDrawerVisible);
@@ -31,12 +32,14 @@ const LockNum: React.FC<ILockNum> = React.memo(
     return (
       <Popup
         visible={visible}
-        position={isFullScreen && isHorizontal ? 'right' : 'bottom'}
-        getContainer={isFullScreen ? window.playerSdk?.player?.root : document.body}
+        position={(isFullScreen || isCssFullScreen) && isHorizontal ? 'right' : 'bottom'}
+        getContainer={isCssFullScreen ? document.body : window.playerSdk?.player?.root}
         onMaskClick={() => {
           dispatch(setLockNumDrawerVisible(false));
         }}
-        bodyClassName={classNames(styles.popupLockBodyClass, { [styles.isFullScreen]: isFullScreen && isHorizontal })}
+        bodyClassName={classNames(styles.popupLockBodyClass, {
+          [styles.isFullScreen]: (isFullScreen || isCssFullScreen) && isHorizontal,
+        })}
       >
         <div className={styles.head}>
           <div className={styles.title}>

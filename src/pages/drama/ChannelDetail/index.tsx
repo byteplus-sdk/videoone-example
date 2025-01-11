@@ -58,6 +58,7 @@ function ChannelDetail() {
   const playbackRate = useSelector((state: RootState) => state.controls.playbackRate);
   const definition = useSelector((state: RootState) => state.controls.definition);
   const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
+  const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
   const isPortrait = useSelector((state: RootState) => state.player.isPortrait);
   const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
   const commentDrawerVisible = useSelector((state: RootState) => state.controls.commentDrawerVisible);
@@ -198,9 +199,9 @@ function ChannelDetail() {
           <img src={LoclAlert} />
         </div>
       ),
-      bodyClassName: classNames(styles.lockAlertBody, { [styles.isFullScreen]: isFullScreen }),
+      bodyClassName: classNames(styles.lockAlertBody, { [styles.isFullScreen]: isFullScreen || isCssFullScreen }),
       maskClassName: styles.lockAlertMask,
-      getContainer: isFullScreen ? window.playerSdk?.player?.root : document.body,
+      getContainer: isCssFullScreen ? document.body : window.playerSdk?.player?.root,
       content: (
         <div className={styles.alertContent}>
           <div className={styles.title}>
@@ -237,7 +238,7 @@ function ChannelDetail() {
       actions: [],
       closeOnMaskClick: true,
     });
-  }, [isFullScreen, isHorizontal]);
+  }, [isFullScreen, isCssFullScreen, isHorizontal]);
 
   return loading ? (
     <div className={styles.loadingWrapper}>
@@ -245,15 +246,17 @@ function ChannelDetail() {
     </div>
   ) : list.length > 0 ? (
     <div className={styles.wrap}>
-      <NavBar
-        backIcon={<IconBack />}
-        className={styles.head}
-        left={<div className={styles.caption}>{current.caption}</div>}
-        onBack={() => {
-          dispatch(resetDetail());
-          navigate('/dramaGround?device_id=001');
-        }}
-      />
+      {!isCssFullScreen && (
+        <NavBar
+          backIcon={<IconBack />}
+          className={styles.head}
+          left={<div className={styles.caption}>{current.caption}</div>}
+          onBack={() => {
+            dispatch(resetDetail());
+            navigate('/dramaGround?device_id=001');
+          }}
+        />
+      )}
       <div className={styles.body}>
         <VideoSwiper
           startTime={startTime}
@@ -322,6 +325,7 @@ function ChannelDetail() {
       ) : null}
       <CommentComp
         isFullScreen={isFullScreen}
+        isCssFullScreen={isCssFullScreen}
         isHorizontal={isHorizontal}
         commentVisible={commentDrawerVisible}
         setCommentVisible={value => {

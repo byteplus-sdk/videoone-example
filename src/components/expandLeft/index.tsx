@@ -11,11 +11,12 @@ import { setCommentPanelVisible } from '@/redux/actions/controls';
 const ExpandLeft = () => {
   const dispatch = useDispatch();
   const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
+  const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
   const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
   const currentDetail = useSelector((state: RootState) => state.dramaDetail.currentDetail);
 
   const [isLike, setIsLike] = useState(false);
-  return isFullScreen && isHorizontal ? (
+  return (isFullScreen || isCssFullScreen) && isHorizontal ? (
     <div className={styles.wrapper}>
       <div
         className={classNames(styles.iconWrapper, { [styles.isLike]: isLike })}

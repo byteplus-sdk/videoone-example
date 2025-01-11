@@ -31,6 +31,7 @@ export const playbackRateList = [
 const Speed = () => {
   const playbackRatePanelVisible = useSelector((state: RootState) => state.controls.playRateDrawerVisible);
   const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
+  const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
   const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
   const playbackRate = useSelector((state: RootState) => state.controls.playbackRate);
   const dispatch = useDispatch();
@@ -38,12 +39,14 @@ const Speed = () => {
   return (
     <Popup
       visible={playbackRatePanelVisible}
-      getContainer={isFullScreen ? window.playerSdk?.player?.root : document.body}
+      getContainer={isCssFullScreen ? document.body : window.playerSdk?.player?.root}
       onMaskClick={() => {
         dispatch(setPlayBackRatePanelVisible(false));
       }}
-      position={isFullScreen && isHorizontal ? 'right' : 'bottom'}
-      bodyClassName={classNames(styles.popupBodyClass, { [styles.isFullScreen]: isFullScreen && isHorizontal })}
+      position={(isFullScreen || isCssFullScreen) && isHorizontal ? 'right' : 'bottom'}
+      bodyClassName={classNames(styles.popupBodyClass, {
+        [styles.isFullScreen]: (isFullScreen || isCssFullScreen) && isHorizontal,
+      })}
       maskClassName={styles.popupMaskClass}
     >
       <div className={styles.head}>Playback speed</div>

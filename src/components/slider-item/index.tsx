@@ -5,6 +5,7 @@ import { IDramaDetailListItem } from '@/@types';
 
 import style from './index.module.less';
 import classNames from 'classnames';
+import { os } from '@/utils';
 
 interface ISliderItemProps extends PropsWithChildren {
   isActive: boolean;
@@ -14,6 +15,7 @@ interface ISliderItemProps extends PropsWithChildren {
   isChannel?: boolean;
   isLandScapeMode?: boolean;
   isFullScreen?: boolean;
+  isCssFullScreen?: boolean;
   otherComponent: React.ReactNode;
   getCurrentTime: () => number;
   playNextStatus: string;
@@ -39,7 +41,12 @@ const SliderItem: React.FC<ISliderItemProps> = ({
     <div className={style.wrapper}>
       {shouldRenderContent && (
         <>
-          <div className={classNames(style.poster, { [style.isLandScapeMode]: isLandScapeMode })}>
+          <div
+            className={classNames(style.poster, {
+              [style.isLandScapeMode]: isLandScapeMode && ((os.isIos && !isFullScreen) || os.isAndroid),
+              [style.isContainMode]: os.isIos && isFullScreen,
+            })}
+          >
             <Viewer
               layout="raw"
               placeholder="skeleton"

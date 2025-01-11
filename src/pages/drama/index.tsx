@@ -34,10 +34,9 @@ const Tabs = [
 
 const DramaGround: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const swiperRef = useRef<SwiperRef>(null);
+  const swiperRef = useRef<SwiperClass>();
   const [isSliderMoving, setIsSliderMoving] = useState(false);
   const preloadOnceRef = useRef<boolean>(false);
-  const [isProgressDragging, setProgressDragging] = useState(false);
 
   const [{ data: channelData, loading: channelLoading }] = useAxios({
     url: API_PATH.GetDramaFeed,
@@ -97,12 +96,10 @@ const DramaGround: React.FC = () => {
         <Swiper
           touchStartPreventDefault
           noSwiping
+          noSwipingSelector="xg-progress"
           noSwipingClass="no-swipe"
-          ref={swiperRef}
+          onSwiper={swiper => (swiperRef.current = swiper)}
           onActiveIndexChange={onSwiperChange}
-          onSliderMove={() => setIsSliderMoving(true)}
-          allowSlideNext={activeIndex !== 1}
-          allowSlidePrev={activeIndex !== 0 && activeIndex === 1 && !isProgressDragging}
           onTransitionEnd={() => {
             setIsSliderMoving(false);
           }}
@@ -120,8 +117,6 @@ const DramaGround: React.FC = () => {
                 isChannelActive={activeIndex === 1}
                 isChannel
                 isSliderMoving={isSliderMoving}
-                onProgressDrag={() => setProgressDragging(true)}
-                onProgressDragend={() => setProgressDragging(false)}
               />
             </div>
           </SwiperSlide>
@@ -135,7 +130,7 @@ const DramaGround: React.FC = () => {
               key={tab.value}
               onClick={() => {
                 setActiveIndex(tab.value);
-                swiperRef.current?.swiper.slideTo(tab.value);
+                swiperRef.current?.slideTo(tab.value);
               }}
             >
               {tab.renderIcon(activeIndex === tab.value)}

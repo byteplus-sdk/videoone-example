@@ -7,9 +7,17 @@
     height: 48px;
     background: linear-gradient(rgba(0, 0, 0, 0.3) 50%, transparent);
 
+    &.isHorizontal {
+        :global {
+            .adm-nav-bar-left {
+                margin-left: 50px;
+            }
+        }
+    }
+
     :global {
         .adm-nav-bar-left {
-            margin-left: 50px;
+            margin-left: 20px;
             white-space: nowrap;
         }
     }

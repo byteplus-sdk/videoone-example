@@ -28,23 +28,13 @@ import { useDispatch } from 'react-redux';
 
 interface IRecommend {
   isSliderMoving: boolean;
-  onProgressDrag: () => void;
-  onProgressDragend: () => void;
   videoDataList: IDramaDetailListItem[];
   loading: boolean;
   isChannel: boolean;
   isChannelActive: boolean;
 }
 
-const Channel: React.FC<IRecommend> = ({
-  isSliderMoving,
-  isChannel,
-  onProgressDrag,
-  onProgressDragend,
-  videoDataList = [],
-  loading,
-  isChannelActive,
-}) => {
+const Channel: React.FC<IRecommend> = ({ isSliderMoving, isChannel, videoDataList = [], loading, isChannelActive }) => {
   const [urlState] = useUrlState();
   const toastRef = useRef<ToastHandler>();
   const startTime = urlState.startTime || 0;
@@ -56,14 +46,6 @@ const Channel: React.FC<IRecommend> = ({
   const { drama_meta, video_meta }: IDramaDetailListItem = videoDataList[activeIndex] ?? {};
   const { drama_length, drama_title, drama_cover_url, drama_id } = drama_meta ?? {};
   const { name, comment, like, caption, vid, order, play_times, display_type } = video_meta ?? {};
-
-  // const [{ data: dramaDetailListData, loading: dramaDetailListLoading }, executeGetGetDramaList] = useAxios(
-  //   {
-  //     url: API_PATH.GetDramaList,
-  //     method: 'POST',
-  //   },
-  //   { manual: true },
-  // );
 
   const [{ data: commentsData, loading: commentLoading }, executeGetComments] = useAxios(
     {
@@ -77,27 +59,8 @@ const Channel: React.FC<IRecommend> = ({
   );
 
   useEffect(() => {
-    document.getElementsByTagName('xg-controls')[0]?.classList.add('no-swipe');
-  }, []);
-
-  useEffect(() => {
     dispatch(setDetail(video_meta ?? {}));
   }, [video_meta]);
-
-  // useEffect(() => {
-  //   if (isRecommend) {
-  //     return;
-  //   }
-  //   if (current) {
-  //     toastRef?.current?.close();
-  //   } else {
-  //     toastRef.current = Toast.show({
-  //       icon: 'loading',
-  //       content: '加载中…',
-  //       duration: 0,
-  //     });
-  //   }
-  // }, [current, isRecommend]);
 
   useEffect(() => {
     return () => {
@@ -118,8 +81,6 @@ const Channel: React.FC<IRecommend> = ({
         videoDataList={videoDataList.map(item => item.video_meta)}
         isSliderMoving={isSliderMoving}
         onChange={setActiveIndex}
-        onProgressDrag={onProgressDrag}
-        onProgressDragend={onProgressDragend}
         otherComponent={
           <div className={styles.channelBottom}>
             <div className={styles.laneWrapper}>

@@ -18,6 +18,7 @@ const Ad: React.FC<IAd> = ({ onClose, getLockData, visible }) => {
   const [count, setCount] = useState(10);
   const refTimer = useRef<number>();
   const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
+  const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
   const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
 
   useEffect(() => {
@@ -63,7 +64,7 @@ const Ad: React.FC<IAd> = ({ onClose, getLockData, visible }) => {
             <img src="https://sf16-videoone.ibytedtos.com/obj/bytertc-platfrom-sg/cocacola.gif" alt="" />
           </div>
         </div>,
-        isFullScreen ? window.playerSdk.player.root : document.body,
+        isCssFullScreen ? document.body : window.playerSdk.player.root,
       )
     : null;
 };

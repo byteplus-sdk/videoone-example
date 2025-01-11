@@ -13,7 +13,7 @@ import '@byteplus/veplayer/index.min.css';
 import classNames from 'classnames';
 import ExpandRightPlugin from '@/plugins/expandRight';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFullScreen, setIsHorizontal, setIsPortrait } from '@/redux/actions/player';
+import { setCssFullScreen, setFullScreen, setIsHorizontal, setIsPortrait } from '@/redux/actions/player';
 import { RootState } from '@/redux/type';
 import ExpandLeftPlugin from '@/plugins/expandLeft';
 import { IPreloadStream, Stream } from '@byteplus/veplayer';
@@ -80,6 +80,11 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     const currentVideoData = videoDataList?.[activeIndex];
     const isLandScapeMode = currentVideoData.height < currentVideoData.width;
     const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
+    const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
+
+    useEffect(() => {
+      swiperRef.current && (swiperRef.current.allowTouchMove = !(isFullScreen || isCssFullScreen));
+    }, [isFullScreen, isCssFullScreen]);
 
     useEffect(() => {
       dispatch(setIsPortrait(!isLandScapeMode));
@@ -121,6 +126,10 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
       dispatch(setFullScreen(value));
     };
 
+    const switchCssFullScreen = (value: boolean) => {
+      dispatch(setCssFullScreen(value));
+    };
+
     const screenOrientation = () => {
       const handleOrientationChange = () => {
         // calcIsNeedFullPlayer();
@@ -154,10 +163,10 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     }, [playbackRate]);
 
     useEffect(() => {
-      if (sdkRef.current && definition && isFullScreen) {
+      if (sdkRef.current && definition && (isCssFullScreen || isFullScreen)) {
         sdkRef.current.changeDefinition(definition);
       }
-    }, [definition, isFullScreen]);
+    }, [definition, isCssFullScreen, isFullScreen]);
 
     const hideStartIcon = useCallback((player?: PlayerCore) => {
       if (!player?.root) {
@@ -195,7 +204,11 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
 
         // vip解锁后或者非vip视频播放
         if (sdkRef.current && (index !== swiperActiveRef.current || vipCanPlay)) {
-          !isFullScreen && setActiveIndex(index);
+          if (os.isIos) {
+            setActiveIndex(index);
+          } else {
+            !isFullScreen && setActiveIndex(index);
+          }
           swiperActiveRef.current = index;
           setPlayNextStatus('start');
           const nextInfo = formatPreloadStreamList([videoDataList?.[index]], definition)[0];
@@ -255,7 +268,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
 
     const onSlideChange = useCallback(
       (swiper: SwiperClass) => {
-        if (isFullScreen && isLandScapeMode) return;
+        if ((isFullScreen || isCssFullScreen) && isLandScapeMode) return;
         if (swiper.realIndex !== swiperActiveRef.current) {
           playNext(swiper.realIndex);
         }
@@ -367,34 +380,12 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
         window.playerSdk = playerSdk;
         playerSdk.once(Events.COMPLETE, () => {
           setPlayerReady(true);
-          const player = playerSdk.player;
-          if (isChannel) {
-            // 通过插件实例调用
-            player.getPlugin('progress').useHooks('dragstart', () => {
-              /**
-               * 如果返回false，则不执行默认逻辑
-               * 如果返回true，则执行默认行为seek操作
-               * */
-              onProgressDrag && onProgressDrag();
-              return true;
-            });
-            player.getPlugin('progress').useHooks('drag', () => {
-              onProgressDrag && onProgressDrag();
-              return true;
-            });
-            player.getPlugin('progress').useHooks('dragend', () => {
-              onProgressDragend && onProgressDragend();
-              return true;
-            });
-          } else {
-            // 通过插件实例调用
-            player.root?.addEventListener('touchmove', preventDefault);
-          }
         });
         playerSdk.once(Events.PLAY, showUnmute);
         playerSdk.once(Events.AUTOPLAY_PREVENTED, showUnmute);
         playerSdk.on(Events.ENDED, onEnded);
         playerSdk.on(Events.FULLSCREEN_CHANGE, switchFullScreen);
+        playerSdk.on(Events.CSS_FULLSCREEN_CHANGE, switchCssFullScreen);
 
         sdkRef.current = playerSdk;
         window.playerSdk = sdkRef.current;
@@ -485,7 +476,6 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
               initialSlide={activeIndex}
               className={classNames(styles.mySwiper, { [styles.hidePlayer]: currentVideoData.vip })}
               direction="vertical"
-              allowTouchMove={!isFullScreen || !isLandScapeMode}
               onSwiper={swiper => (swiperRef.current = swiper)}
               onActiveIndexChange={onSlideChange}
             >

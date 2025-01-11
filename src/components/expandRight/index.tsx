@@ -16,10 +16,11 @@ const ExpandRight = () => {
   const playbackRate = useSelector((state: RootState) => state.controls.playbackRate);
   const definition = useSelector((state: RootState) => state.controls.definition);
   const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
+  const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
   const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
   const list = useSelector((state: RootState) => state.dramaDetail.list);
 
-  return isFullScreen && isHorizontal ? (
+  return (isFullScreen || isCssFullScreen) && isHorizontal ? (
     <div className={styles.wrapper}>
       <div
         className={styles.iconWrapper}

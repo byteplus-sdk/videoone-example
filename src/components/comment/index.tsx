@@ -17,6 +17,7 @@ interface IProps {
   list: IComment[];
   loading: boolean;
   isFullScreen?: boolean;
+  isCssFullScreen?: boolean;
   isHorizontal?: boolean;
   commentVisible: boolean;
   setCommentVisible: (value: boolean) => void;
@@ -25,7 +26,6 @@ interface IProps {
 const Comment: React.FC<IProps> = props => {
   const [likeMap, setLikeMap] = useState<Map<number, boolean>>(new Map());
   const [list, setList] = useState<IComment[]>(props.list ?? []);
-
   useEffect(() => {
     if (props.list?.length > 0) {
       setList(props.list);
@@ -40,10 +40,10 @@ const Comment: React.FC<IProps> = props => {
       onClose={() => {
         props.setCommentVisible(false);
       }}
-      position={props.isFullScreen && props.isHorizontal ? 'right' : 'bottom'}
-      getContainer={props.isFullScreen ? window.playerSdk?.player?.root : document.body}
+      position={(props.isFullScreen || props.isCssFullScreen) && props.isHorizontal ? 'right' : 'bottom'}
+      getContainer={props.isCssFullScreen ? document.body : window.playerSdk?.player?.root}
       bodyClassName={classNames(styles.popupLockBodyClass, {
-        [styles.isFullScreen]: props.isFullScreen && props.isHorizontal,
+        [styles.isFullScreen]: (props.isFullScreen || props.isCssFullScreen) && props.isHorizontal,
       })}
     >
       <div>

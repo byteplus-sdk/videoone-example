@@ -27,6 +27,7 @@ const LockAll: React.FC<ILockAll> = React.memo(
   ({ cover_url, caption, count, visible, list, order, loading, setLockAllDrawerOpen, getLockData }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
+    const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
     const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
 
     const [part, all] = useMemo(() => {
@@ -46,10 +47,10 @@ const LockAll: React.FC<ILockAll> = React.memo(
         onMaskClick={() => {
           setLockAllDrawerOpen(false);
         }}
-        position={isFullScreen && isHorizontal ? 'right' : 'bottom'}
-        getContainer={isFullScreen ? window.playerSdk?.player?.root : document.body}
+        position={(isFullScreen || isCssFullScreen) && isHorizontal ? 'right' : 'bottom'}
+        getContainer={isCssFullScreen ? document.body : window.playerSdk?.player?.root}
         bodyClassName={classNames(styles.popupLockAllBodyClass, {
-          [styles.isFullScreen]: isFullScreen && isHorizontal,
+          [styles.isFullScreen]: (isFullScreen || isCssFullScreen) && isHorizontal,
         })}
       >
         <div className={styles.lockAllWrapper}>

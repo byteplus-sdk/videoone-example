@@ -8,6 +8,7 @@ import styles from './index.module.less';
 const Definition = () => {
   const definitionDrawerVisible = useSelector((state: RootState) => state.controls.definitionDrawerVisible);
   const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
+  const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
   const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
   const definition = useSelector((state: RootState) => state.controls.definition);
   const currentDetail = useSelector((state: RootState) => state.dramaDetail.currentDetail);
@@ -16,11 +17,11 @@ const Definition = () => {
   return (
     <Popup
       visible={definitionDrawerVisible}
-      getContainer={isFullScreen ? window.playerSdk?.player?.root : document.body}
+      getContainer={isCssFullScreen ? document.body : window.playerSdk?.player?.root}
       onMaskClick={() => {
         dispatch(setDefinitionPanelVisible(false));
       }}
-      position={isFullScreen && isHorizontal ? 'right' : 'bottom'}
+      position={(isFullScreen || isCssFullScreen) && isHorizontal ? 'right' : 'bottom'}
       bodyClassName={classNames(styles.popupBodyClass, { [styles.isFullScreen]: isFullScreen && isHorizontal })}
       maskClassName={styles.popupMaskClass}
     >

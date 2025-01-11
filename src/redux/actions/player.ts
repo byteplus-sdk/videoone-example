@@ -3,6 +3,11 @@ export const setFullScreen = (value: boolean) => ({
   payload: value,
 });
 
+export const setCssFullScreen = (value: boolean) => ({
+  type: 'SET_CSS_FULL_SCREEN',
+  payload: value,
+});
+
 export const setIsHorizontal = (value: boolean) => ({
   type: 'SET_HORIZONTAL',
   payload: value,
