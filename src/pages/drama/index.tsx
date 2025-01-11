@@ -10,7 +10,7 @@ import IconVideo from '@/assets/svgr/iconVideo.svg?react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import classNames from 'classnames';
-import { Swiper, SwiperClass, SwiperRef, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import Ground from './Ground';
 import Channel from './Channel';
 import { IDramaDetailListItem } from '@/@types';
