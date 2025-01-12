@@ -17,6 +17,7 @@ interface IProps {
   list: IComment[];
   loading: boolean;
   isFullScreen?: boolean;
+  isPortrait?: boolean;
   isCssFullScreen?: boolean;
   isHorizontal?: boolean;
   commentVisible: boolean;
@@ -41,7 +42,11 @@ const Comment: React.FC<IProps> = props => {
         props.setCommentVisible(false);
       }}
       position={(props.isFullScreen || props.isCssFullScreen) && props.isHorizontal ? 'right' : 'bottom'}
-      getContainer={props.isCssFullScreen ? document.body : window.playerSdk?.player?.root}
+      getContainer={
+        !props.isPortrait && props.isFullScreen && !props.isCssFullScreen
+          ? window.playerSdk?.player?.root
+          : document.body
+      }
       bodyClassName={classNames(styles.popupLockBodyClass, {
         [styles.isFullScreen]: (props.isFullScreen || props.isCssFullScreen) && props.isHorizontal,
       })}

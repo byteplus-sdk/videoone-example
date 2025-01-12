@@ -25,6 +25,7 @@ const LockNum: React.FC<ILockNum> = React.memo(
     const dispatch = useDispatch();
     const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
     const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
+    const isPortrait = useSelector((state: RootState) => state.player.isPortrait);
     const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
     const pageIndex = useSelector((state: RootState) => state.controls.pageIndex);
     const visible = useSelector((state: RootState) => state.controls.lockNumDrawerVisible);
@@ -33,7 +34,7 @@ const LockNum: React.FC<ILockNum> = React.memo(
       <Popup
         visible={visible}
         position={(isFullScreen || isCssFullScreen) && isHorizontal ? 'right' : 'bottom'}
-        getContainer={isCssFullScreen ? document.body : window.playerSdk?.player?.root}
+        getContainer={!isPortrait && isFullScreen && !isCssFullScreen ? window.playerSdk?.player?.root : document.body}
         onMaskClick={() => {
           dispatch(setLockNumDrawerVisible(false));
         }}
@@ -85,6 +86,7 @@ const LockNum: React.FC<ILockNum> = React.memo(
                   key={item}
                   onClick={() => {
                     clickCallBack(item - 1);
+                    dispatch(setLockNumDrawerVisible(false));
                   }}
                 >
                   {item}

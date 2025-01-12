@@ -28,6 +28,7 @@ const LockAll: React.FC<ILockAll> = React.memo(
     const [activeIndex, setActiveIndex] = useState(0);
     const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
     const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
+    const isPortrait = useSelector((state: RootState) => state.player.isPortrait);
     const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
 
     const [part, all] = useMemo(() => {
@@ -48,7 +49,7 @@ const LockAll: React.FC<ILockAll> = React.memo(
           setLockAllDrawerOpen(false);
         }}
         position={(isFullScreen || isCssFullScreen) && isHorizontal ? 'right' : 'bottom'}
-        getContainer={isCssFullScreen ? document.body : window.playerSdk?.player?.root}
+        getContainer={!isPortrait && isFullScreen && !isCssFullScreen ? window.playerSdk?.player?.root : document.body}
         bodyClassName={classNames(styles.popupLockAllBodyClass, {
           [styles.isFullScreen]: (isFullScreen || isCssFullScreen) && isHorizontal,
         })}

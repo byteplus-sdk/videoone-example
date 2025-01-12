@@ -201,7 +201,7 @@ function ChannelDetail() {
       ),
       bodyClassName: classNames(styles.lockAlertBody, { [styles.isFullScreen]: isFullScreen || isCssFullScreen }),
       maskClassName: styles.lockAlertMask,
-      getContainer: isCssFullScreen ? document.body : window.playerSdk?.player?.root,
+      getContainer: !isPortrait && isFullScreen && !isCssFullScreen ? window.playerSdk?.player?.root : document.body,
       content: (
         <div className={styles.alertContent}>
           <div className={styles.title}>
@@ -326,6 +326,7 @@ function ChannelDetail() {
       <CommentComp
         isFullScreen={isFullScreen}
         isCssFullScreen={isCssFullScreen}
+        isPortrait={isPortrait}
         isHorizontal={isHorizontal}
         commentVisible={commentDrawerVisible}
         setCommentVisible={value => {
