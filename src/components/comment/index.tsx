@@ -93,7 +93,7 @@ const Comment: React.FC<IProps> = props => {
                         <img
                           src={imgUrl(
                             imgUrl(
-                              '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/1fea0cf233a5372ecf028b16844ec1b6.png~tplv-j963mrpdmh-image.image',
+                              '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/f91bdb13eb83960457760d4f0be0b1e8.png~tplv-j963mrpdmh-image.image',
                             ),
                           )}
                           alt=""

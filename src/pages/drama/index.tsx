@@ -18,6 +18,8 @@ import { canSupportPreload, formatPreloadStreamList, parseModel } from '@/utils'
 import VePlayer from '@/player';
 import { IPreloadStream } from '@byteplus/veplayer';
 import t from '@/utils/translation';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/type';
 
 const Tabs = [
   {
@@ -37,7 +39,7 @@ const DramaGround: React.FC = () => {
   const swiperRef = useRef<SwiperClass>();
   const [isSliderMoving, setIsSliderMoving] = useState(false);
   const preloadOnceRef = useRef<boolean>(false);
-
+  const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
   const [{ data: channelData, loading: channelLoading }] = useAxios({
     url: API_PATH.GetDramaFeed,
     method: 'POST',
@@ -92,7 +94,7 @@ const DramaGround: React.FC = () => {
 
   return (
     <>
-      <div className={styles.content}>
+      <div className={classNames(styles.content, { [styles.isCssFullScreen]: isCssFullScreen })}>
         <Swiper
           touchStartPreventDefault
           noSwipingSelector="xg-progress,.noSwipingClass"
@@ -120,23 +122,25 @@ const DramaGround: React.FC = () => {
           </SwiperSlide>
         </Swiper>
       </div>
-      <div className={styles.footer}>
-        {Tabs.map(tab => {
-          return (
-            <div
-              className={classNames(styles.tab)}
-              key={tab.value}
-              onClick={() => {
-                setActiveIndex(tab.value);
-                swiperRef.current?.slideTo(tab.value);
-              }}
-            >
-              {tab.renderIcon(activeIndex === tab.value)}
-              <span>{tab.title}</span>
-            </div>
-          );
-        })}
-      </div>
+      {isCssFullScreen ? null : (
+        <div className={styles.footer}>
+          {Tabs.map(tab => {
+            return (
+              <div
+                className={classNames(styles.tab)}
+                key={tab.value}
+                onClick={() => {
+                  setActiveIndex(tab.value);
+                  swiperRef.current?.slideTo(tab.value);
+                }}
+              >
+                {tab.renderIcon(activeIndex === tab.value)}
+                <span>{tab.title}</span>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 };

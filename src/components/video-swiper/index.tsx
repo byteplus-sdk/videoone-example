@@ -507,6 +507,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
                         isActive={isActive}
                         activeIndex={activeIndex}
                         isFullScreen={isFullScreen}
+                        isCssFullScreen={isCssFullScreen}
                         isLandScapeMode={isLandScapeMode}
                         otherComponent={otherComponent}
                         getCurrentTime={getCurrentTime}

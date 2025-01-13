@@ -276,53 +276,57 @@ function ChannelDetail() {
             dispatch(setLockNumPageIndex(findIndex));
           }}
           otherComponent={
-            <div>
-              <div className={styles.rightLane}>
-                <div className={styles.btns}>
-                  <div className={styles.like}>
-                    <LikeComp like={current.like} />
-                  </div>
-                  <div
-                    className={styles.comment}
-                    onClick={e => {
-                      e.stopPropagation();
-                      dispatch(setCommentPanelVisible(true));
-                    }}
-                  >
-                    <IconComment />
-                    <span>{renderCount(current.comment)}</span>
+            isFullScreen || isCssFullScreen ? null : (
+              <div>
+                <div className={styles.rightLane}>
+                  <div className={styles.btns}>
+                    <div className={styles.like}>
+                      <LikeComp like={current.like} />
+                    </div>
+                    <div
+                      className={styles.comment}
+                      onClick={e => {
+                        e.stopPropagation();
+                        dispatch(setCommentPanelVisible(true));
+                      }}
+                    >
+                      <IconComment />
+                      <span>{renderCount(current.comment)}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )
           }
         />
       </div>
 
-      <div className={styles.footer}>
-        <div
-          className={styles.button}
-          onClick={() => {
-            dispatch(setLockNumDrawerVisible(true));
-          }}
-        >
-          <div className={styles.info}>
-            <IconMenu />
-            <span className={styles.title}>
-              {current.caption} · {list.length} videos
-            </span>
+      {isFullScreen || isCssFullScreen ? null : (
+        <div className={styles.footer}>
+          <div
+            className={styles.button}
+            onClick={() => {
+              dispatch(setLockNumDrawerVisible(true));
+            }}
+          >
+            <div className={styles.info}>
+              <IconMenu />
+              <span className={styles.title}>
+                {current.caption} · {list.length} videos
+              </span>
+            </div>
+            <IconUp />
           </div>
-          <IconUp />
+          <div
+            className={styles.playbackRateBtn}
+            onClick={() => {
+              dispatch(setPlayBackRatePanelVisible(true));
+            }}
+          >
+            {playbackRateList.find(item => item.value === playbackRate)?.title}
+          </div>
         </div>
-        <div
-          className={styles.playbackRateBtn}
-          onClick={() => {
-            dispatch(setPlayBackRatePanelVisible(true));
-          }}
-        >
-          {playbackRateList.find(item => item.value === playbackRate)?.title}
-        </div>
-      </div>
+      )}
       <CommentComp
         isFullScreen={isFullScreen}
         isCssFullScreen={isCssFullScreen}
