@@ -8,6 +8,7 @@ import path from 'path';
 import svgr from 'vite-plugin-svgr';
 
 const isProd = process.env.NODE_ENV === 'production';
+const isPPE = process.env.CUSTOM_IS_PPE === '1';
 
 export default defineConfig({
   plugins: [
@@ -39,7 +40,7 @@ export default defineConfig({
   },
   define: {
     __API_URL__: JSON.stringify(
-      !isProd ? '//rtc-sg-test.bytedance.com/videoone' : '//videocloud.byteplusapi.com/videoone',
+      isPPE ? '//rtc-sg-test.bytedance.com/videoone' : '//videocloud.byteplusapi.com/videoone',
     ),
   },
   resolve: {
