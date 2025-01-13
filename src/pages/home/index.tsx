@@ -24,7 +24,7 @@ const Menus = [
     title: t('home_video_tit'),
     desc: t('home_video_desc'),
     background: imgUrl(
-      '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/b01f3be4a4433adab38103989b851865.webp~tplv-j963mrpdmh-image.image',
+      'https://p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/1d7941721d915b10b1b63fcc94ba0d75.png~tplv-j963mrpdmh-image.image',
     ),
     borderLinerColors: ['#45B1E5', '#3797C4'],
     bgLinerColors: ['#399FC6', '#399FC6'],

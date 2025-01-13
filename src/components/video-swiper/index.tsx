@@ -73,6 +73,8 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     const sdkRef = useRef<VePlayer>();
     const dispatch = useDispatch();
     const refVip = useRef(false);
+    const refStartTime = useRef(0);
+    const refEndTime = useRef(0);
     const [playNextStatus, setPlayNextStatus] = useState<string>('');
     const [showUnmuteBtn, setShowUnmuteBtn] = useState<boolean>(false);
     const [playerReady, setPlayerReady] = useState<boolean>(false);
@@ -91,12 +93,9 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     }, [isLandScapeMode]);
 
     useEffect(() => {
-      (currentVideoData?.videoModel?.PlayInfoList ?? []).map(item => {
-        return {
-          [item.Definition]: item,
-        };
-      });
-    }, [currentVideoData]);
+      refEndTime.current = 0;
+      refStartTime.current = new Date().valueOf();
+    }, [activeIndex]);
 
     /**
      * 展示静音按钮
@@ -384,6 +383,21 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
         playerSdk.once(Events.PLAY, showUnmute);
         playerSdk.once(Events.AUTOPLAY_PREVENTED, showUnmute);
         playerSdk.on(Events.ENDED, onEnded);
+        playerSdk.on(Events.PLAY, () => {
+          if (refEndTime.current === 0) {
+            refEndTime.current = new Date().valueOf();
+            window?.VideooneSlardar('sendEvent', {
+              name: 'vod_wait_play',
+              metrics: {
+                ev_count: 1,
+              },
+              categories: {
+                waitTime: refEndTime.current - refStartTime.current,
+                vodInfo: JSON.stringify(videoDataList[swiperActiveRef.current]),
+              },
+            });
+          }
+        });
         playerSdk.on(Events.FULLSCREEN_CHANGE, switchFullScreen);
         playerSdk.on(Events.CSS_FULLSCREEN_CHANGE, switchCssFullScreen);
 

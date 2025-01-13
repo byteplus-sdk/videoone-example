@@ -4,4 +4,5 @@ interface Window {
   VConsole: any;
   playerSdk: VePlayer;
   mySize: any;
+  VideooneSlardar?: any;
 }
