@@ -45,7 +45,7 @@ const Channel: React.FC<IRecommend> = ({ isSliderMoving, isChannel, videoDataLis
   const dispatch = useDispatch();
   const { drama_meta, video_meta }: IDramaDetailListItem = videoDataList[activeIndex] ?? {};
   const { drama_length, drama_title, drama_cover_url, drama_id } = drama_meta ?? {};
-  const { name, comment, like, caption, vid, order, play_times, display_type, width, height } = video_meta ?? {};
+  const { name, comment, like, caption, vid, order, play_times, display_type } = video_meta ?? {};
 
   const [{ data: commentsData, loading: commentLoading }, executeGetComments] = useAxios(
     {
