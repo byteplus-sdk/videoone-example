@@ -21,7 +21,6 @@ import LikeComp from '@/components/like';
 import { renderCount } from '@/utils/util';
 import CommentComp from '@/components/comment';
 import classNames from 'classnames';
-import LoclAlert from '@/assets/images/lockAlert.png';
 import { DialogShowHandler } from 'antd-mobile/es/components/dialog';
 import LockAll from '@/components/lockAll';
 import LockNum from '@/components/lockNum';
@@ -196,7 +195,11 @@ function ChannelDetail() {
       header: (
         <div className={styles.alertHeader}>
           <h3>{t('d_for_free_to_1_episode')}</h3>
-          <img src={LoclAlert} />
+          <img
+            src={
+              '//p3-live.byteimg.com/tos-cn-i-gjr78lqtd0/ad47910b02441289f1fa91319e73b3d9.png~tplv-gjr78lqtd0-image.png'
+            }
+          />
         </div>
       ),
       bodyClassName: classNames(styles.lockAlertBody, { [styles.isFullScreen]: isFullScreen || isCssFullScreen }),
@@ -273,56 +276,53 @@ function ChannelDetail() {
             dispatch(setLockNumPageIndex(findIndex));
           }}
           otherComponent={
-            isPortrait ? (
-              <div>
-                <div className={styles.rightLane}>
-                  <div className={styles.btns}>
-                    <div className={styles.like}>
-                      <LikeComp like={current.like} />
-                    </div>
-                    <div
-                      className={styles.comment}
-                      onClick={e => {
-                        e.stopPropagation();
-                        dispatch(setCommentPanelVisible(true));
-                      }}
-                    >
-                      <IconComment />
-                      <span>{renderCount(current.comment)}</span>
-                    </div>
+            <div>
+              <div className={styles.rightLane}>
+                <div className={styles.btns}>
+                  <div className={styles.like}>
+                    <LikeComp like={current.like} />
+                  </div>
+                  <div
+                    className={styles.comment}
+                    onClick={e => {
+                      e.stopPropagation();
+                      dispatch(setCommentPanelVisible(true));
+                    }}
+                  >
+                    <IconComment />
+                    <span>{renderCount(current.comment)}</span>
                   </div>
                 </div>
               </div>
-            ) : null
+            </div>
           }
         />
       </div>
-      {isPortrait ? (
-        <div className={styles.footer}>
-          <div
-            className={styles.button}
-            onClick={() => {
-              dispatch(setLockNumDrawerVisible(true));
-            }}
-          >
-            <div className={styles.info}>
-              <IconMenu />
-              <span className={styles.title}>
-                {current.caption} · {list.length} videos
-              </span>
-            </div>
-            <IconUp />
+
+      <div className={styles.footer}>
+        <div
+          className={styles.button}
+          onClick={() => {
+            dispatch(setLockNumDrawerVisible(true));
+          }}
+        >
+          <div className={styles.info}>
+            <IconMenu />
+            <span className={styles.title}>
+              {current.caption} · {list.length} videos
+            </span>
           </div>
-          <div
-            className={styles.playbackRateBtn}
-            onClick={() => {
-              dispatch(setPlayBackRatePanelVisible(true));
-            }}
-          >
-            {playbackRateList.find(item => item.value === playbackRate)?.title}
-          </div>
+          <IconUp />
         </div>
-      ) : null}
+        <div
+          className={styles.playbackRateBtn}
+          onClick={() => {
+            dispatch(setPlayBackRatePanelVisible(true));
+          }}
+        >
+          {playbackRateList.find(item => item.value === playbackRate)?.title}
+        </div>
+      </div>
       <CommentComp
         isFullScreen={isFullScreen}
         isCssFullScreen={isCssFullScreen}

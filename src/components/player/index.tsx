@@ -4,7 +4,6 @@ import cn from 'classnames';
 import { IComment, IPlayer } from '@/interface';
 import IconComment from '@/assets/svgr/iconComment.svg?react';
 import CommentComp from '@/components/comment';
-import Avatar from '@/assets/images/avatar.png';
 import LikeComp, { IRef } from '../like';
 import useAxios from 'axios-hooks';
 import { API_PATH } from '@/service/path';
@@ -12,6 +11,7 @@ import { renderCount } from '@/utils/util';
 import translation from '@/utils/translation';
 import { debounce } from 'lodash';
 import { Popup } from 'antd-mobile';
+import { imgUrl } from '@/utils';
 
 const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, index }, ref) => {
   const likeRef = useRef<IRef>(null);
@@ -67,7 +67,12 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, i
         <div className={style.btns}>
           <div className={style.avatar}>
             <div>
-              <img src={Avatar} alt="" />
+              <img
+                src={imgUrl(
+                  '//p3-live.byteimg.com/tos-cn-i-gjr78lqtd0/1fea0cf233a5372ecf028b16844ec1b6.png~tplv-gjr78lqtd0-origin.image',
+                )}
+                alt=""
+              />
             </div>
           </div>
           <div className={style.like}>

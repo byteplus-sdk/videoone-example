@@ -486,6 +486,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
                       <SliderItem
                         key={item.id}
                         data={item}
+                        isChannel={isChannel}
                         index={i}
                         playNextStatus={playNextStatus}
                         isActive={isActive}

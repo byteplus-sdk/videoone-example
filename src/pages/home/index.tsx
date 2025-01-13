@@ -6,15 +6,16 @@ import IconEnter from '@/assets/svgr/iconEnter.svg?react';
 import { useNavigate } from 'react-router-dom';
 
 import t from '@/utils/translation';
+import { imgUrl } from '@/utils';
 const Menus = [
   {
     navigateUrl: '/dramaGround?device_id=001',
     title: t('home_drama_tit'),
     desc: t('home_drama_desc'),
-    background:
-      'http://p16-imagex-sg.' +
-      window.atob('dm9sY2ltYWdleC5jb20=') +
-      '/tos-alisg-i-0d8x0d4ylr-sg/7c129a17bb51cd0e7bcc1f87a6666b4f.png~tplv-0d8x0d4ylr-resize:0:q75.webp',
+    background: imgUrl(
+      '//p3-live.byteimg.com/tos-cn-i-gjr78lqtd0/36854f7160573ca841fd9a3155ed5dc8.webp~tplv-gjr78lqtd0-image.image',
+    ),
+
     borderLinerColors: ['#9a912f', '#3f411c'],
     bgLinerColors: ['#4A4C20', '#40421D'],
   },
@@ -22,10 +23,9 @@ const Menus = [
     navigateUrl: '/ttshow',
     title: t('home_video_tit'),
     desc: t('home_video_desc'),
-    background:
-      'http://p16-imagex-sg.' +
-      window.atob('dm9sY2ltYWdleC5jb20=') +
-      '/tos-alisg-i-0d8x0d4ylr-sg/a71e33ae8f724686c0ba406549fed6df.png~tplv-0d8x0d4ylr-resize:0:q75.webp',
+    background: imgUrl(
+      '//p3-live.byteimg.com/tos-cn-i-gjr78lqtd0/b01f3be4a4433adab38103989b851865.webp~tplv-gjr78lqtd0-image.image',
+    ),
     borderLinerColors: ['#45B1E5', '#3797C4'],
     bgLinerColors: ['#399FC6', '#399FC6'],
   },
@@ -34,7 +34,12 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      style={{
+        background: `url(${imgUrl('//p3-live.byteimg.com/tos-cn-i-gjr78lqtd0/55135ebccd537641590ca8a2977e04e4.png~tplv-gjr78lqtd0-z75.image')}) no-repeat`,
+      }}
+    >
       <div className={styles.logo}>
         <img src={logo} alt="byteplus logo" />
       </div>
@@ -60,10 +65,12 @@ const Home: React.FC = () => {
               onClick={() => navigate(menu.navigateUrl)}
               key={index}
             >
-              <div className={styles.quality}>
-                <IconQuality />
-                <span>1080P</span>
-              </div>
+              {index === 1 && (
+                <div className={styles.quality}>
+                  <IconQuality />
+                  <span>1080P</span>
+                </div>
+              )}
               <div
                 className={styles.introBgWrapper}
                 style={{

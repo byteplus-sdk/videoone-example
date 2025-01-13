@@ -10,6 +10,7 @@ function getOS(): {
   isPc?: boolean;
   isMobile?: boolean;
   isFireFox?: boolean;
+  isChrome?: boolean;
   isWeixin?: boolean;
   isLark?: boolean;
 } {
@@ -19,6 +20,7 @@ function getOS(): {
   const ua = navigator.userAgent;
   const isAndroid = /(?:Android)/.test(ua);
   const isFireFox = /(?:Firefox)/.test(ua);
+  const isChrome = /(?:Chrome)/.test(ua);
   const isIpad = /(?:iPad|PlayBook)/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   const isTablet = isIpad || (isAndroid && !/(?:Mobile)/.test(ua)) || (isFireFox && /(?:Tablet)/.test(ua));
   const isPhone = /(?:iPhone)/.test(ua) && !isTablet;
@@ -36,6 +38,7 @@ function getOS(): {
     isPc,
     isMobile: isPhone || isAndroid || isSymbian || isTablet,
     isFireFox,
+    isChrome,
     isWeixin,
     isLark,
   };
@@ -164,4 +167,12 @@ export const bindOrientationEvents = (isBind: boolean, fn: () => void) => {
   } else {
     window.removeEventListener(eventName, fn);
   }
+};
+
+export const imgUrl = (url: string, prefix?: string) => {
+  if (os.isChrome) {
+    // 目前仅有chrome和安卓对webp支持较好
+    url = url.replace(/.image$/, prefix || '.webp');
+  }
+  return url;
 };

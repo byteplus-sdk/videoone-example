@@ -18,18 +18,13 @@
   height: 100%;
   background-color: #000;
 
-  :global {
-    xg-controls {
-      bottom: 10px !important;
-    }
-  }
-
   .channelBottom {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 30px;
+    bottom: 36px;
     z-index: 999999;
+    z-index: 0;
 
     .laneWrapper {
       margin-left: 16px;
@@ -205,22 +200,29 @@
         }
       }
     }
+  }
+}
 
-    .recommendBrief {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 10px;
-      height: 36px;
-      line-height: 36px;
-      color: #ffffff;
-      font-size: 14px;
-      text-align: left;
 
-      span {
-        margin-left: 6px;
-      }
-    }
+.recommendBrief {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  height: 36px;
+  line-height: 36px;
+  color: #ffffff;
+  font-size: 14px;
+  text-align: left;
+  background: rgba(7, 8, 10, 0.4);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 11;
+
+  span {
+    margin-left: 6px;
   }
 }
 
@@ -268,8 +270,8 @@
   }
 
   .body {
-    min-height: 40vh;
-    max-height: 60vh;
+    min-height: calc(var(--vh, 1vh) * 40);
+    max-height: calc(var(--vh, 1vh) * 60);
     overflow-y: scroll;
 
     &.isLoading {

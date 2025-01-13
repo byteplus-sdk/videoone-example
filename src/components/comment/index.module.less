@@ -41,7 +41,7 @@
 
   .body {
     @media screen and (orientation: portrait) {
-      height: calc(73vh - 52px);
+      height: calc(var(--vh, 1vh) * 73 - - 52px)
     }
 
     @media screen and (orientation: landscape) {

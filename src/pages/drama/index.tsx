@@ -95,7 +95,7 @@ const DramaGround: React.FC = () => {
       <div className={styles.content}>
         <Swiper
           touchStartPreventDefault
-          noSwipingSelector="xg-progress,figure"
+          noSwipingSelector="xg-progress,.noSwipingClass"
           onSwiper={swiper => (swiperRef.current = swiper)}
           onActiveIndexChange={onSwiperChange}
           onTransitionEnd={() => {

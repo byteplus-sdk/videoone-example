@@ -26,6 +26,7 @@ const imageSizes = [600, 750, 800, 960];
 const SliderItem: React.FC<ISliderItemProps> = ({
   activeIndex,
   data,
+  isChannel,
   index,
   isFullScreen,
   isLandScapeMode,
@@ -38,7 +39,7 @@ const SliderItem: React.FC<ISliderItemProps> = ({
   const shouldRenderContent = useMemo(() => Math.abs(activeIndex - index) <= 2, [activeIndex, index]);
 
   return (
-    <div className={style.wrapper}>
+    <div className={classNames(style.wrapper, { [style.isChannel]: isChannel })}>
       {shouldRenderContent && (
         <>
           <div
@@ -55,12 +56,17 @@ const SliderItem: React.FC<ISliderItemProps> = ({
               loading="eager"
               src={coverUrl}
               imageSizes={imageSizes}
-              loader={({ src, format, width }) => {
-                return `//mpaas-vod-cover-test.${window.atob('Ynl0ZS10ZXN0LmNvbQ==')}/${src}~${'tplv-vod-noop'}:${width}:q75.${format}`;
+              loader={({ src, format, width, extra }) => {
+                return `//${extra.domain}/${src}~${'tplv-vod-noop'}:${width}:q75.${format}`;
               }}
             />
           </div>
-          <div id={`swiper-video-container-${index}`} className={style.videoContainer}>
+          <div
+            id={`swiper-video-container-${index}`}
+            className={classNames(style.videoContainer, {
+              [style.isLandScapeMode]: isLandScapeMode,
+            })}
+          >
             <div className="veplayer-cus-gradient-wrapper" />
             <div
               className={classNames(style.videoWithRotateBtn, {

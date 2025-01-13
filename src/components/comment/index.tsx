@@ -5,13 +5,13 @@ import translation from '@/utils/translation';
 import IconClose from '@/assets/svgr/iconClose.svg?react';
 import Loading from '../loading';
 import InputBar from '../input';
-import Avatar from '@/assets/images/avatar.png';
 import { formatDateTime } from '@/utils/util';
 import Delete from '@/assets/svgr/iconDelete.svg?react';
 import Like from '@/assets/svgr/iconLike.svg?react';
 import cn from 'classnames';
 import { IComment } from '@/interface';
 import classNames from 'classnames';
+import { imgUrl } from '@/utils';
 
 interface IProps {
   list: IComment[];
@@ -90,7 +90,12 @@ const Comment: React.FC<IProps> = props => {
                   <div className={styles.comment} key={comment.uid}>
                     <div className={styles.avatar}>
                       <div>
-                        <img src={Avatar} alt="" />
+                        <img
+                          src={imgUrl(
+                            '//p3-live.byteimg.com/tos-cn-i-gjr78lqtd0/1fea0cf233a5372ecf028b16844ec1b6.png~tplv-gjr78lqtd0-origin.image',
+                          )}
+                          alt=""
+                        />
                       </div>
                     </div>
                     <div className={styles.contentWrapper}>

@@ -39,7 +39,7 @@ export default defineConfig({
   },
   define: {
     __API_URL__: JSON.stringify(
-      !isProd ? 'https://rtc-sg-test.bytedance.com/videoone' : 'https://rtc-sg-test.bytedance.com/videoone',
+      !isProd ? '//rtc-sg-test.bytedance.com/videoone' : '//videocloud.byteplusapi.com/videoone',
     ),
   },
   resolve: {

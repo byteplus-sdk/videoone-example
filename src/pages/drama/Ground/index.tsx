@@ -85,7 +85,7 @@ const Ground: React.FC = () => {
         <IconBack />
       </div>
       {/* 轮播 */}
-      <figure className={classNames(styles.carousel)}>
+      <div className={classNames(styles.carousel, 'noSwipingClass')}>
         <Slider {...settings}>
           {loopData.map(item => {
             handlePreload(item.drama_id);
@@ -106,7 +106,7 @@ const Ground: React.FC = () => {
             );
           })}
         </Slider>
-      </figure>
+      </div>
       {/* 趋势 */}
       <div className={styles.trendingWrapper}>
         <h1 className={styles.tit}>{t('d_most_trending')} 🔥</h1>
@@ -146,7 +146,7 @@ const Ground: React.FC = () => {
       {/* 新发 */}
       <div className={styles.releaseWrapper}>
         <h1 className={styles.tit}>{t('d_new_release')}</h1>
-        <figure className={classNames(styles.releaseContentWrapper)}>
+        <div className={classNames(styles.releaseContentWrapper, 'noSwipingClass')}>
           {release.map(item => {
             handlePreload(item.drama_id);
             return (
@@ -171,7 +171,7 @@ const Ground: React.FC = () => {
               </div>
             );
           })}
-        </figure>
+        </div>
       </div>
       {/* 推荐 */}
       <div className={styles.recommendWrapper}>
