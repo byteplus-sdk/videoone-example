@@ -16,7 +16,7 @@ export default defineConfig({
     createHtmlPlugin({
       minify: true,
       inject: {
-        data: { isProd },
+        data: { isProd, envName: isProd ? 'production' : 'development' },
       },
     }),
   ],
