@@ -394,6 +394,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
               categories: {
                 waitTime: refEndTime.current - refStartTime.current,
                 vodInfo: JSON.stringify(videoDataList[swiperActiveRef.current]),
+                hitpreload: playerSdk.getPlugin('mp4encryptplayer').hitpreload,
               },
             });
           }
