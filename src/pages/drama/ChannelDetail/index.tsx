@@ -197,7 +197,7 @@ function ChannelDetail() {
           <h3>{t('d_for_free_to_1_episode')}</h3>
           <img
             src={
-              '//p3-live.byteimg.com/tos-cn-i-gjr78lqtd0/ad47910b02441289f1fa91319e73b3d9.png~tplv-gjr78lqtd0-image.png'
+              '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/ad47910b02441289f1fa91319e73b3d9.png~tplv-j963mrpdmh-image.png'
             }
           />
         </div>

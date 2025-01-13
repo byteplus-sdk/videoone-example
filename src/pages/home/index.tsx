@@ -13,7 +13,7 @@ const Menus = [
     title: t('home_drama_tit'),
     desc: t('home_drama_desc'),
     background: imgUrl(
-      '//p3-live.byteimg.com/tos-cn-i-gjr78lqtd0/36854f7160573ca841fd9a3155ed5dc8.webp~tplv-gjr78lqtd0-image.image',
+      '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/36854f7160573ca841fd9a3155ed5dc8.webp~tplv-j963mrpdmh-image.image',
     ),
 
     borderLinerColors: ['#9a912f', '#3f411c'],
@@ -24,7 +24,7 @@ const Menus = [
     title: t('home_video_tit'),
     desc: t('home_video_desc'),
     background: imgUrl(
-      '//p3-live.byteimg.com/tos-cn-i-gjr78lqtd0/b01f3be4a4433adab38103989b851865.webp~tplv-gjr78lqtd0-image.image',
+      '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/b01f3be4a4433adab38103989b851865.webp~tplv-j963mrpdmh-image.image',
     ),
     borderLinerColors: ['#45B1E5', '#3797C4'],
     bgLinerColors: ['#399FC6', '#399FC6'],
@@ -37,7 +37,7 @@ const Home: React.FC = () => {
     <div
       className={styles.container}
       style={{
-        background: `url(${imgUrl('//p3-live.byteimg.com/tos-cn-i-gjr78lqtd0/55135ebccd537641590ca8a2977e04e4.png~tplv-gjr78lqtd0-z75.image')}) no-repeat`,
+        background: `url(${imgUrl('//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/55135ebccd537641590ca8a2977e04e4.png~tplv-j963mrpdmh-image.image')}) no-repeat`,
       }}
     >
       <div className={styles.logo}>
