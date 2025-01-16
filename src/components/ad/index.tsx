@@ -62,7 +62,7 @@ const Ad: React.FC<IAd> = ({ onClose, getLockData, visible }) => {
             )}
           </div>
           <div className={styles.imgWrapper}>
-            <img src="https://sf16-videoone.ibytedtos.com/obj/bytertc-platfrom-sg/cocacola.gif" alt="" />
+            <img src="//sf16-videoone.ibytedtos.com/obj/bytertc-platfrom-sg/cocacola.gif" alt="" />
           </div>
         </div>,
         !isPortrait && isFullScreen && !isCssFullScreen ? window.playerSdk?.player?.root : document.body,

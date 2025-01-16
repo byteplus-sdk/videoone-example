@@ -426,6 +426,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
           nextCount: 2,
         });
         // 待预加载列表设置
+        VePlayer.preloader?.clearPreloadList();
         VePlayer.setPreloadList(formatPreloadStreamList(videoDataList, definition) as IPreloadStream[]);
       }
     }, [isChannel, isChannelActive, videoDataList.filter(item => !item.vip).length, definition]); // 解锁vip后的视频也需要预加载
@@ -435,7 +436,6 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
       return () => {
         if (sdkRef.current) {
           sdkRef.current.destroy();
-          sdkRef.current?.player?.root?.removeEventListener('touchmove', preventDefault);
         }
       };
     }, []);

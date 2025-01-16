@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import useAxios from 'axios-hooks';
 import { API_PATH } from '@/service/path';
 import Slider, { Settings } from 'react-slick';
@@ -14,6 +14,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import classNames from 'classnames';
 import t from '@/utils/translation';
 import { renderCount } from '@/utils/util';
+import { formatPreloadStreamList, os, parseModel } from '@/utils';
+import VePlayer, { IPreloadStream } from '@byteplus/veplayer';
 
 interface IData {
   drama_cover_url: string;
@@ -42,13 +44,15 @@ const settings: Settings = {
 const Ground: React.FC = () => {
   const navigate = useNavigate();
   const refPreloadSet = useRef(new Set()) as React.MutableRefObject<Set<string>>;
+  const refIo = useRef<IntersectionObserver>();
+  const preloadOnceRef = useRef<boolean>(false);
 
   const [{ data, loading }] = useAxios({
     url: API_PATH.GetDramaChannel,
     method: 'POST',
   });
 
-  const [, executePreload] = useAxios(
+  const [{ data: dramaDetailData }, executePreload] = useAxios(
     {
       url: API_PATH.GetDramaList,
       method: 'POST',
@@ -70,6 +74,47 @@ const Ground: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    refIo.current = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio > 0 && entry.target.getAttribute('drama-id')) {
+          handlePreload(entry.target.getAttribute('drama-id')!);
+        }
+      });
+    });
+    const dramaLIst = document.querySelectorAll('.drama');
+    dramaLIst.forEach(el => {
+      refIo.current?.observe(el);
+    });
+  }, [data?.response]);
+
+  useEffect(() => {
+    return () => {
+      refIo.current?.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    // PC&Android开启预加载
+    if (!(os.isPc || os.isAndroid)) {
+      return;
+    }
+    if (dramaDetailData?.response) {
+      const singlelist = [
+        { ...dramaDetailData?.response[0], videoModel: parseModel(dramaDetailData?.response[0].video_model)! },
+      ];
+      if (!preloadOnceRef.current) {
+        preloadOnceRef.current = true;
+        VePlayer.setPreloadScene(0); // 更新为手动模式，注意：手动模式下直接全量加载所有待预加载资源
+        VePlayer.preloader?.clearPreloadList(); // 切换模式前清空预加载列表
+        VePlayer.setPreloadList(formatPreloadStreamList(singlelist) as IPreloadStream[]);
+      } else {
+        console.log(singlelist[0].caption);
+        VePlayer.addPreloadList(formatPreloadStreamList(singlelist) as IPreloadStream[]);
+      }
+    }
+  }, [dramaDetailData?.response]);
+
   const loopData = (data?.response?.loop as IData[]) ?? [];
   const trending = (data?.response?.trending as IData[]) ?? [];
   const release = (data?.response?.new as IData[]) ?? [];
@@ -88,9 +133,8 @@ const Ground: React.FC = () => {
       <div className={classNames(styles.carousel, 'noSwipingClass')}>
         <Slider {...settings}>
           {loopData.map(item => {
-            handlePreload(item.drama_id);
             return (
-              <div key={item.drama_id}>
+              <div key={item.drama_id} className="drama" drama-id={item.drama_id}>
                 <div className="carouselItemWrapper" style={{ background: `url(${item.drama_cover_url})` }}>
                   <div
                     className="btn"
@@ -114,11 +158,11 @@ const Ground: React.FC = () => {
           {trending
             .filter((_item, index) => index < 6)
             .map((item, index) => {
-              handlePreload(item.drama_id);
               return (
                 <div
                   key={item.drama_id}
-                  className={styles.trendingItemWrapper}
+                  drama-id={item.drama_id}
+                  className={classNames(styles.trendingItemWrapper, 'drama')}
                   onClick={() => {
                     navigate(`/dramaDetail?id=${item.drama_id}&device_id=001`);
                   }}
@@ -148,11 +192,11 @@ const Ground: React.FC = () => {
         <h1 className={styles.tit}>{t('d_new_release')}</h1>
         <div className={classNames(styles.releaseContentWrapper, 'noSwipingClass')}>
           {release.map(item => {
-            handlePreload(item.drama_id);
             return (
               <div
                 key={item.drama_id}
-                className={styles.releaseItemWrapper}
+                drama-id={item.drama_id}
+                className={classNames(styles.releaseItemWrapper, 'drama')}
                 onClick={() => {
                   navigate(`/dramaDetail?id=${item.drama_id}&device_id=001`);
                 }}
@@ -180,11 +224,11 @@ const Ground: React.FC = () => {
           {recommend
             .filter((_item, index) => index < 6)
             .map(item => {
-              handlePreload(item.drama_id);
               return (
                 <div
                   key={item.drama_id}
-                  className={styles.recommendItemWrapper}
+                  drama-id={item.drama_id}
+                  className={classNames(styles.recommendItemWrapper, 'drama')}
                   onClick={() => {
                     navigate(`/dramaDetail?id=${item.drama_id}&device_id=001`);
                   }}

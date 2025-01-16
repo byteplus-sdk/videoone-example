@@ -38,7 +38,6 @@ const DramaGround: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperClass>();
   const [isSliderMoving, setIsSliderMoving] = useState(false);
-  const preloadOnceRef = useRef<boolean>(false);
   const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
   const [{ data: channelData, loading: channelLoading }] = useAxios({
     url: API_PATH.GetDramaFeed,
@@ -60,27 +59,6 @@ const DramaGround: React.FC = () => {
       window.scrollTo({ left: 0, top: 0 });
     }
   }, []);
-
-  useEffect(() => {
-    // PC&Android开启预加载
-    if (!channelLoading && channelData?.response && canSupportPreload && !preloadOnceRef.current && activeIndex === 0) {
-      const temp = new Set();
-      const list: IDramaDetailListItem['video_meta'][] = [];
-      channelData?.response.forEach((item: IDramaDetailListItem) => {
-        const { drama_meta, video_meta } = item;
-        if (!temp.has(drama_meta.drama_id) && video_meta.video_model) {
-          temp.add(drama_meta.drama_id);
-          if (parseModel(video_meta.video_model)?.PlayInfoList?.[0]?.MainPlayUrl) {
-            list.push({ ...item.video_meta, videoModel: parseModel(video_meta.video_model)! });
-          }
-        }
-      });
-      VePlayer.preloader?.clearPreloadList(); // 切换模式前清空预加载列表
-      VePlayer.setPreloadScene(0); // 更新为手动模式，注意：手动模式下直接全量加载所有待预加载资源
-      VePlayer.setPreloadList(formatPreloadStreamList(list) as IPreloadStream[]); // 设置手动模式待预加载列表
-      preloadOnceRef.current = true;
-    }
-  }, [channelData?.response, channelLoading, activeIndex]);
 
   const videoDataList = (channelData?.response ?? [])
     .map((item: IDramaDetailListItem) => ({
