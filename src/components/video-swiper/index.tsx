@@ -45,8 +45,6 @@ export interface RefVideoSwiper {
   onSelectClick: (index: number) => void;
 }
 
-const preventDefault = (e: TouchEvent) => e?.preventDefault?.();
-
 const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
   (
     {
