@@ -109,7 +109,6 @@ const Ground: React.FC = () => {
         VePlayer.preloader?.clearPreloadList(); // 切换模式前清空预加载列表
         VePlayer.setPreloadList(formatPreloadStreamList(singlelist) as IPreloadStream[]);
       } else {
-        console.log(singlelist[0].caption);
         VePlayer.addPreloadList(formatPreloadStreamList(singlelist) as IPreloadStream[]);
       }
     }

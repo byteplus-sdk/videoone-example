@@ -39,7 +39,8 @@
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: constant(safe-area-inset-bottom);
+  bottom: env(safe-area-inset-bottom);
   height: 48px;
   background-color: #07080a;
   backdrop-filter: blur(12px);
