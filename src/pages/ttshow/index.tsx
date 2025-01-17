@@ -15,7 +15,7 @@ import Loading from '@/components/loading';
 import VePlayer from '@/player';
 
 const TTShow: React.FC = () => {
-  const playerSDKins = useRef<any>();
+  const playerSDKins = useRef<VePlayer>();
   const refSwiper = useRef<SwiperClass>();
   const playerRef = useRef<any>(null);
   const refTimer = useRef<number>();
@@ -38,7 +38,6 @@ const TTShow: React.FC = () => {
   );
 
   const list = (data?.response as IVideo[]) ?? [];
-  const [isTouch, setTouch] = useState(false);
   const [isFirstSlide, setFirstSlide] = useState(true);
   const [showUnmuteBtn, setShowUnmuteBtn] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
@@ -143,20 +142,26 @@ const TTShow: React.FC = () => {
       const next = list[activeIndex];
       const { playAuthToken = '', coverUrl } = next;
       indexRef.current = activeIndex;
-      playerSDKins.current?.player.plugins.poster.update(coverUrl);
+      playerSDKins.current?.player?.pause();
+      playerSDKins.current?.getPlugin('poster')?.update(coverUrl);
+
       playerSDKins.current
         .playNext({
           autoplay: true,
           getVideoByToken: {
             playAuthToken,
             defaultDefinition: '480p',
+            needPoster: true,
           },
         })
         .then(() => {
-          setTouch(false);
+          const playerDom = document.querySelector('#veplayerContainer');
+          const insertParentNode = document.getElementById(`swiper-video-container-${activeIndex}`);
+          if (insertParentNode && playerDom) {
+            insertParentNode?.insertBefore(playerDom, null);
+          }
+          playerSDKins.current?.player?.play();
         });
-    } else {
-      setTouch(false);
     }
   }
 
@@ -185,7 +190,7 @@ const TTShow: React.FC = () => {
    * 展示静音按钮
    */
   function showUnmute() {
-    const player = playerSDKins.current.player;
+    const player = playerSDKins?.current?.player;
     if (player.muted || player.video.muted) {
       setShowUnmuteBtn(true);
     } else {
@@ -197,7 +202,7 @@ const TTShow: React.FC = () => {
    * 点击取消静音按钮
    */
   function onUnmuteClick() {
-    const player = playerSDKins.current.player;
+    const player = playerSDKins?.current?.player;
     player.muted = false;
     setShowUnmuteBtn(false);
   }
@@ -247,31 +252,18 @@ const TTShow: React.FC = () => {
               }
               playNext(swiper.realIndex);
             }}
-            onSliderMove={() => {
-              setTouch(true);
-            }}
           >
             {list.map((item: any, i: number) => {
               return (
                 <SwiperSlide key={i}>
-                  {({ isActive }) => (
-                    <Player
-                      ref={isActive ? playerRef : null}
-                      data={item}
-                      index={i}
-                      isTouch={isTouch}
-                      isActive={isActive}
-                    />
-                  )}
+                  {({ isActive }) => <Player ref={isActive ? playerRef : null} data={item} index={i} />}
                 </SwiperSlide>
               );
             })}
           </Swiper>
         )}
       </div>
-      <div className={style.veplayerWrapper}>
-        <div id="veplayerContainer" />
-      </div>
+
       {showGuide && (
         <div className={style.guide} onClick={handleMaskClose} onTouchMove={handleMaskClose}>
           <img src={Gesture} alt="" />

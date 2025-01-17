@@ -13,7 +13,7 @@ import { debounce } from 'lodash';
 import { Popup } from 'antd-mobile';
 import { imgUrl } from '@/utils';
 
-const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, index }, ref) => {
+const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
   const likeRef = useRef<IRef>(null);
   const [commentVisible, setCommentVisible] = useState(false);
   const [showMore, setShowMore] = useState(false);
@@ -62,14 +62,22 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ isActive, isTouch, data, i
 
   return (
     <div className={cn(style.wrapper, style.swiperItem)}>
-      <img src={data.coverUrl} className={isActive && !isTouch ? style.posterHide : style.posterShow} />
+      <img src={data.coverUrl} className={style.posterShow} />
+      {index === 0 ? (
+        <div className={style.veplayerWrapper}>
+          <div id="veplayerContainer" />
+        </div>
+      ) : (
+        <div className={style.videoDom} id={`swiper-video-container-${index}`}></div>
+      )}
+
       <div className={style.rightSlider}>
         <div className={style.btns}>
           <div className={style.avatar}>
             <div>
               <img
                 src={imgUrl(
-                  '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/1fea0cf233a5372ecf028b16844ec1b6.png~tplv-j963mrpdmh-image.image',
+                  '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/f91bdb13eb83960457760d4f0be0b1e8.png~tplv-j963mrpdmh-image.image',
                 )}
                 alt=""
               />

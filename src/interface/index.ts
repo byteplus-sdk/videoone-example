@@ -16,8 +16,6 @@ export interface IVideo {
 }
 
 export interface IPlayer {
-  isActive: boolean;
-  isTouch: boolean;
   index: number;
   data: IVideo;
   ref: any;
