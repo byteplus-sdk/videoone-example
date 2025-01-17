@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useAxios from 'axios-hooks';
 import { API_PATH } from '@/service/path';
 import Player from '@/components/player';
@@ -12,7 +12,10 @@ import IconBack from '@/assets/svgr/iconBack.svg?react';
 import { useNavigate } from 'react-router-dom';
 import t from '@/utils/translation';
 import Loading from '@/components/loading';
-import VePlayer from '@/player';
+import VePlayer, { PlayerCore } from '@/player';
+
+const getClass: (player: PlayerCore) => HTMLDivElement = (player: PlayerCore) =>
+  player.root?.getElementsByClassName('xgplayer-start')[0];
 
 const TTShow: React.FC = () => {
   const playerSDKins = useRef<VePlayer>();
@@ -133,6 +136,29 @@ const TTShow: React.FC = () => {
     }
   }
 
+  const hideStartIcon = useCallback((player?: PlayerCore) => {
+    if (!player?.root) {
+      return;
+    }
+    const startClassDom = getClass(player);
+    if (startClassDom) {
+      startClassDom.className = startClassDom.className
+        ?.split(' ')
+        .filter(item => item !== 'veplayer-h5-hide-start')
+        .join(' ');
+    }
+  }, []);
+
+  const attachStartIcon = useCallback((player: PlayerCore) => {
+    if (!player?.root) {
+      return;
+    }
+    const startClassDom = getClass(player);
+    if (startClassDom) {
+      startClassDom.className = `${startClassDom.className} veplayer-h5-hide-start`;
+    }
+  }, []);
+
   /**
    * 播放器下一个视频
    * @param {number} activeIndex - 当前swiper的index
@@ -145,6 +171,7 @@ const TTShow: React.FC = () => {
       playerSDKins.current?.player?.pause();
       playerSDKins.current?.getPlugin('poster')?.update(coverUrl);
 
+      attachStartIcon(playerSDKins.current?.player);
       playerSDKins.current
         .playNext({
           autoplay: true,
@@ -161,6 +188,9 @@ const TTShow: React.FC = () => {
             insertParentNode?.insertBefore(playerDom, null);
           }
           playerSDKins.current?.player?.play();
+        })
+        .then(() => {
+          setTimeout(() => hideStartIcon(playerSDKins.current?.player), 0);
         });
     }
   }
