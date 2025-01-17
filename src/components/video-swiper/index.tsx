@@ -124,6 +124,11 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     };
 
     const switchCssFullScreen = (value: boolean) => {
+      if (value) {
+        document.body.classList.add('fullscreen');
+      } else {
+        document.body.classList.remove('fullscreen');
+      }
       dispatch(setCssFullScreen(value));
     };
 

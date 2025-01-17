@@ -2,10 +2,13 @@
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     overflow: hidden;
+    background: #FFF9F1;
 
     &.isFullScreen {
         border-radius: 0;
         width: 375px;
+        padding-right: env(safe-area-inset-right);
+        padding-right: constant(safe-area-inset-bottom);
 
         .lockAllWrapper {
             height: 100%;
@@ -13,7 +16,6 @@
     }
 
     .lockAllWrapper {
-        background: #FFF9F1;
         padding: 0 16px;
 
         .header {

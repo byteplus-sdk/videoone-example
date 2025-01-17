@@ -3,6 +3,8 @@
   &.isFullScreen {
     border-radius: 0 !important;
     width: 320px;
+    padding-right: env(safe-area-inset-right);
+    padding-right: constant(safe-area-inset-bottom);
 
     .body {
       max-height: calc(var(--vh, 1vh) * 100 - 52px);

@@ -9,12 +9,16 @@ body {
   height: calc(var(--vh, 1vh) * 100 - env(safe-area-inset-bottom));
   margin: 0;
   overflow: hidden;
+
+  &.fullscreen {
+    height: calc(var(--vh, 1vh) * 100);
+  }
 }
 
 #root {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow-y: scroll;
 }
 
 ::-webkit-scrollbar {
