@@ -50,6 +50,7 @@ const Home: React.FC = () => {
         return (
           <div
             className={styles.videoEntryCoverOuter}
+            key={index}
             style={{
               background: `linear-gradient(to bottom, ${menu.borderLinerColors[0]}, ${menu.borderLinerColors[1]})`,
             }}
