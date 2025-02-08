@@ -1,15 +1,20 @@
 {
   "$schema": "https://json.schemastore.org/stylelintrc.json",
   "extends": "stylelint-config-standard",
-  "plugins": ["stylelint-prettier"],
+  "plugins": [
+    "stylelint-prettier"
+  ],
   "customSyntax": "postcss-less",
   "rules": {
     "selector-class-pattern": null,
     "function-no-unknown": null,
+    "no-descending-specificity": null,
     "selector-pseudo-class-no-unknown": [
       true,
       {
-        "ignorePseudoClasses": ["global"]
+        "ignorePseudoClasses": [
+          "global"
+        ]
       }
     ]
   }
