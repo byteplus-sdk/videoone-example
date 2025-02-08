@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import useAxios from 'axios-hooks';
 import { API_PATH } from '@/service/path';
 import 'swiper/less';
@@ -37,36 +37,54 @@ const DramaGround: React.FC = () => {
   const swiperRef = useRef<SwiperClass>();
   const [isSliderMoving, setIsSliderMoving] = useState(false);
   const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
-  const [{ data: channelData, loading: channelLoading }] = useAxios({
-    url: API_PATH.GetDramaFeed,
-    method: 'POST',
-    data: {
-      offset: 0,
-      page_size: 5,
-      play_info_type: 1,
-    },
-  });
+
+  const requestConfig = useMemo(
+    () => ({
+      url: API_PATH.GetDramaFeed,
+      method: 'POST' as const,
+      data: {
+        offset: 0,
+        page_size: 5,
+        play_info_type: 1,
+      },
+    }),
+    [],
+  );
+
+  const [{ data: channelData, loading: channelLoading }] = useAxios(requestConfig);
+
+  const videoDataList = useMemo(
+    () =>
+      (channelData?.response ?? [])
+        .map((item: IDramaDetailListItem) => ({
+          ...item,
+          video_meta: {
+            ...item.video_meta,
+            videoModel: parseModel(item.video_meta.video_model!)!,
+          },
+        }))
+        .filter((item: IDramaDetailListItem) => item?.video_meta.videoModel?.PlayInfoList?.[0]?.MainPlayUrl),
+    [channelData],
+  );
 
   useEffect(() => {
     document.body.style.background = '#161823';
+    return () => {
+      document.body.style.background = '';
+    };
   }, []);
 
   const onSwiperChange = useCallback((swiper: SwiperClass) => {
     setActiveIndex(swiper.activeIndex);
     if (swiper.activeIndex === 1) {
-      window.scrollTo({ left: 0, top: 0 });
+      window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
     }
   }, []);
 
-  const videoDataList = (channelData?.response ?? [])
-    .map((item: IDramaDetailListItem) => ({
-      ...item,
-      video_meta: {
-        ...item.video_meta,
-        videoModel: parseModel(item.video_meta.video_model!)!,
-      },
-    }))
-    .filter((item: IDramaDetailListItem) => item?.video_meta.videoModel?.PlayInfoList?.[0]?.MainPlayUrl);
+  const handleTabClick = useCallback((tabValue: number) => {
+    setActiveIndex(tabValue);
+    swiperRef.current?.slideTo(tabValue);
+  }, []);
 
   return (
     <>
@@ -76,9 +94,7 @@ const DramaGround: React.FC = () => {
           noSwipingSelector="xg-progress,.noSwipingClass"
           onSwiper={swiper => (swiperRef.current = swiper)}
           onActiveIndexChange={onSwiperChange}
-          onTransitionEnd={() => {
-            setIsSliderMoving(false);
-          }}
+          onTransitionEnd={() => setIsSliderMoving(false)}
         >
           <SwiperSlide>
             <div className={styles.ground}>
@@ -98,23 +114,14 @@ const DramaGround: React.FC = () => {
           </SwiperSlide>
         </Swiper>
       </div>
-      {isCssFullScreen ? null : (
+      {!isCssFullScreen && (
         <div className={styles.footer}>
-          {Tabs.map(tab => {
-            return (
-              <div
-                className={classNames(styles.tab)}
-                key={tab.value}
-                onClick={() => {
-                  setActiveIndex(tab.value);
-                  swiperRef.current?.slideTo(tab.value);
-                }}
-              >
-                {tab.renderIcon(activeIndex === tab.value)}
-                <span>{tab.title}</span>
-              </div>
-            );
-          })}
+          {Tabs.map(tab => (
+            <div className={styles.tab} key={tab.value} onClick={() => handleTabClick(tab.value)}>
+              {tab.renderIcon(activeIndex === tab.value)}
+              <span>{tab.title}</span>
+            </div>
+          ))}
         </div>
       )}
     </>

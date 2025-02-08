@@ -5,5 +5,5 @@ export const API_PATH = {
   GetDramaFeed: '/drama/v1/getDramaFeed',
   GetDramaList: '/drama/v1/getDramaList',
   GetDramaVideoComments: '/drama/v1/getVideoComments',
-  GetDramaDetail: '/drama/v1/getDramaDetail', // 获取付费解锁视频
+  GetDramaDetail: '/drama/v1/getDramaDetail',
 };

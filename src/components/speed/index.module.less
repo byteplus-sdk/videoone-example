@@ -1,35 +1,35 @@
 .popupBodyClass {
-    background: #000000;
-    text-align: center;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    color: #ffffffe5;
+  background: #000000;
+  text-align: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  color: #ffffffe5;
 
-    &.isFullScreen {
-        width: 200px;
-        border-radius: 0;
-        padding-right: env(safe-area-inset-right);
-        padding-right: constant(safe-area-inset-bottom);
+  &.isFullScreen {
+    width: 200px;
+    border-radius: 0;
+    padding-right: env(safe-area-inset-right);
+    padding-right: constant(safe-area-inset-bottom);
+  }
+
+  .head {
+    height: 40px;
+    font-size: 14px;
+    padding: 12px 16px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+  }
+
+  .body {
+    font-size: 16px;
+
+    .item {
+      margin-bottom: 8px;
+      line-height: 48px;
+
+      &.selected {
+        background: #ffffff1f;
+      }
     }
-
-    .head {
-        height: 40px;
-        font-size: 14px;
-        padding: 12px 16px;
-        box-sizing: border-box;
-        margin-bottom: 12px;
-    }
-
-    .body {
-        font-size: 16px;
-
-        .item {
-            margin-bottom: 8px;
-            line-height: 48px;
-
-            &.selected {
-                background: #ffffff1f;
-            }
-        }
-    }
+  }
 }

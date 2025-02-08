@@ -49,7 +49,7 @@
       display: flex !important;
       justify-content: center;
 
-      &>li {
+      & > li {
         list-style: none;
 
         &::last-child {
@@ -114,18 +114,19 @@
           right: -1px;
           top: 0;
           bottom: -1px;
-          background: linear-gradient(to top,
-              rgb(22 24 35) 1%,
-              rgba(0, 0, 0, 0.8),
-              rgba(0, 0, 0, 0.8),
-              rgba(0, 0, 0, 0.8));
+          background: linear-gradient(
+            to top,
+            rgb(22 24 35) 1%,
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.8)
+          );
           transition: background 0.5s ease-in-out;
         }
       }
 
       .slick-center {
         .carouselItemWrapper {
-
           // 模拟底层遮罩效果
           &::after {
             background: linear-gradient(to top, rgb(22 24 35) 1%, transparent, transparent, transparent);

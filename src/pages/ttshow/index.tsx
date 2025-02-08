@@ -96,7 +96,7 @@ const TTShow: React.FC = () => {
     const { playAuthToken = '', coverUrl = '' } = list[0] || {};
     if (!playerSDKins.current && playAuthToken) {
       playerSDKins.current = new VePlayer({
-        el: document.querySelector('#veplayerContainer') as HTMLElement,
+        el: document.querySelector('#veplayer-container') as HTMLElement,
         getVideoByToken: {
           playAuthToken,
           defaultDefinition: '480p',
@@ -182,7 +182,7 @@ const TTShow: React.FC = () => {
           },
         })
         .then(() => {
-          const playerDom = document.querySelector('#veplayerContainer');
+          const playerDom = document.querySelector('#veplayer-container');
           const insertParentNode = document.getElementById(`swiper-video-container-${activeIndex}`);
           if (insertParentNode && playerDom) {
             insertParentNode?.insertBefore(playerDom, null);

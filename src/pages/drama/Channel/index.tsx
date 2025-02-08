@@ -35,7 +35,96 @@ interface IRecommend {
   isChannelActive: boolean;
 }
 
-const Channel: React.FC<IRecommend> = ({ isSliderMoving, isChannel, videoDataList = [], loading, isChannelActive }) => {
+interface ChannelProps extends IRecommend {
+  isSliderMoving: boolean;
+  videoDataList: IDramaDetailListItem[];
+  loading: boolean;
+  isChannel: boolean;
+  isChannelActive: boolean;
+}
+
+const VideoInfo: React.FC<{
+  drama_meta: any;
+  video_meta: any;
+  onNavigate: (startTime?: number) => void;
+}> = React.memo(({ drama_meta, video_meta, onNavigate }) => {
+  if (video_meta.display_type === CHANNEL_MODE.NORMAL) {
+    return (
+      <div className={styles.mode1}>
+        <div className={styles.briefWrapper} onClick={() => onNavigate()}>
+          <IconDrama />
+          <span className={styles.brief}>{t('d_short_drama_placeholder', drama_meta.drama_title)}</span>
+        </div>
+        <div className={styles.info}>
+          <span className={styles.author}>@{video_meta.name}</span>
+          <span className={styles.title}>
+            {drama_meta.drama_title} | {drama_meta.drama_length} | {video_meta.caption}
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.mode2}>
+      <div className={styles.info}>
+        <img src={drama_meta.drama_cover_url} />
+        <div className={styles.title}>
+          <h2>{drama_meta.drama_title}</h2>
+          <span className={styles.popularity}>
+            <IconFire />
+            <span className={styles.num}>{renderCount(video_meta.play_times)}</span>
+          </span>
+        </div>
+      </div>
+      <div
+        className={styles.btn}
+        onClick={() => {
+          const startTime = window.playerSdk?.player?.currentTime || 0;
+          onNavigate(startTime);
+        }}
+      >
+        {t('d_play_now')}
+      </div>
+    </div>
+  );
+});
+
+const VideoControls: React.FC<{
+  like: number;
+  comment: number;
+  onCommentClick: () => void;
+}> = React.memo(({ like, comment, onCommentClick }) => (
+  <div className={styles.rightLane}>
+    <div className={styles.btns}>
+      <div className={styles.avatar}>
+        <div>
+          <img
+            src={imgUrl(
+              '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/f91bdb13eb83960457760d4f0be0b1e8.png~tplv-j963mrpdmh-image.image',
+            )}
+            alt=""
+          />
+        </div>
+      </div>
+      <div className={styles.like}>
+        <LikeComp like={like} />
+      </div>
+      <div className={styles.comment} onClick={onCommentClick}>
+        <IconComment />
+        <span>{renderCount(comment)}</span>
+      </div>
+    </div>
+  </div>
+));
+
+const Channel: React.FC<ChannelProps> = ({
+  isSliderMoving,
+  isChannel,
+  videoDataList = [],
+  loading,
+  isChannelActive,
+}) => {
   const [urlState] = useUrlState();
   const toastRef = useRef<ToastHandler>();
   const startTime = urlState.startTime || 0;
@@ -44,9 +133,9 @@ const Channel: React.FC<IRecommend> = ({ isSliderMoving, isChannel, videoDataLis
   const [commentVisible, setCommentVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { drama_meta, video_meta }: IDramaDetailListItem = videoDataList[activeIndex] ?? {};
-  const { drama_length, drama_title, drama_cover_url, drama_id } = drama_meta ?? {};
-  const { name, comment, like, caption, vid, order, play_times, display_type } = video_meta ?? {};
+  const currentVideo = videoDataList[activeIndex] ?? {};
+  const { drama_meta, video_meta } = currentVideo;
+  const { comment, like, vid, order } = video_meta ?? {};
   const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
   const [{ data: commentsData, loading: commentLoading }, executeGetComments] = useAxios(
     {
@@ -59,9 +148,22 @@ const Channel: React.FC<IRecommend> = ({ isSliderMoving, isChannel, videoDataLis
     { manual: true },
   );
 
+  const handleNavigate = React.useCallback(
+    (startTime?: number) => {
+      const queryStartTime = startTime ? `&startTime=${startTime}` : '';
+      navigate(`/dramaDetail?id=${drama_meta.drama_id}&order=${order}${queryStartTime}&device_id=001`);
+    },
+    [drama_meta?.drama_id, order],
+  );
+
+  const handleCommentClick = React.useCallback(() => {
+    setCommentVisible(true);
+    executeGetComments();
+  }, [executeGetComments]);
+
   useEffect(() => {
     dispatch(setDetail(video_meta ?? {}));
-  }, [video_meta]);
+  }, [video_meta, dispatch]);
 
   useEffect(() => {
     return () => {
@@ -69,11 +171,15 @@ const Channel: React.FC<IRecommend> = ({ isSliderMoving, isChannel, videoDataLis
     };
   }, []);
 
-  return loading ? (
-    <div className={styles.loadingWrapper}>
-      <Loading />
-    </div>
-  ) : (
+  if (loading) {
+    return (
+      <div className={styles.loadingWrapper}>
+        <Loading />
+      </div>
+    );
+  }
+
+  return (
     <>
       <div className={styles.wrap}>
         <VideoSwiper
@@ -87,81 +193,8 @@ const Channel: React.FC<IRecommend> = ({ isSliderMoving, isChannel, videoDataLis
             isCssFullScreen ? null : (
               <div className={classNames(styles.channelBottom)}>
                 <div className={styles.laneWrapper}>
-                  <div className={styles.bottomLane}>
-                    {display_type === CHANNEL_MODE.NORMAL ? (
-                      <div className={styles.mode1}>
-                        <div
-                          className={styles.briefWrapper}
-                          onClick={() => {
-                            navigate(`/dramaDetail?id=${drama_id}&device_id=001`);
-                          }}
-                        >
-                          <IconDrama />
-                          <span className={styles.brief}>
-                            {t('d_short_drama_placeholder', drama_title)}
-                            {}
-                          </span>
-                        </div>
-                        <div className={styles.info}>
-                          <span className={styles.author}>@{name}</span>
-                          <span className={styles.title}>
-                            {drama_title} | {drama_length} | {caption}
-                          </span>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className={styles.mode2}>
-                        <div className={styles.info}>
-                          <img src={drama_cover_url} />
-                          <div className={styles.title}>
-                            <h2>{drama_title}</h2>
-                            <span className={styles.popularity}>
-                              <IconFire />
-                              <span className={styles.num}>{renderCount(play_times)}</span>
-                            </span>
-                          </div>
-                        </div>
-                        <div
-                          className={styles.btn}
-                          onClick={() => {
-                            const startTime = window.playerSdk?.player?.currentTime || 0;
-                            const queryStartTime = `&startTime=${startTime}`;
-                            navigate(`/dramaDetail?id=${drama_id}&order=${order}${queryStartTime}&device_id=001`);
-                          }}
-                        >
-                          {t('d_play_now')}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  <div className={styles.rightLane}>
-                    <div className={styles.btns}>
-                      <div className={styles.avatar}>
-                        <div>
-                          <img
-                            src={imgUrl(
-                              '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/f91bdb13eb83960457760d4f0be0b1e8.png~tplv-j963mrpdmh-image.image',
-                            )}
-                            alt=""
-                          />
-                        </div>
-                      </div>
-                      <div className={styles.like}>
-                        <LikeComp like={like} />
-                      </div>
-                      <div
-                        className={styles.comment}
-                        onClick={e => {
-                          e.stopPropagation();
-                          setCommentVisible(true);
-                          executeGetComments();
-                        }}
-                      >
-                        <IconComment />
-                        <span>{renderCount(comment)}</span>
-                      </div>
-                    </div>
-                  </div>
+                  <VideoInfo drama_meta={drama_meta} video_meta={video_meta} onNavigate={handleNavigate} />
+                  <VideoControls like={like} comment={comment} onCommentClick={handleCommentClick} />
                 </div>
               </div>
             )
@@ -251,4 +284,4 @@ const Channel: React.FC<IRecommend> = ({ isSliderMoving, isChannel, videoDataLis
   );
 };
 
-export default Channel;
+export default React.memo(Channel);

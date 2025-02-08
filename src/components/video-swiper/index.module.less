@@ -4,7 +4,6 @@
   height: 100%;
 
   :global {
-
     .xgplayer-is-fullscreen,
     .xgplayer-is-cssfullscreen {
       xg-controls {
@@ -21,7 +20,7 @@
     }
   }
 
-  .swiper-container {
+  .swiperContainer {
     height: calc(100% - constant(safe-area-inset-bottom));
     height: calc(100% - env(safe-area-inset-bottom));
 
@@ -31,25 +30,25 @@
   }
 }
 
-.recommend-main {
+.recommendMain {
   position: relative;
   width: 100%;
   height: 100%;
 
-  .swiper-container {
+  .swiperContainer {
     height: calc(100% - constant(safe-area-inset-bottom));
     height: calc(100% - env(safe-area-inset-bottom));
   }
 }
 
-.swiper-container {
+.swiperContainer {
   position: relative;
   z-index: 4;
   width: 100%;
   height: 100%;
   overflow: hidden;
 
-  .my-swiper {
+  .mySwiper {
     width: 100%;
     height: 100%;
 
@@ -120,7 +119,6 @@
         }
 
         .inner-focus-point {
-
           &:before,
           &:after {
             width: 6px;
@@ -142,7 +140,7 @@
   height: 100%;
   pointer-events: none;
 
-  .unmute-btn {
+  .unmuteBtn {
     box-sizing: border-box;
     display: flex;
     flex-shrink: 0;
@@ -156,7 +154,7 @@
     backdrop-filter: blur(5px);
     border-radius: 25px;
 
-    .unmute-icon {
+    .unmuteIcon {
       width: 20px;
       height: 20px;
       margin-right: 2px;
@@ -172,7 +170,7 @@
     }
   }
 
-  .unmute-bt:active {
+  .unmuteBt:active {
     background-color: rgb(58 58 58 / 50%);
   }
 }

@@ -1,8 +1,6 @@
 import React, { PropsWithChildren, useMemo } from 'react';
 import { Viewer } from '@volcengine/imagex-react';
-
 import { IDramaDetailListItem } from '@/@types';
-
 import style from './index.module.less';
 import classNames from 'classnames';
 import { os } from '@/utils';
@@ -74,7 +72,7 @@ const SliderItem: React.FC<ISliderItemProps> = ({
                 [style.isLandScapeMode]: isLandScapeMode,
                 [style.isFullScreen]: isFullScreen && !isCssFullScreen,
               })}
-              id={`videoWithRotateBtn${index}`}
+              id={`video-with-rotate-btn-${index}`}
             >
               {children}
             </div>

@@ -26,10 +26,6 @@ const Like = React.forwardRef<IRef, IProps>((props, ref) => {
     },
   });
 
-  useImperativeHandle(ref, () => ({
-    handleLike,
-  }));
-
   const handleLike = () => {
     setLike(!isLike);
     if (isLike) {
@@ -38,6 +34,10 @@ const Like = React.forwardRef<IRef, IProps>((props, ref) => {
       likePlay(0, true);
     }
   };
+
+  useImperativeHandle(ref, () => ({
+    handleLike,
+  }));
 
   const { View: unLike, goToAndPlay: unlikePlay } = useLottie({
     animationData: unlikeAni,

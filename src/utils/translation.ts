@@ -160,6 +160,10 @@ const translation = {
     'zh-CN': '$placeholder',
     en: 'USD placeholder',
   },
+  d_click_to_unmute: {
+    'zh-CN': '点击取消静音',
+    en: 'Click to unmute',
+  },
 };
 
 type ILang = 'zh-CN' | 'en' | 'zh' | 'zh-Hans-CN';

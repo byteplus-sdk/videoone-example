@@ -1,24 +1,24 @@
 .wrapper {
-    display: flex;
-    align-items: center;
-    color: #fff;
-    height: 28px;
-    position: relative;
-    height: 48px;
-    background: linear-gradient(rgba(0, 0, 0, 0.3) 50%, transparent);
+  display: flex;
+  align-items: center;
+  color: #fff;
+  height: 28px;
+  position: relative;
+  height: 48px;
+  background: linear-gradient(rgba(0, 0, 0, 0.3) 50%, transparent);
 
-    &.isHorizontal {
-        :global {
-            .adm-nav-bar-left {
-                margin-left: 50px;
-            }
-        }
-    }
-
+  &.isHorizontal {
     :global {
-        .adm-nav-bar-left {
-            margin-left: 20px;
-            white-space: nowrap;
-        }
+      .adm-nav-bar-left {
+        margin-left: 50px;
+      }
     }
+  }
+
+  :global {
+    .adm-nav-bar-left {
+      margin-left: 20px;
+      white-space: nowrap;
+    }
+  }
 }

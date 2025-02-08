@@ -12,11 +12,8 @@ module.exports = {
   plugins: ['react-refresh', 'prettier'],
   rules: {
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
-    'eqeqeq': 2,
+    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    eqeqeq: 2,
     'require-atomic-updates': 'warn',
     'no-console': 'warn',
     'react/display-name': 'off',
@@ -40,4 +37,4 @@ module.exports = {
     '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
   },
-}
+};

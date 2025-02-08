@@ -449,7 +449,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
       }
       onChange(activeIndex);
       const playerDom = sdkRef.current?.playerContainer;
-      const insertParentNode = document.getElementById(`videoWithRotateBtn${activeIndex}`);
+      const insertParentNode = document.getElementById(`video-with-rotate-btn-${activeIndex}`);
       if (insertParentNode && playerDom && playerDom.parentNode) {
         playerDom.parentNode!.style.height = !isLandScapeMode
           ? '100%'
@@ -521,7 +521,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
                             playerReady={playerReady}
                             index={i}
                             isFullScreen={isFullScreen}
-                            swithFullScreen={() => {
+                            switchFullScreen={() => {
                               os.isIos
                                 ? sdkRef.current?.player?.getCssFullscreen()
                                 : sdkRef.current?.player?.getFullscreen();
@@ -550,7 +550,7 @@ interface IPlayControlProps {
   activeIndex: number;
   index: number;
   onUnmuteClick: () => void;
-  swithFullScreen: () => void;
+  switchFullScreen: () => void;
   showUnmuteBtn: boolean;
   isFullScreen: boolean;
 }
@@ -558,10 +558,9 @@ const PlayContol: React.FC<IPlayControlProps> = ({
   videoData,
   playerReady,
   activeIndex,
-  isFullScreen,
   index,
   onUnmuteClick,
-  swithFullScreen,
+  switchFullScreen,
   showUnmuteBtn,
 }) => {
   const isLandScapeMode = videoData.height < videoData.width;
@@ -574,7 +573,7 @@ const PlayContol: React.FC<IPlayControlProps> = ({
         style={{
           top: isLandScapeMode ? `calc(${videoData.height / videoData.width} * 100vw)` : 0,
         }}
-        onClick={swithFullScreen}
+        onClick={switchFullScreen}
       >
         <IconRotate />
         <span>{t('d_full_screen')}</span>
@@ -589,17 +588,14 @@ const PlayContol: React.FC<IPlayControlProps> = ({
         >
           <div className={styles.unmuteBtn}>
             <IconUnmute className={styles.unmuteIcon} />
-            <span>点击取消静音</span>
+            <span>{t('d_click_to_unmute')}</span>
           </div>
         </div>
       )}
       {activeIndex === index && (
         <div
           id="veplayer-container"
-          className={classNames('veplayer-container', {
-            'is-landscape-mode': isLandScapeMode,
-            'is-full-screen': isFullScreen,
-          })}
+          className="veplayer-container"
           style={{
             width: '100%',
             height: isLandScapeMode ? `calc(${videoData.height / videoData.width} * 100vw)` : '100%',

@@ -1,6 +1,7 @@
+// 待抽离和短剧复用
 import React, { useEffect, useRef, useImperativeHandle, useState, useCallback } from 'react';
 import style from './index.module.less';
-import cn from 'classnames';
+import classNames from 'classnames';
 import { IComment, IPlayer } from '@/interface';
 import IconComment from '@/assets/svgr/iconComment.svg?react';
 import CommentComp from '@/components/comment';
@@ -9,7 +10,7 @@ import useAxios from 'axios-hooks';
 import { API_PATH } from '@/service/path';
 import { renderCount } from '@/utils/util';
 import translation from '@/utils/translation';
-import { debounce } from 'lodash';
+import { debounce } from 'lodash-es';
 import { Popup } from 'antd-mobile';
 import { imgUrl } from '@/utils';
 
@@ -47,25 +48,21 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
 
   function calcCaption() {
     try {
-      const containerHeight = document.getElementById(`titleContainer${index}`)?.offsetHeight || 0;
-      const content = document.getElementById(`title${index}`)?.offsetHeight || 0;
+      const containerHeight = document.getElementById(`title-container-${index}`)?.offsetHeight || 0;
+      const content = document.getElementById(`title-${index}`)?.offsetHeight || 0;
 
-      if (content > containerHeight) {
-        setShowMore(true);
-      } else {
-        setShowMore(false);
-      }
+      setShowMore(content > containerHeight);
     } catch (e) {
       console.log(e);
     }
   }
 
   return (
-    <div className={cn(style.wrapper, style.swiperItem)}>
+    <div className={classNames(style.wrapper, style.swiperItem)}>
       <img src={data.coverUrl} className={style.posterShow} />
       {index === 0 ? (
         <div className={style.veplayerWrapper}>
-          <div id="veplayerContainer" />
+          <div id="veplayer-container" />
         </div>
       ) : (
         <div className={style.videoDom} id={`swiper-video-container-${index}`}></div>
@@ -101,7 +98,7 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
       </div>
       <div className={style.bottom}>
         {data.name && <div className={style.name}>@{data.name}</div>}
-        <div id={`titleContainer${index}`} className={style.titleContainer}>
+        <div id={`title-container-${index}`} className={style.titleContainer}>
           {showMore && (
             <div
               className={style.boxMore}
@@ -114,7 +111,7 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
             </div>
           )}
           <div className={style.titleWrapper}>
-            <div className={style.title} id={`title${index}`}>
+            <div className={style.title} id={`title-${index}`}>
               {data.caption}
             </div>
           </div>

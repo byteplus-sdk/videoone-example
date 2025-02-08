@@ -37,12 +37,61 @@ import { resetDetail, setDetail, setList } from '@/redux/actions/dramaDetail';
 import Speed, { playbackRateList } from '@/components/speed';
 import Definition from '@/components/definition';
 import t from '@/utils/translation';
+import { chunk } from 'lodash-es';
 
 interface ILockData {
   vid: string;
   order: number;
   subtitle_auth_token: string;
   video_model: string;
+}
+
+interface VideoControlsProps {
+  current: any; // 建议替换为具体的类型
+  onCommentClick: (e: React.MouseEvent) => void;
+}
+
+const VideoControls: React.FC<VideoControlsProps> = ({ current, onCommentClick }) => (
+  <div>
+    <div className={styles.rightLane}>
+      <div className={styles.btns}>
+        <div className={styles.like}>
+          <LikeComp like={current.like} />
+        </div>
+        <div className={styles.comment} onClick={onCommentClick}>
+          <IconComment />
+          <span>{renderCount(current.comment)}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+function useDramaData(urlState: any) {
+  const dispatch = useDispatch();
+
+  const [{ data, loading }] = useAxios(
+    {
+      url: API_PATH.GetDramaList,
+      method: 'POST',
+      data: {
+        drama_id: urlState.id,
+        play_info_type: 1,
+        user_id: window.sessionStorage.getItem('user_id'),
+      },
+    },
+    { useCache: true },
+  );
+
+  useEffect(() => {
+    const list = ((data?.response || []) as IDramaDetailListItem['video_meta'][]).map(item => ({
+      ...item,
+      videoModel: parseModel(item.video_model) as IVideoModel,
+    }));
+    dispatch(setList(list));
+  }, [data?.response, dispatch]);
+
+  return { loading };
 }
 
 function ChannelDetail() {
@@ -63,18 +112,7 @@ function ChannelDetail() {
   const commentDrawerVisible = useSelector((state: RootState) => state.controls.commentDrawerVisible);
 
   const list = useSelector((state: RootState) => state.dramaDetail.list);
-  const [{ data, loading }] = useAxios(
-    {
-      url: API_PATH.GetDramaList,
-      method: 'POST',
-      data: {
-        drama_id: urlState.id,
-        play_info_type: 1,
-        user_id: window.sessionStorage.getItem('user_id'),
-      },
-    },
-    { useCache: true },
-  );
+  const { loading } = useDramaData(urlState);
 
   const [{ data: commentsData, loading: commentLoading }, executeGetComments] = useAxios(
     {
@@ -98,16 +136,6 @@ function ChannelDetail() {
     },
     { useCache: true, manual: true },
   );
-
-  useEffect(() => {
-    const list = ((data?.response || []) as IDramaDetailListItem['video_meta'][]).map(item => {
-      return {
-        ...item,
-        videoModel: parseModel(item.video_model) as IVideoModel,
-      };
-    });
-    dispatch(setList(list));
-  }, [data?.response]);
 
   /**
    * vip解锁更新
@@ -133,21 +161,11 @@ function ChannelDetail() {
 
   const current = useMemo(() => list?.[activeIndex] ?? {}, [activeIndex, list]);
   const numArrList = useMemo(() => {
-    const nums = Array.from({ length: Math.ceil(list.length) }, (_, index) => index + 1);
-    let tempList: number[][] = [];
-    let temp: number[] = [];
-    nums.forEach(item => {
-      if (temp.length === 7) {
-        tempList.push(temp);
-        temp = [item];
-      } else {
-        temp.push(item);
-      }
-    });
-    if (temp.length > 0) {
-      tempList.push(temp);
-    }
-    return tempList;
+    if (!list.length) return [];
+    return chunk(
+      Array.from({ length: Math.ceil(list.length) }, (_, i) => i + 1),
+      7,
+    );
   }, [list.length]);
 
   useEffect(() => {
@@ -243,6 +261,40 @@ function ChannelDetail() {
     });
   }, [isFullScreen, isCssFullScreen, isHorizontal]);
 
+  const handleBack = useCallback(() => {
+    dispatch(resetDetail());
+    navigate('/dramaGround?device_id=001');
+  }, [dispatch, navigate]);
+
+  const handleCommentClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      dispatch(setCommentPanelVisible(true));
+    },
+    [dispatch],
+  );
+
+  const renderVideoPlayer = () => (
+    <VideoSwiper
+      startTime={startTime}
+      initActiveIndex={Number(activeIndex)}
+      adVisible={adVisible}
+      playbackRate={playbackRate}
+      definition={definition}
+      videoDataList={list}
+      ref={videoSwiperRef}
+      showLockPrompt={showLockPrompt}
+      onChange={index => {
+        const findIndex = numArrList.findIndex(itemArr => itemArr.includes(index + 1));
+        setActiveIndex(index);
+        dispatch(setLockNumPageIndex(findIndex));
+      }}
+      otherComponent={
+        !isFullScreen && !isCssFullScreen && <VideoControls current={current} onCommentClick={handleCommentClick} />
+      }
+    />
+  );
+
   return loading ? (
     <div className={styles.loadingWrapper}>
       <Loading />
@@ -254,52 +306,10 @@ function ChannelDetail() {
           backIcon={<IconBack />}
           className={styles.head}
           left={<div className={styles.caption}>{current.caption}</div>}
-          onBack={() => {
-            dispatch(resetDetail());
-            navigate('/dramaGround?device_id=001');
-          }}
+          onBack={handleBack}
         />
       )}
-      <div className={styles.body}>
-        <VideoSwiper
-          startTime={startTime}
-          initActiveIndex={Number(activeIndex)}
-          adVisible={adVisible}
-          playbackRate={playbackRate}
-          definition={definition}
-          videoDataList={list}
-          ref={videoSwiperRef}
-          showLockPrompt={showLockPrompt}
-          onChange={index => {
-            const findIndex = numArrList.findIndex(itemArr => itemArr.includes(index + 1));
-            setActiveIndex(index);
-            dispatch(setLockNumPageIndex(findIndex));
-          }}
-          otherComponent={
-            isFullScreen || isCssFullScreen ? null : (
-              <div>
-                <div className={styles.rightLane}>
-                  <div className={styles.btns}>
-                    <div className={styles.like}>
-                      <LikeComp like={current.like} />
-                    </div>
-                    <div
-                      className={styles.comment}
-                      onClick={e => {
-                        e.stopPropagation();
-                        dispatch(setCommentPanelVisible(true));
-                      }}
-                    >
-                      <IconComment />
-                      <span>{renderCount(current.comment)}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-          }
-        />
-      </div>
+      <div className={styles.body}>{renderVideoPlayer()}</div>
 
       {isFullScreen || isCssFullScreen ? null : (
         <div className={styles.footer}>

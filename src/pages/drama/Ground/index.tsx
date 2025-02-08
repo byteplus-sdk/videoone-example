@@ -25,6 +25,59 @@ interface IData {
   new_release: boolean;
 }
 
+// 抽取公共类型定义
+interface DramaItemProps extends IData {
+  index?: number;
+  showTopTag?: boolean;
+}
+
+// 抽取可复用的卡片组件
+const DramaCard: React.FC<DramaItemProps & { type: 'trending' | 'release' | 'recommend' }> = ({
+  drama_id,
+  drama_cover_url,
+  drama_title,
+  drama_play_times,
+  new_release,
+  index,
+  type,
+  showTopTag,
+}) => {
+  const navigate = useNavigate();
+
+  return (
+    <div
+      drama-id={drama_id}
+      className={classNames(styles[`${type}ItemWrapper`], 'drama')}
+      onClick={() => navigate(`/dramaDetail?id=${drama_id}&device_id=001`)}
+    >
+      <div className={styles.coverWrapper}>
+        <img src={drama_cover_url} alt={drama_title} />
+        {showTopTag &&
+          index !== undefined &&
+          (index < 3 ? (
+            <span className={styles.tagTop}>TOP{index + 1}</span>
+          ) : (
+            <span className={styles.tagNum}>{index + 1}</span>
+          ))}
+        {type === 'release' && new_release && <div className={styles.newTag}>NEW</div>}
+        <div className={styles.playNum}>
+          <IconPlay />
+          <span>{renderCount(drama_play_times)}</span>
+        </div>
+      </div>
+      <div className={styles.contentWrapper}>
+        <h2>{drama_title}</h2>
+        {type === 'trending' && (
+          <div className={styles.popularity}>
+            <IconFire />
+            <span className={styles.num}>{renderCount(drama_play_times)}</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const settings: Settings = {
   className: 'center',
   centerMode: true,
@@ -94,24 +147,29 @@ const Ground: React.FC = () => {
     };
   }, []);
 
+  // 抽取预加载逻辑
+  const setupPreload = () => {
+    if (!(os.isPc || os.isAndroid) || !dramaDetailData?.response) return;
+
+    const singlelist = [
+      {
+        ...dramaDetailData.response[0],
+        videoModel: parseModel(dramaDetailData.response[0].video_model)!,
+      },
+    ];
+
+    if (!preloadOnceRef.current) {
+      preloadOnceRef.current = true;
+      VePlayer.setPreloadScene(0);
+      VePlayer.preloader?.clearPreloadList();
+      VePlayer.setPreloadList(formatPreloadStreamList(singlelist) as IPreloadStream[]);
+    } else {
+      VePlayer.addPreloadList(formatPreloadStreamList(singlelist) as IPreloadStream[]);
+    }
+  };
+
   useEffect(() => {
-    // PC&Android开启预加载
-    if (!(os.isPc || os.isAndroid)) {
-      return;
-    }
-    if (dramaDetailData?.response) {
-      const singlelist = [
-        { ...dramaDetailData?.response[0], videoModel: parseModel(dramaDetailData?.response[0].video_model)! },
-      ];
-      if (!preloadOnceRef.current) {
-        preloadOnceRef.current = true;
-        VePlayer.setPreloadScene(0); // 更新为手动模式，注意：手动模式下直接全量加载所有待预加载资源
-        VePlayer.preloader?.clearPreloadList(); // 切换模式前清空预加载列表
-        VePlayer.setPreloadList(formatPreloadStreamList(singlelist) as IPreloadStream[]);
-      } else {
-        VePlayer.addPreloadList(formatPreloadStreamList(singlelist) as IPreloadStream[]);
-      }
-    }
+    setupPreload();
   }, [dramaDetailData?.response]);
 
   const loopData = (data?.response?.loop as IData[]) ?? [];
@@ -156,64 +214,18 @@ const Ground: React.FC = () => {
         <div className={styles.trendingContentWrapper}>
           {trending
             .filter((_item, index) => index < 6)
-            .map((item, index) => {
-              return (
-                <div
-                  key={item.drama_id}
-                  drama-id={item.drama_id}
-                  className={classNames(styles.trendingItemWrapper, 'drama')}
-                  onClick={() => {
-                    navigate(`/dramaDetail?id=${item.drama_id}&device_id=001`);
-                  }}
-                >
-                  <div className={styles.coverWrapper}>
-                    <img src={item.drama_cover_url} />
-                    {index < 3 ? (
-                      <span className={styles.tagTop}>TOP{index + 1}</span>
-                    ) : (
-                      <span className={styles.tagNum}>{index + 1}</span>
-                    )}
-                  </div>
-                  <div className={styles.contentWrapper}>
-                    <h2>{item.drama_title}</h2>
-                    <div className={styles.popularity}>
-                      <IconFire />
-                      <span className={styles.num}>{renderCount(item.drama_play_times)}</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            .map((item, index) => (
+              <DramaCard key={item.drama_id} {...item} type="trending" index={index} showTopTag />
+            ))}
         </div>
       </div>
       {/* 新发 */}
       <div className={styles.releaseWrapper}>
         <h1 className={styles.tit}>{t('d_new_release')}</h1>
         <div className={classNames(styles.releaseContentWrapper, 'noSwipingClass')}>
-          {release.map(item => {
-            return (
-              <div
-                key={item.drama_id}
-                drama-id={item.drama_id}
-                className={classNames(styles.releaseItemWrapper, 'drama')}
-                onClick={() => {
-                  navigate(`/dramaDetail?id=${item.drama_id}&device_id=001`);
-                }}
-              >
-                <div className={styles.coverWrapper}>
-                  <img src={item.drama_cover_url} />
-                  {item.new_release && <div className={styles.newTag}>NEW</div>}
-                  <div className={styles.playNum}>
-                    <IconPlay />
-                    <span>{renderCount(item.drama_play_times)}</span>
-                  </div>
-                </div>
-                <div className={styles.contentWrapper}>
-                  <h2>{item.drama_title}</h2>
-                </div>
-              </div>
-            );
-          })}
+          {release.map(item => (
+            <DramaCard key={item.drama_id} {...item} type="release" />
+          ))}
         </div>
       </div>
       {/* 推荐 */}
@@ -222,29 +234,9 @@ const Ground: React.FC = () => {
         <div className={styles.recommendContentWrapper}>
           {recommend
             .filter((_item, index) => index < 6)
-            .map(item => {
-              return (
-                <div
-                  key={item.drama_id}
-                  drama-id={item.drama_id}
-                  className={classNames(styles.recommendItemWrapper, 'drama')}
-                  onClick={() => {
-                    navigate(`/dramaDetail?id=${item.drama_id}&device_id=001`);
-                  }}
-                >
-                  <div className={styles.coverWrapper}>
-                    <img src={item.drama_cover_url} />
-                    <div className={styles.playNum}>
-                      <IconPlay />
-                      <span>{renderCount(item.drama_play_times)}</span>
-                    </div>
-                  </div>
-                  <div className={styles.contentWrapper}>
-                    <h2>{item.drama_title}</h2>
-                  </div>
-                </div>
-              );
-            })}
+            .map(item => (
+              <DramaCard key={item.drama_id} {...item} type="recommend" />
+            ))}
         </div>
       </div>
     </div>
