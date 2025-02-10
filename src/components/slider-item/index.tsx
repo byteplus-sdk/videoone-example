@@ -16,6 +16,7 @@ interface ISliderItemProps extends PropsWithChildren {
   isCssFullScreen?: boolean;
   otherComponent: React.ReactNode;
   getCurrentTime: () => number;
+  clickCallback: () => void;
   playNextStatus: string;
 }
 
@@ -31,6 +32,7 @@ const SliderItem: React.FC<ISliderItemProps> = ({
   isLandScapeMode,
   otherComponent,
   children,
+  clickCallback,
 }) => {
   const coverUrl = data?.videoModel?.PosterUrl ?? data?.cover_url;
 
@@ -65,6 +67,7 @@ const SliderItem: React.FC<ISliderItemProps> = ({
             className={classNames(style.videoContainer, {
               [style.isLandScapeMode]: isLandScapeMode,
             })}
+            onClick={clickCallback}
           >
             <div className="veplayer-cus-gradient-wrapper" />
             <div

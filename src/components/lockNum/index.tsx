@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import IconPlaying from '@/assets/svgr/iconPlaying.svg?react';
 import IconLock from '@/assets/svgr/iconLock.svg?react';
-import { Popup } from 'antd-mobile';
+import { Popup, Toast } from 'antd-mobile';
 import styles from './index.module.less';
 import { IDramaDetailListItem } from '@/@types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -55,7 +55,12 @@ const LockNum: React.FC<ILockNum> = React.memo(
           <div
             className={styles.lockBtn}
             onClick={() => {
-              setLockAllDrawerOpen(true);
+              const hasVip = list.find(item => item.vip);
+              if (hasVip) {
+                setLockAllDrawerOpen(true);
+              } else {
+                Toast.show(t('d_unlock_all_episodes_placeholder'));
+              }
             }}
           >
             <IconLock />

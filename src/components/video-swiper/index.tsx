@@ -514,6 +514,11 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
                         isLandScapeMode={isLandScapeMode}
                         otherComponent={otherComponent}
                         getCurrentTime={getCurrentTime}
+                        clickCallback={() => {
+                          if (currentVideoData.vip) {
+                            showLockPrompt?.();
+                          }
+                        }}
                       >
                         {!currentVideoData.vip && (
                           <PlayContol

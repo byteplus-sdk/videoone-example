@@ -164,6 +164,10 @@ const translation = {
     'zh-CN': '点击取消静音',
     en: 'Click to unmute',
   },
+  d_unlock_all_episodes_placeholder: {
+    'zh-CN': '已经解锁全部剧集',
+    en: 'Already unlocked all episodes',
+  },
 };
 
 type ILang = 'zh-CN' | 'en' | 'zh' | 'zh-Hans-CN';
