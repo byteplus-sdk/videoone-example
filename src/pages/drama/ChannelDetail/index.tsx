@@ -122,6 +122,14 @@ function ChannelDetail() {
     { manual: true },
   );
 
+  const [, executeGetDramaList] = useAxios(
+    {
+      url: API_PATH.GetDramaList,
+      method: 'POST',
+    },
+    { useCache: true, manual: true },
+  );
+
   const [activeIndex, setActiveIndex] = useState(urlState.order ? urlState.order - 1 : 0);
   const navigate = useNavigate();
 
@@ -144,6 +152,16 @@ function ChannelDetail() {
     if (!lockData?.response) {
       return;
     }
+
+    // 重新获取数据并缓存
+    executeGetDramaList({
+      data: {
+        drama_id: current.drama_id,
+        play_info_type: 1,
+        user_id: window.sessionStorage.getItem('user_id'),
+      },
+    });
+
     setLockAllDrawerOpen(false);
     const newList = list.map(item => {
       const findItem = (lockData?.response as ILockData[]).find(lockItem => lockItem.order === item.order);
