@@ -78,24 +78,6 @@ const DramaCard: React.FC<DramaItemProps & { type: 'trending' | 'release' | 'rec
   );
 };
 
-const settings: Settings = {
-  className: 'center',
-  centerMode: true,
-  infinite: true,
-  slidesToShow: 1,
-  autoplaySpeed: 5000,
-  pauseOnFocus: false,
-  pauseOnHover: false,
-  adaptiveHeight: true,
-  arrows: false,
-  dots: true,
-  dotsClass: styles.slickDots,
-  customPaging: function () {
-    return <div className="dotWrapper"></div>;
-  },
-  autoplay: true,
-};
-
 const Ground: React.FC = () => {
   const navigate = useNavigate();
   const refPreloadSet = useRef(new Set()) as React.MutableRefObject<Set<string>>;
@@ -177,10 +159,30 @@ const Ground: React.FC = () => {
     setupPreload();
   }, [dramaDetailData?.response]);
 
-  const loopData = (data?.response?.loop as IData[]) ?? [];
+  const loopData = ((data?.response?.loop as IData[]) ?? []).filter((_item, index) => index < 8);
   const trending = (data?.response?.trending as IData[]) ?? [];
   const release = (data?.response?.new as IData[]) ?? [];
   const recommend = (data?.response?.recommend as IData[]) ?? [];
+
+
+  const settings: Settings = {
+    className: 'center',
+    centerMode: true,
+    infinite: true,
+    slidesToShow: 1,
+    autoplaySpeed: 5000,
+    pauseOnFocus: false,
+    pauseOnHover: false,
+    adaptiveHeight: true,
+    arrows: false,
+    swipe: loopData.length >= 2,
+    dots: true,
+    dotsClass: styles.slickDots,
+    customPaging: function () {
+      return <div className="dotWrapper"></div>;
+    },
+    autoplay: true,
+  };
 
   return loading ? (
     <div className={styles.loadingWrapper}>
@@ -192,7 +194,7 @@ const Ground: React.FC = () => {
         <IconBack />
       </div>
       {/* 轮播 */}
-      <div className={classNames(styles.carousel, 'noSwipingClass')}>
+      {loopData.length > 0 && <div className={classNames(styles.carousel, 'noSwipingClass')}>
         <Slider {...settings}>
           {loopData.map(item => {
             return (
@@ -212,9 +214,9 @@ const Ground: React.FC = () => {
             );
           })}
         </Slider>
-      </div>
+      </div>}
       {/* 趋势 */}
-      <div className={styles.trendingWrapper}>
+      <div className={classNames(styles.trendingWrapper, { [styles.trendingWrapperHide]: loopData.length <= 0 })}>
         <h1 className={styles.tit}>{t('d_most_trending')} 🔥</h1>
         <div className={styles.trendingContentWrapper}>
           {trending
