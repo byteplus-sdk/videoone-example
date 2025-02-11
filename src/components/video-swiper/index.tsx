@@ -444,6 +444,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     useEffect(() => {
       return () => {
         if (sdkRef.current) {
+          os.isIos ? window.playerSdk?.player?.exitCssFullscreen() : window.playerSdk?.player?.exitFullscreen();
           sdkRef.current.destroy();
         }
       };
