@@ -205,6 +205,9 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
         const next = videoDataList?.[index];
 
         if (next.vip) {
+          swiperActiveRef.current = index;
+          setActiveIndex(index);
+          sdkRef.current?.player?.pause();
           refVip.current = true;
           showLockPrompt?.();
           return;
@@ -325,6 +328,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
           videoFillMode: 'fillWidth',
           codec: def.Codec,
           enableMp4MSE: true,
+          loop: true,
           ignores: [
             'moreButtonPlugin',
             'enter',
