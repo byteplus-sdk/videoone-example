@@ -204,15 +204,6 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
         }
         const next = videoDataList?.[index];
 
-        if (next.vip) {
-          swiperActiveRef.current = index;
-          setActiveIndex(index);
-          sdkRef.current?.player?.pause();
-          refVip.current = true;
-          showLockPrompt?.();
-          return;
-        }
-
         // vip解锁后或者非vip视频播放
         if (sdkRef.current && (index !== swiperActiveRef.current || vipCanPlay)) {
           if (os.isIos) {
@@ -221,6 +212,15 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
             !isFullScreen && setActiveIndex(index);
           }
           swiperActiveRef.current = index;
+
+          if (next.vip) {
+            swiperRef.current?.slideTo(index, 0);
+            sdkRef.current?.player?.pause();
+            refVip.current = true;
+            showLockPrompt?.();
+            return;
+          }
+
           setPlayNextStatus('start');
           const nextInfo = formatPreloadStreamList([videoDataList?.[index]], definition)[0];
           const poster = next?.videoModel?.PosterUrl ?? next.cover_url;
