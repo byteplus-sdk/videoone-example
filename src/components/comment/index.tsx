@@ -110,7 +110,10 @@ const Comment: React.FC<IProps> = props => {
                           onClick={() => {
                             Dialog.confirm({
                               title: translation('c_delete_confirm'),
-                              getContainer: props.isFullScreen ? window.playerSdk?.player?.root : document.body,
+                              getContainer:
+                                !props.isPortrait && props.isFullScreen && !props.isCssFullScreen
+                                  ? window.playerSdk?.player?.root
+                                  : document.body,
                               bodyClassName: classNames(styles.confirmBody, {
                                 [styles.isFullScreen]: props.isFullScreen,
                               }),
