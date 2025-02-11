@@ -204,6 +204,12 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
         }
         const next = videoDataList?.[index];
 
+        if (next.vip) {
+          refVip.current = true;
+          showLockPrompt?.();
+          return;
+        }
+
         // vip解锁后或者非vip视频播放
         if (sdkRef.current && (index !== swiperActiveRef.current || vipCanPlay)) {
           if (os.isIos) {
@@ -218,11 +224,6 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
           swiperRef.current?.slideTo(index, 0);
           sdkRef.current?.player?.pause();
           sdkRef.current?.getPlugin('poster')?.update(poster);
-          if (next.vip) {
-            refVip.current = true;
-            showLockPrompt?.();
-            return;
-          }
           if (!nextInfo?.url) {
             Toast.show({
               icon: 'fail',
@@ -258,6 +259,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     useEffect(() => {
       // 关闭广告后并且当前视频经过了vip解锁后可播放
       if (refVip.current && !currentVideoData.vip && !adVisible) {
+        debugger;
         if (!sdkRef.current) {
           // 首个视频未解锁需要初始化播放器
           initPlayer();
@@ -486,6 +488,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     const getCurrentTime = useCallback(() => {
       return sdkRef?.current?.player?.currentTime || 0;
     }, []);
+
     return (
       <div className={isChannel ? styles.recommendMain : styles.main}>
         <div className={styles.swiperContainer} ref={wrapRef as React.MutableRefObject<HTMLDivElement>}>
