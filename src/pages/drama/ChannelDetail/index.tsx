@@ -178,6 +178,10 @@ function ChannelDetail() {
       return item;
     });
     dispatch(setList(newList));
+
+    setTimeout(() => {
+      videoSwiperRef.current?.playLockVideo();
+    }, 0);
   }, [lockData?.response]);
 
   const current = useMemo(() => list?.[activeIndex] ?? {}, [activeIndex, list]);
@@ -299,7 +303,6 @@ function ChannelDetail() {
     <VideoSwiper
       startTime={startTime}
       initActiveIndex={Number(activeIndex)}
-      adVisible={adVisible}
       playbackRate={playbackRate}
       definition={definition}
       videoDataList={list}

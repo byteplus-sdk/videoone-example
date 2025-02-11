@@ -20,6 +20,7 @@ import { IPreloadStream, Stream } from '@byteplus/veplayer';
 import { setDefinition } from '@/redux/actions/controls';
 import t from '@/utils/translation';
 import ExpandTopPlugin from '@/plugins/expandTop';
+import SystemCover from '../systemCover';
 
 const getClass: (player: PlayerCore) => HTMLDivElement = (player: PlayerCore) =>
   player.root?.getElementsByClassName('xgplayer-start')[0];
@@ -29,7 +30,6 @@ interface IVideoSwiperProps {
   isChannel?: boolean;
   isChannelActive?: boolean;
   isSliderMoving?: boolean;
-  adVisible?: boolean;
   startTime?: number;
   initActiveIndex?: number;
   playbackRate?: number;
@@ -39,10 +39,12 @@ interface IVideoSwiperProps {
   onProgressDrag?: () => void;
   onProgressDragend?: () => void;
   showLockPrompt?: () => void;
+  playLockVideo?: () => void;
 }
 
 export interface RefVideoSwiper {
   onSelectClick: (index: number) => void;
+  playLockVideo: () => void;
 }
 
 const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
@@ -55,7 +57,6 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
       playbackRate = 1,
       onChange,
       definition = '720p',
-      adVisible,
       onProgressDrag,
       onProgressDragend,
       videoDataList,
@@ -75,6 +76,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     const refEndTime = useRef(0);
     const [playNextStatus, setPlayNextStatus] = useState<string>('');
     const [showUnmuteBtn, setShowUnmuteBtn] = useState<boolean>(false);
+    const [showSystemCover, setShowSystemCover] = useState<boolean>(false);
     const [playerReady, setPlayerReady] = useState<boolean>(false);
     const [activeIndex, setActiveIndex] = useState<number>(initActiveIndex || 0);
     const currentVideoData = videoDataList?.[activeIndex];
@@ -217,9 +219,11 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
             swiperRef.current?.slideTo(index, 0);
             sdkRef.current?.player?.pause();
             refVip.current = true;
+            os.isAndroid && isFullScreen && setShowSystemCover(true);
             showLockPrompt?.();
             return;
           }
+          setShowSystemCover(false);
 
           setPlayNextStatus('start');
           const nextInfo = formatPreloadStreamList([videoDataList?.[index]], definition)[0];
@@ -258,19 +262,6 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
       },
       [attachStartIcon, hideStartIcon, videoDataList, activeIndex, isFullScreen, definition],
     );
-
-    useEffect(() => {
-      // 关闭广告后并且当前视频经过了vip解锁后可播放
-      if (refVip.current && !currentVideoData.vip && !adVisible) {
-        if (!sdkRef.current) {
-          // 首个视频未解锁需要初始化播放器
-          initPlayer();
-        } else {
-          // 已经初始化的话直接播放当前这条
-          playNext(activeIndex, true);
-        }
-      }
-    }, [currentVideoData.vip, adVisible]);
 
     const onSlideChange = useCallback(
       (swiper: SwiperClass) => {
@@ -487,6 +478,10 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
 
     useImperativeHandle(ref, () => ({
       onSelectClick,
+      // 解锁后直接调用播放
+      playLockVideo: () => {
+        playNext(swiperActiveRef.current, true);
+      },
     }));
 
     const getCurrentTime = useCallback(() => {
@@ -549,6 +544,14 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
                 );
               })}
             </Swiper>
+          )}
+          {showSystemCover && (
+            <SystemCover
+              imgUrl={videoDataList[swiperActiveRef.current].cover_url}
+              clickCallback={() => {
+                showLockPrompt?.();
+              }}
+            />
           )}
         </div>
       </div>
