@@ -7,7 +7,7 @@
     .xgplayer-is-fullscreen,
     .xgplayer-is-cssfullscreen {
       xg-controls {
-        background: linear-gradient(0deg, rgba(0, 0, 0, 0.2) 50%, transparent);
+        background: linear-gradient(0deg, rgb(0 0 0 / 20%) 50%, transparent);
       }
 
       xg-inner-controls {
@@ -85,17 +85,17 @@
       background-color: transparent !important;
     }
 
-    .xgplayer .xgplayer-start {
-      transform: translate3d(0, 0, 0);
-      translate: -50% -50%;
-    }
+    // .xgplayer .xgplayer-start {
+    //   transform: translate3d(0, 0, 0);
+    //   translate: -50% -50%;
+    // }
 
     .xgplayer .xgplayer-controls {
       transform: translate3d(0, 0, 0);
     }
 
     .xgplayer-mobile .xgplayer-progress .xgplayer-progress-btn {
-      background-color: rgba(255, 255, 255, 0) !important;
+      background-color: rgb(255 255 255 / 0%) !important;
       box-shadow: none;
     }
 
@@ -119,8 +119,8 @@
         }
 
         .inner-focus-point {
-          &:before,
-          &:after {
+          &::before,
+          &::after {
             width: 6px;
           }
         }
@@ -190,7 +190,7 @@
   height: 32px;
   width: fit-content;
   border-radius: 4px;
-  border: 1px solid #ffffff33;
+  border: 1px solid #fff3;
   padding: 0 8px;
   margin-top: 12px;
 
