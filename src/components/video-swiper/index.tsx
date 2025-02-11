@@ -165,10 +165,10 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     }, [playbackRate]);
 
     useEffect(() => {
-      if (sdkRef.current && definition && (isCssFullScreen || isFullScreen)) {
+      if (sdkRef.current?.player && definition) {
         sdkRef.current.changeDefinition(definition);
       }
-    }, [definition, isCssFullScreen, isFullScreen]);
+    }, [definition]);
 
     const hideStartIcon = useCallback((player?: PlayerCore) => {
       if (!player?.root) {
@@ -230,7 +230,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
           if (!nextInfo?.url) {
             Toast.show({
               icon: 'fail',
-              content: '数据异常',
+              content: t('d_data_error'),
             });
             return;
           }
@@ -247,7 +247,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
                 bitrate: def.Bitrate,
                 vtype: 'MP4',
               })) as Stream[],
-              defaultDefinition: nextInfo.definition,
+              defaultDefinition: definition,
             })
             .then(() => sdkRef.current?.player?.play())
             .then(() => {
@@ -256,13 +256,12 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
             });
         }
       },
-      [attachStartIcon, hideStartIcon, videoDataList, activeIndex, isFullScreen],
+      [attachStartIcon, hideStartIcon, videoDataList, activeIndex, isFullScreen, definition],
     );
 
     useEffect(() => {
       // 关闭广告后并且当前视频经过了vip解锁后可播放
       if (refVip.current && !currentVideoData.vip && !adVisible) {
-        debugger;
         if (!sdkRef.current) {
           // 首个视频未解锁需要初始化播放器
           initPlayer();
@@ -286,7 +285,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     const onEnded = useCallback(() => {
       if (swiperRef.current?.activeIndex === videoDataList.length - 1) {
         Toast.show({
-          content: '看完了！',
+          content: t('d_data_over'),
         });
       } else {
         swiperRef.current?.slideNext();
@@ -451,7 +450,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     }, []);
 
     useEffect(() => {
-      if (!sdkRef.current) {
+      if (!sdkRef.current && !currentVideoData.vip) {
         return;
       }
       onChange(activeIndex);
@@ -463,7 +462,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
           : `calc(${currentVideoData.height / currentVideoData.width} * 100vw)`;
         insertParentNode?.insertBefore(playerDom.parentNode, null);
       }
-    }, [activeIndex]);
+    }, [activeIndex, currentVideoData.vip]);
 
     useEffect(() => {
       if (isChannel) {
@@ -575,6 +574,7 @@ const PlayContol: React.FC<IPlayControlProps> = ({
   onUnmuteClick,
   switchFullScreen,
   showUnmuteBtn,
+  isFullScreen,
 }) => {
   const isLandScapeMode = videoData.height < videoData.width;
   return (
@@ -591,7 +591,7 @@ const PlayContol: React.FC<IPlayControlProps> = ({
         <IconRotate />
         <span>{t('d_full_screen')}</span>
       </div>
-      {showUnmuteBtn && (
+      {showUnmuteBtn && !isFullScreen && (
         <div
           className={styles.unmute}
           onClick={onUnmuteClick}

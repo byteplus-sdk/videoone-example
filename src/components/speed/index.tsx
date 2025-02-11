@@ -4,7 +4,7 @@ import { Popup } from 'antd-mobile';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './index.module.less';
-
+import t from '@/utils/translation';
 export const playbackRateList = [
   {
     title: '2.0x',
@@ -49,7 +49,7 @@ const Speed = () => {
       })}
       maskClassName={styles.popupMaskClass}
     >
-      <div className={styles.head}>Playback speed</div>
+      <div className={styles.head}>{t('d_playback_speed')}</div>
       <div className={styles.body}>
         {playbackRateList.map(item => (
           <div

@@ -1,6 +1,6 @@
 const initialState = {
   playbackRate: 1,
-  definition: '720p',
+  definition: '',
   playRateDrawerVisible: false,
   definitionDrawerVisible: false,
   commentDrawerVisible: false,

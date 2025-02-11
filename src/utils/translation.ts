@@ -168,6 +168,22 @@ const translation = {
     'zh-CN': '已经解锁全部剧集',
     en: 'Already unlocked all episodes',
   },
+  d_definition: {
+    'zh-CN': '清晰度',
+    en: 'Definition',
+  },
+  d_playback_speed: {
+    'zh-CN': '倍速',
+    en: 'Playback speed',
+  },
+  d_data_error: {
+    'zh-CN': '数据异常',
+    en: 'Data exception',
+  },
+  d_data_over: {
+    'zh-CN': '看完了！',
+    en: 'Finished!',
+  },
 };
 
 type ILang = 'zh-CN' | 'en' | 'zh' | 'zh-Hans-CN';
