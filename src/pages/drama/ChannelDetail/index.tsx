@@ -127,7 +127,7 @@ function ChannelDetail() {
       url: API_PATH.GetDramaList,
       method: 'POST',
     },
-    { useCache: true, manual: true },
+    { manual: true },
   );
 
   const [activeIndex, setActiveIndex] = useState(urlState.order ? urlState.order - 1 : 0);
@@ -154,13 +154,16 @@ function ChannelDetail() {
     }
 
     // 重新获取数据并缓存
-    executeGetDramaList({
-      data: {
-        drama_id: current.drama_id,
-        play_info_type: 1,
-        user_id: window.sessionStorage.getItem('user_id'),
+    executeGetDramaList(
+      {
+        data: {
+          drama_id: current.drama_id,
+          play_info_type: 1,
+          user_id: window.sessionStorage.getItem('user_id'),
+        },
       },
-    });
+      { useCache: false },
+    );
 
     setLockAllDrawerOpen(false);
     const newList = list.map(item => {

@@ -112,19 +112,22 @@ const Ground: React.FC = () => {
       url: API_PATH.GetDramaList,
       method: 'POST',
     },
-    { useCache: true, autoCancel: false, manual: true },
+    { autoCancel: false, manual: true },
   );
 
   // 广场页的vid提前加载数据
   const handlePreload = (drama_id: string) => {
     if (!refPreloadSet.current.has(drama_id)) {
-      executePreload({
-        data: {
-          drama_id: drama_id,
-          play_info_type: 1,
-          user_id: window.sessionStorage.getItem('user_id'),
+      executePreload(
+        {
+          data: {
+            drama_id: drama_id,
+            play_info_type: 1,
+            user_id: window.sessionStorage.getItem('user_id'),
+          },
         },
-      });
+        { useCache: true },
+      );
       refPreloadSet.current.add(drama_id);
     }
   };
