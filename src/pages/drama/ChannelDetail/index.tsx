@@ -127,7 +127,7 @@ function ChannelDetail() {
       url: API_PATH.GetDramaList,
       method: 'POST',
     },
-    { manual: true },
+    { manual: true, autoCancel: false },
   );
 
   const [activeIndex, setActiveIndex] = useState(urlState.order ? urlState.order - 1 : 0);
@@ -142,7 +142,7 @@ function ChannelDetail() {
       url: API_PATH.GetDramaDetail,
       method: 'POST',
     },
-    { useCache: true, manual: true },
+    { useCache: true, manual: true, autoCancel: false },
   );
 
   /**
@@ -337,7 +337,9 @@ function ChannelDetail() {
           onBack={handleBack}
         />
       )}
-      <div className={classNames(styles.body, { [styles.isCssFullScreen]: isCssFullScreen })}>{renderVideoPlayer()}</div>
+      <div className={classNames(styles.body, { [styles.isCssFullScreen]: isCssFullScreen })}>
+        {renderVideoPlayer()}
+      </div>
 
       {isFullScreen || isCssFullScreen ? null : (
         <div className={styles.footer}>
