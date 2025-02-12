@@ -9,7 +9,27 @@
   align-items: center;
   background-color: #000;
 
-  img {
-    height: 100%;
+  .back {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media screen and (orientation: portrait) {
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  @media screen and (orientation: landscape) {
+    img {
+      height: 100%;
+    }
   }
 }

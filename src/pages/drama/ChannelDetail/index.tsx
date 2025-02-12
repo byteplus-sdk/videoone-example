@@ -307,6 +307,10 @@ function ChannelDetail() {
       definition={definition}
       videoDataList={list}
       ref={videoSwiperRef}
+      changeNum={(value: number) => {
+        setActiveIndex(value);
+        videoSwiperRef.current?.onSelectClick(value);
+      }}
       showLockPrompt={showLockPrompt}
       onChange={index => {
         const findIndex = numArrList.findIndex(itemArr => itemArr.includes(index + 1));
@@ -333,7 +337,7 @@ function ChannelDetail() {
           onBack={handleBack}
         />
       )}
-      <div className={styles.body}>{renderVideoPlayer()}</div>
+      <div className={classNames(styles.body, { [styles.isCssFullScreen]: isCssFullScreen })}>{renderVideoPlayer()}</div>
 
       {isFullScreen || isCssFullScreen ? null : (
         <div className={styles.footer}>

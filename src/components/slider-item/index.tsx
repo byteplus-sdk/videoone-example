@@ -4,7 +4,7 @@ import { IDramaDetailListItem } from '@/@types';
 import style from './index.module.less';
 import classNames from 'classnames';
 import { os } from '@/utils';
-
+import IconBack from '@/assets/svgr/iconBack.svg?react';
 interface ISliderItemProps extends PropsWithChildren {
   isActive: boolean;
   activeIndex: number;
@@ -18,6 +18,7 @@ interface ISliderItemProps extends PropsWithChildren {
   getCurrentTime: () => number;
   clickCallback: () => void;
   playNextStatus: string;
+  goBack: () => void;
 }
 
 const imageSizes = [600, 750, 800, 960];
@@ -32,6 +33,8 @@ const SliderItem: React.FC<ISliderItemProps> = ({
   otherComponent,
   children,
   clickCallback,
+  isCssFullScreen,
+  goBack
 }) => {
   const coverUrl = data?.videoModel?.PosterUrl ?? data?.cover_url;
 
@@ -79,6 +82,12 @@ const SliderItem: React.FC<ISliderItemProps> = ({
               {children}
             </div>
           </div>
+          {data.vip && isCssFullScreen && <div className={style.back} onClick={(e) => {
+            e.stopPropagation();
+            goBack()
+          }} >
+            <IconBack />
+          </div>}
           {otherComponent}
         </>
       )}

@@ -40,6 +40,7 @@ interface IVideoSwiperProps {
   onProgressDragend?: () => void;
   showLockPrompt?: () => void;
   playLockVideo?: () => void;
+  changeNum: (value: number) => void;
 }
 
 export interface RefVideoSwiper {
@@ -63,11 +64,13 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
       otherComponent,
       showLockPrompt,
       initActiveIndex,
+      changeNum
     },
     ref,
   ) => {
     const swiperRef = useRef<SwiperClass>();
     const swiperActiveRef = useRef<number>(initActiveIndex || 0);
+    const prevSwiperActiveRef = useRef<number>(swiperActiveRef.current);
     const wrapRef = useRef<HTMLElement>();
     const sdkRef = useRef<VePlayer>();
     const dispatch = useDispatch();
@@ -207,6 +210,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
           } else {
             !isFullScreen && setActiveIndex(index);
           }
+          prevSwiperActiveRef.current = swiperActiveRef.current;
           swiperActiveRef.current = index;
 
           if (next.vip) {
@@ -510,6 +514,9 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
                         isLandScapeMode={isLandScapeMode}
                         otherComponent={otherComponent}
                         getCurrentTime={getCurrentTime}
+                        goBack={() => {
+                          changeNum(prevSwiperActiveRef.current);
+                        }}
                         clickCallback={() => {
                           if (currentVideoData.vip) {
                             showLockPrompt?.();
@@ -544,6 +551,10 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
               imgUrl={videoDataList[swiperActiveRef.current].cover_url}
               clickCallback={() => {
                 showLockPrompt?.();
+              }}
+              goBack={(e: React.MouseEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+                changeNum(prevSwiperActiveRef.current);
               }}
             />
           )}
