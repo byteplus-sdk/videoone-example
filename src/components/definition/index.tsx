@@ -33,6 +33,7 @@ const Definition = () => {
             key={def.Definition}
             className={classNames(styles.item, { [styles.selected]: definition === def.Definition })}
             onClick={() => {
+              window.playerSdk?.changeDefinition(def.Definition);
               dispatch(setDefinition(def.Definition));
               dispatch(setDefinitionPanelVisible(false));
             }}

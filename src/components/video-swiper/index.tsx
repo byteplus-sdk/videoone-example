@@ -166,12 +166,6 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
       }
     }, [playbackRate]);
 
-    useEffect(() => {
-      if (sdkRef.current?.player && definition) {
-        sdkRef.current.changeDefinition(definition);
-      }
-    }, [definition]);
-
     const hideStartIcon = useCallback((player?: PlayerCore) => {
       if (!player?.root) {
         return;
@@ -239,7 +233,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
             return;
           }
           attachStartIcon(sdkRef.current?.player);
-          dispatch(setDefinition(nextInfo.definition));
+
           sdkRef.current
             ?.playNext({
               autoplay: true,
