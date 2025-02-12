@@ -40,7 +40,7 @@ interface IVideoSwiperProps {
   onProgressDragend?: () => void;
   showLockPrompt?: () => void;
   playLockVideo?: () => void;
-  changeNum: (value: number) => void;
+  changeNum?: (value: number) => void;
 }
 
 export interface RefVideoSwiper {
@@ -515,7 +515,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
                         otherComponent={otherComponent}
                         getCurrentTime={getCurrentTime}
                         goBack={() => {
-                          changeNum(prevSwiperActiveRef.current);
+                          changeNum?.(prevSwiperActiveRef.current);
                         }}
                         clickCallback={() => {
                           if (currentVideoData.vip) {
@@ -554,7 +554,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
               }}
               goBack={(e: React.MouseEvent<HTMLDivElement>) => {
                 e.stopPropagation();
-                changeNum(prevSwiperActiveRef.current);
+                changeNum?.(prevSwiperActiveRef.current);
               }}
             />
           )}
