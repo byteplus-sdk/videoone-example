@@ -206,7 +206,7 @@ function ChannelDetail() {
     } else {
       toastRef.current = Toast.show({
         icon: 'loading',
-        content: '加载中…',
+        content: t('d_loading'),
         duration: 0,
       });
     }

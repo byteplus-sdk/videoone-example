@@ -184,6 +184,10 @@ const translation = {
     'zh-CN': '看完了！',
     en: 'Finished!',
   },
+  d_loading: {
+    'zh-CN': '加载中…',
+    en: 'Loading...',
+  },
 };
 
 type ILang = 'zh-CN' | 'en' | 'zh' | 'zh-Hans-CN';
