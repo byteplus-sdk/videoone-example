@@ -73,7 +73,7 @@ const SliderItem: React.FC<ISliderItemProps> = ({
             <div
               className={classNames(style.videoWithRotateBtn, {
                 [style.isLandScapeMode]: isLandScapeMode,
-                [style.isFullScreen]: isFullScreen && !isCssFullScreen,
+                [style.isFullScreen]: isFullScreen,
               })}
               id={`video-with-rotate-btn-${index}`}
             >
