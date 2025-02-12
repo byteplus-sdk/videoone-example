@@ -28,7 +28,6 @@ const SliderItem: React.FC<ISliderItemProps> = ({
   isChannel,
   index,
   isFullScreen,
-  isCssFullScreen,
   isLandScapeMode,
   otherComponent,
   children,
