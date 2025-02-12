@@ -14,17 +14,10 @@ function flexible(window: Window, document: Document) {
 
   // set 1rem = viewWidth / 10
   function setRemUnit() {
-    const width = docEl.getBoundingClientRect().width || docEl.clientWidth;
-    const height = docEl.getBoundingClientRect().height || docEl.clientHeight;
-    let realWidth;
+    const width = docEl.clientWidth;
+    const height = docEl.clientHeight;
+    const realWidth = Math.min(width, height);
 
-    if (window.mySize) {
-      realWidth = window.mySize;
-    } else {
-      realWidth = Math.min(width, height); // Compatible with mobile phone horizontal screen case
-      // Record the current adaptation value to solve the problem of changes in the above calculation caused by scenarios such as the soft keyboard popping up.
-      window.mySize = realWidth;
-    }
     const rem = (realWidth * 100) / 375;
     docEl.style.fontSize = rem + 'px';
   }
@@ -41,8 +34,10 @@ function flexible(window: Window, document: Document) {
 
   // reset rem unit on page resize
   window.addEventListener('resize', () => {
-    setRemUnit();
-    setVh();
+    setTimeout(() => {
+      setRemUnit();
+      setVh();
+    }, 100);
   });
   window.addEventListener('pageshow', e => {
     if (e.persisted) {
