@@ -59,7 +59,11 @@ const LockNum: React.FC<ILockNum> = React.memo(
               if (hasVip) {
                 setLockAllDrawerOpen(true);
               } else {
-                Toast.show(t('d_unlock_all_episodes_placeholder'));
+                Toast.show({
+                  getContainer:
+                    !isPortrait && isFullScreen && !isCssFullScreen ? window.playerSdk?.player?.root : document.body,
+                  content: t('d_unlock_all_episodes_placeholder'),
+                });
               }
             }}
           >
