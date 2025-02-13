@@ -1,5 +1,5 @@
 /**
- * 视频播放信息
+ * Video playback information
  */
 export interface IPlayInfoListItem {
   BackupPlayUrl: string;
@@ -23,7 +23,7 @@ export enum CHANNEL_MODE {
 }
 
 /**
- * 短剧列表页
+ * Short drama list page
  */
 export interface IDramaDetailListItem {
   drama_meta: {
@@ -57,7 +57,7 @@ export interface IDramaDetailListItem {
 }
 
 /**
- * 服务端返回video_model解析后
+ * Parsed video_model returned from the server
  */
 export interface IVideoModel {
   Duration: number;

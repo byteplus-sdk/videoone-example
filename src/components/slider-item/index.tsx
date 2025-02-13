@@ -38,7 +38,7 @@ const SliderItem: React.FC<ISliderItemProps> = ({
 }) => {
   const coverUrl = data?.videoModel?.PosterUrl ?? data?.cover_url;
 
-  // 距离当前两集加载，减少dom数目
+  // Load two episodes from the current episode to reduce the number of DOMs
   const shouldRenderContent = useMemo(() => Math.abs(activeIndex - index) <= 2, [activeIndex, index]);
 
   return (

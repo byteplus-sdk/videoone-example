@@ -101,7 +101,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     }, [activeIndex]);
 
     /**
-     * 展示静音按钮
+     * Show the mute button
      */
     const showUnmute = useCallback(() => {
       if (sdkRef.current?.player) {
@@ -150,7 +150,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     };
 
     useEffect(() => {
-      // 屏幕旋转监听
+      // Screen rotation monitoring
       screenOrientation();
     }, []);
 
@@ -193,8 +193,8 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     }, []);
 
     /**
-     * 播放器下一个视频
-     * @param {number} index - 当前swiper的index
+     * Next video of the player
+     * @param {number} index - Current swiper index
      */
     const playNext = useCallback(
       (index: number, vipCanPlay?: boolean) => {
@@ -203,7 +203,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
         }
         const next = videoDataList?.[index];
 
-        // vip解锁后或者非vip视频播放
+        // Play after VIP unlock or non-VIP video
         if (sdkRef.current && (index !== swiperActiveRef.current || vipCanPlay)) {
           if (os.isIos) {
             setActiveIndex(index);
@@ -331,7 +331,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
             'sdkDefinitionPlugin',
           ],
           commonStyle: {
-            // 播放完成部分进度条底色
+            // Background color of the completed part of the progress bar
             playedColor: '#ffffff',
           },
           fullscreen: { rotateFullscreen: true, useCssFullscreen: os.isIos },
@@ -369,7 +369,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
             vtype: 'MP4',
             tag: 'normal',
             codec_type: def.Codec,
-            line_app_id: 597335, // 从视频点播控制台-点播SDK-应用管理 获取，如果没有应用则创建
+            line_app_id: 597335, // Obtain from the video-on-demand console - VOD SDK - Application Management. Create one if not available.
           },
         };
         const playerSdk = new VePlayer(options as IPlayerConfig);
@@ -404,7 +404,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
       }
     }, [currentVideoData, isChannel, onEnded, onProgressDrag, onProgressDragend, showUnmute, startTime]);
 
-    // 组件加载时初始化播放器
+    // Initialize the player when the component is loaded
     useEffect(() => {
       setTimeout(() => {
         initPlayer();
@@ -412,23 +412,23 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     }, [currentVideoData, activeIndex, initPlayer]);
 
     useEffect(() => {
-      // 预加载只支持PC、Android
+      // Preload only supports PC and Android
       if (!(os.isPc || os.isAndroid)) {
         return;
       }
-      // 预加载开启场景：推荐页且处于激活状态； 进入短剧详情页
+      // Preload enabled scenarios: Recommend page and active state; Enter short drama details page
       if ((isChannel && isChannelActive) || !isChannel) {
         VePlayer.setPreloadScene(1, {
           prevCount: 1,
           nextCount: 2,
         });
-        // 待预加载列表设置
+        // Set the list to be preloaded
         VePlayer.preloader?.clearPreloadList();
         VePlayer.setPreloadList(formatPreloadStreamList(videoDataList, definition) as IPreloadStream[]);
       }
-    }, [isChannel, isChannelActive, videoDataList.filter(item => !item.vip).length, definition]); // 解锁vip后的视频也需要预加载
+    }, [isChannel, isChannelActive, videoDataList.filter(item => !item.vip).length, definition]); // The video after unlocking VIP also needs to be preloaded
 
-    // 组件卸载时销毁播放器
+    // Destroy the player when the component is unloaded
     useEffect(() => {
       return () => {
         if (sdkRef.current) {
@@ -476,7 +476,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
 
     useImperativeHandle(ref, () => ({
       onSelectClick,
-      // 解锁后直接调用播放
+      // Play after unlocking
       playLockVideo: () => {
         playNext(swiperActiveRef.current, true);
       },

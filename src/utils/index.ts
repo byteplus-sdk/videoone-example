@@ -61,12 +61,12 @@ export function isWifi() {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     const con = window.navigator.connection;
-    // 如果是微信
+    // If it is WeChat
     if (os.isWeixin) {
       if (ua.indexOf('WIFI') >= 0) {
         return true;
       }
-      // 如果支持navigator.connection
+      // If navigator.connection is supported
     } else if (con) {
       const network = con.type;
       if (network === 'wifi') {
@@ -80,9 +80,9 @@ export function isWifi() {
 }
 
 /**
- * 根据环境选择清晰度
- * @param list 清晰度列表
- * @param defaultDef 弱网下的默认清晰度
+ * Select the definition based on the environment
+ * @param list The list of definitions
+ * @param defaultDef The default definition for weak networks
  */
 export function selectDef(list: IPlayInfoListItem[], defaultDef = '720p'): undefined | IPlayInfoListItem {
   if (!list.length) {
@@ -92,12 +92,12 @@ export function selectDef(list: IPlayInfoListItem[], defaultDef = '720p'): undef
   const lowestDef = orderList[0];
   const highestDef = orderList[orderList.length - 1];
   if (os.isPc) {
-    // pc使用最高码率
+    // pc uses the highest bitrate
     return highestDef;
   } else {
-    // 其他环境下，如h5
+    // In other environments, such as h5
     if (isWifi()) {
-      // wifi 下使用最高码率
+      // wifi uses the highest bitrate
       return highestDef;
     } else {
       const target = list.find(item => item.Definition === defaultDef);
@@ -116,7 +116,7 @@ export function hasScrollbar() {
 
 export const canSupportPreload = os.isPc || os.isAndroid;
 
-/** 获取当前设备宽高的兼容写法 */
+/** Compatible writing for getting the current device width and height */
 export function getDeciceWidth(): { width: number; height: number } {
   const docEl = document.documentElement;
   const width =
@@ -134,29 +134,28 @@ export function getDeciceWidth(): { width: number; height: number } {
   };
 }
 
-// 获取当前手机是否是横向
+/** Get whether the current phone is horizontal */
 export const getIsLandscape = () => {
   if (window.screen.orientation?.type) {
     return window.screen.orientation?.type.includes('landscape');
   }
-  // 旧的方向判断方案（兼容）
+  // Old orientation detection scheme (compatible)
   if (window.orientation) {
     return [90, -90, '90', '-90'].includes(window.orientation);
   }
 
-  // iframe及不支持orientation的浏览器（兼容）
+  // iframe and browsers that do not support orientation (compatible)
   const { width, height } = getDeciceWidth();
   return width > height;
 };
 
 // hack
 export const isHitBlackList = () => {
-  // 1+手机自带浏览器  window.orientation window.screen.width 获取值存在问题，需要屏蔽
   const blacklist = ['HeyTapBrowser', 'DingTalk'];
   return blacklist.some(item => navigator.userAgent.includes(item));
 };
 
-// 屏幕旋转监听
+// Screen rotation monitoring
 export const bindOrientationEvents = (isBind: boolean, fn: () => void) => {
   if (isHitBlackList()) {
     return;
@@ -171,7 +170,7 @@ export const bindOrientationEvents = (isBind: boolean, fn: () => void) => {
 
 export const imgUrl = (url: string, prefix?: string) => {
   if (os.isChrome) {
-    // 目前仅有chrome和安卓对webp支持较好
+    // Currently, only Chrome and Android have good support for webp
     url = url.replace(/.image$/, prefix || '.webp');
   }
   return url;

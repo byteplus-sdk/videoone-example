@@ -25,13 +25,13 @@ interface IData {
   new_release: boolean;
 }
 
-// 抽取公共类型定义
+// Extract common type definitions
 interface DramaItemProps extends IData {
   index?: number;
   showTopTag?: boolean;
 }
 
-// 抽取可复用的卡片组件
+// Extract reusable card components
 const DramaCard: React.FC<DramaItemProps & { type: 'trending' | 'release' | 'recommend' }> = ({
   drama_id,
   drama_cover_url,

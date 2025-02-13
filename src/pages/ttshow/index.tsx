@@ -90,7 +90,7 @@ const TTShow: React.FC = () => {
   })();
 
   /**
-   * 初始化播放器，并对播放器内部抛出事件处理
+   * Initialize the player and handle events inside the player
    */
   function initVePlayer() {
     const { playAuthToken = '', coverUrl = '' } = list[0] || {};
@@ -160,8 +160,8 @@ const TTShow: React.FC = () => {
   }, []);
 
   /**
-   * 播放器下一个视频
-   * @param {number} activeIndex - 当前swiper的index
+   * Next video of the player
+   * @param {number} activeIndex - Current swiper index
    */
   function playNext(activeIndex: number) {
     if (playerSDKins.current && activeIndex !== indexRef.current) {
@@ -196,7 +196,7 @@ const TTShow: React.FC = () => {
   }
 
   /**
-   * 点击swiper实现暂停/播放器操作
+   * Click the swiper to pause/play the player
    */
   function pauseOrPlay() {
     if (playerSDKins.current) {
@@ -210,14 +210,14 @@ const TTShow: React.FC = () => {
   }
 
   /**
-   * 点击获取应用跳转官网文档
+   * Click to get the application and jump to the official documentation
    */
   function jumpToApp() {
     window.open('//docs.byteplus.com/en/docs/byteplus-vos/docs-byteplus-videoone-demo-app_1');
   }
 
   /**
-   * 展示静音按钮
+   * Show the mute button
    */
   function showUnmute() {
     const player = playerSDKins?.current?.player;
@@ -229,7 +229,7 @@ const TTShow: React.FC = () => {
   }
 
   /**
-   * 点击取消静音按钮
+   * Click to cancel the mute button
    */
   function onUnmuteClick() {
     const player = playerSDKins?.current?.player;

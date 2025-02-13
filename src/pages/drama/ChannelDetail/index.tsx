@@ -47,7 +47,7 @@ interface ILockData {
 }
 
 interface VideoControlsProps {
-  current: any; // 建议替换为具体的类型
+  current: any; // Replace with a specific type
   onCommentClick: (e: React.MouseEvent) => void;
 }
 
@@ -146,14 +146,14 @@ function ChannelDetail() {
   );
 
   /**
-   * vip解锁更新
+   * VIP unlock update
    */
   useEffect(() => {
     if (!lockData?.response) {
       return;
     }
 
-    // 重新获取数据并缓存
+    // Re-fetch data and cache
     executeGetDramaList(
       {
         data: {

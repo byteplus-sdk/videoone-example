@@ -56,7 +56,7 @@ function App() {
   useEffect(() => {
     importVconsole();
     VePlayer.prepare({
-      appId: 597335, // 从视频点播控制台-点播SDK-应用管理 获取，如果没有应用则创建
+      appId: 597335, // Obtain from the video-on-demand console - VOD SDK - Application Management. Create one if not available.
       strategies: {
         preload: true,
         adaptRange: true,
