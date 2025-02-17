@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import useAxios from 'axios-hooks';
 import { API_PATH } from '@/service/path';
 import Slider, { Settings } from 'react-slick';
@@ -29,6 +29,7 @@ interface IData {
 interface DramaItemProps extends IData {
   index?: number;
   showTopTag?: boolean;
+  myNavigate: (path: string) => void;
 }
 
 // Extract reusable card components
@@ -41,14 +42,15 @@ const DramaCard: React.FC<DramaItemProps & { type: 'trending' | 'release' | 'rec
   index,
   type,
   showTopTag,
+  myNavigate,
 }) => {
-  const navigate = useNavigate();
-
   return (
     <div
       drama-id={drama_id}
       className={classNames(styles[`${type}ItemWrapper`], 'drama')}
-      onClick={() => navigate(`/dramaDetail?id=${drama_id}&device_id=001`)}
+      onClick={() => {
+        myNavigate(`/dramaDetail?id=${drama_id}&device_id=001`);
+      }}
     >
       <div className={styles.coverWrapper}>
         <img src={drama_cover_url} alt={drama_title} />
@@ -83,6 +85,7 @@ const Ground: React.FC = () => {
   const refPreloadSet = useRef(new Set()) as React.MutableRefObject<Set<string>>;
   const refIo = useRef<IntersectionObserver>();
   const preloadOnceRef = useRef<boolean>(false);
+  const groundRef = useRef<HTMLDivElement>(null);
 
   const [{ data, loading }] = useAxios({
     url: API_PATH.GetDramaChannel,
@@ -128,6 +131,14 @@ const Ground: React.FC = () => {
     });
   }, [data?.response]);
 
+  useLayoutEffect(() => {
+    const homeLocation = window.sessionStorage.getItem('homeLocation');
+    if (homeLocation) {
+      debugger;
+      groundRef.current?.scrollTo(0, parseInt(homeLocation));
+    }
+  }, [data?.response]);
+
   useEffect(() => {
     return () => {
       refIo.current?.disconnect();
@@ -155,6 +166,11 @@ const Ground: React.FC = () => {
     }
   };
 
+  const myNavigate = (path: string) => {
+    window.sessionStorage.setItem('homeLocation', String(groundRef.current?.scrollTop ?? 0));
+    navigate(path);
+  };
+
   useEffect(() => {
     setupPreload();
   }, [dramaDetailData?.response]);
@@ -163,7 +179,6 @@ const Ground: React.FC = () => {
   const trending = (data?.response?.trending as IData[]) ?? [];
   const release = (data?.response?.new as IData[]) ?? [];
   const recommend = (data?.response?.recommend as IData[]) ?? [];
-
 
   const settings: Settings = {
     className: 'center',
@@ -184,68 +199,81 @@ const Ground: React.FC = () => {
     autoplay: true,
   };
 
-  return loading ? (
-    <div className={styles.loadingWrapper}>
-      <Loading />
-    </div>
-  ) : (
-    <div className={styles.GroundContainer}>
-      <div className={styles.back} onClick={() => navigate('/')}>
-        <IconBack />
-      </div>
-      {/* 轮播 */}
-      {loopData.length > 0 && <div className={classNames(styles.carousel, 'noSwipingClass')}>
-        <Slider {...settings}>
-          {loopData.map(item => {
-            return (
-              <div key={item.drama_id} className="drama" drama-id={item.drama_id}>
-                <div className="carouselItemWrapper" style={{ background: `url(${item.drama_cover_url})` }}>
-                  <div
-                    className="btn"
-                    onClick={() => {
-                      navigate(`/dramaDetail?id=${item.drama_id}&device_id=001`);
-                    }}
-                  >
-                    <IconPlay style={{ marginRight: 6 }} />
-                    {t('d_play_now')}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </Slider>
-      </div>}
-      {/* 趋势 */}
-      <div className={classNames(styles.trendingWrapper, { [styles.trendingWrapperHide]: loopData.length <= 0 })}>
-        <h1 className={styles.tit}>{t('d_most_trending')} 🔥</h1>
-        <div className={styles.trendingContentWrapper}>
-          {trending
-            .filter((_item, index) => index < 6)
-            .map((item, index) => (
-              <DramaCard key={item.drama_id} {...item} type="trending" index={index} showTopTag />
-            ))}
+  return (
+    <div className={styles.ground} ref={groundRef}>
+      {loading ? (
+        <div className={styles.loadingWrapper}>
+          <Loading />
         </div>
-      </div>
-      {/* 新发 */}
-      <div className={styles.releaseWrapper}>
-        <h1 className={styles.tit}>{t('d_new_release')}</h1>
-        <div className={classNames(styles.releaseContentWrapper, 'noSwipingClass')}>
-          {release.map(item => (
-            <DramaCard key={item.drama_id} {...item} type="release" />
-          ))}
+      ) : (
+        <div className={styles.groundContainer}>
+          <div className={styles.back} onClick={() => myNavigate('/')}>
+            <IconBack />
+          </div>
+          {/* 轮播 */}
+          {loopData.length > 0 && (
+            <div className={classNames(styles.carousel, 'noSwipingClass')}>
+              <Slider {...settings}>
+                {loopData.map(item => {
+                  return (
+                    <div key={item.drama_id} className="drama" drama-id={item.drama_id}>
+                      <div className="carouselItemWrapper" style={{ background: `url(${item.drama_cover_url})` }}>
+                        <div
+                          className="btn"
+                          onClick={() => {
+                            myNavigate(`/dramaDetail?id=${item.drama_id}&device_id=001`);
+                          }}
+                        >
+                          <IconPlay style={{ marginRight: 6 }} />
+                          {t('d_play_now')}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </Slider>
+            </div>
+          )}
+          {/* 趋势 */}
+          <div className={classNames(styles.trendingWrapper, { [styles.trendingWrapperHide]: loopData.length <= 0 })}>
+            <h1 className={styles.tit}>{t('d_most_trending')} 🔥</h1>
+            <div className={styles.trendingContentWrapper}>
+              {trending
+                .filter((_item, index) => index < 6)
+                .map((item, index) => (
+                  <DramaCard
+                    key={item.drama_id}
+                    {...item}
+                    type="trending"
+                    index={index}
+                    showTopTag
+                    myNavigate={myNavigate}
+                  />
+                ))}
+            </div>
+          </div>
+          {/* 新发 */}
+          <div className={styles.releaseWrapper}>
+            <h1 className={styles.tit}>{t('d_new_release')}</h1>
+            <div className={classNames(styles.releaseContentWrapper, 'noSwipingClass')}>
+              {release.map(item => (
+                <DramaCard key={item.drama_id} {...item} type="release" myNavigate={myNavigate} />
+              ))}
+            </div>
+          </div>
+          {/* 推荐 */}
+          <div className={styles.recommendWrapper}>
+            <h1 className={styles.tit}>{t('d_recommended')}</h1>
+            <div className={styles.recommendContentWrapper}>
+              {recommend
+                .filter((_item, index) => index < 6)
+                .map(item => (
+                  <DramaCard key={item.drama_id} {...item} type="recommend" myNavigate={myNavigate} />
+                ))}
+            </div>
+          </div>
         </div>
-      </div>
-      {/* 推荐 */}
-      <div className={styles.recommendWrapper}>
-        <h1 className={styles.tit}>{t('d_recommended')}</h1>
-        <div className={styles.recommendContentWrapper}>
-          {recommend
-            .filter((_item, index) => index < 6)
-            .map(item => (
-              <DramaCard key={item.drama_id} {...item} type="recommend" />
-            ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 };

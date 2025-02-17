@@ -212,16 +212,6 @@ function ChannelDetail() {
     }
   }, [current]);
 
-  useEffect(() => {
-    const scrollFn = () => {
-      window.scrollTo({ left: 0, top: 0 });
-    };
-    window.addEventListener('scrollend', scrollFn);
-    return () => {
-      window.removeEventListener('scrollend', scrollFn);
-    };
-  }, []);
-
   const getLockData = (lockData: IDramaDetailListItem['video_meta'][]) => {
     executeGetDramaDetail({
       data: {

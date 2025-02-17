@@ -97,20 +97,16 @@ const DramaGround: React.FC = () => {
           onTransitionEnd={() => setIsSliderMoving(false)}
         >
           <SwiperSlide>
-            <div className={styles.ground}>
-              <Ground />
-            </div>
+            <Ground />
           </SwiperSlide>
           <SwiperSlide>
-            <div className={styles.channel} id="channel">
-              <Channel
-                videoDataList={videoDataList}
-                loading={channelLoading}
-                isChannelActive={activeIndex === 1}
-                isChannel
-                isSliderMoving={isSliderMoving}
-              />
-            </div>
+            <Channel
+              videoDataList={videoDataList}
+              loading={channelLoading}
+              isChannelActive={activeIndex === 1}
+              isChannel
+              isSliderMoving={isSliderMoving}
+            />
           </SwiperSlide>
         </Swiper>
       </div>

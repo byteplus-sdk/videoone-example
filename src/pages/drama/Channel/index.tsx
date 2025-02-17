@@ -129,6 +129,7 @@ const Channel: React.FC<ChannelProps> = ({
   const toastRef = useRef<ToastHandler>();
   const startTime = urlState.startTime || 0;
   const [activeIndex, setActiveIndex] = useState(0);
+  const refWrapper = useRef<HTMLDivElement>(null);
   const [popupVisible, setPopupVisible] = useState(false);
   const [commentVisible, setCommentVisible] = useState(false);
   const navigate = useNavigate();
@@ -180,7 +181,7 @@ const Channel: React.FC<ChannelProps> = ({
   }
 
   return (
-    <>
+    <div className={styles.channel} ref={refWrapper}>
       <div className={styles.wrap}>
         <VideoSwiper
           startTime={startTime}
@@ -221,7 +222,7 @@ const Channel: React.FC<ChannelProps> = ({
         onMaskClick={() => {
           setPopupVisible(false);
         }}
-        getContainer={() => document.getElementById('channel')!}
+        getContainer={() => refWrapper.current!}
         bodyClassName={styles.popupBodyClass}
         maskClassName={styles.popupMaskClass}
       >
@@ -280,7 +281,7 @@ const Channel: React.FC<ChannelProps> = ({
         list={commentsData?.response ?? []}
         loading={commentLoading}
       />
-    </>
+    </div>
   );
 };
 
