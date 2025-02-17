@@ -39,7 +39,7 @@ const Speed = () => {
   return (
     <Popup
       visible={playbackRatePanelVisible}
-      getContainer={isCssFullScreen ? document.body : window.playerSdk?.player?.root}
+      getContainer={(isCssFullScreen || !isFullScreen) ? document.body : window.playerSdk?.player?.root}
       onMaskClick={() => {
         dispatch(setPlayBackRatePanelVisible(false));
       }}
