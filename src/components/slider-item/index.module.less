@@ -4,7 +4,7 @@
   height: 100%;
   transform: translate3d(0, 0, 0);
 
-  // 横屏模式下，控制条位置
+  // In landscape mode, control bar position
   .isLandScapeMode {
     :global {
       .xgplayer .xgplayer-controls {
@@ -21,14 +21,14 @@
     }
   }
 
-  // 非频道模式下，非横屏模式下，控制条位置
+  // In non-channel mode, non-landscape mode, control bar position
   :global {
     .xgplayer .xgplayer-controls {
       bottom: 5px !important;
     }
   }
 
-  // 频道模式下，非横屏模式下，控制条位置
+  // In channel mode, non-landscape mode, control bar position
   &.isChannel {
     .videoContainer {
       &:not(.isLandScapeMode) {
