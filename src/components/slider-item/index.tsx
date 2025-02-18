@@ -34,7 +34,7 @@ const SliderItem: React.FC<ISliderItemProps> = ({
   children,
   clickCallback,
   isCssFullScreen,
-  goBack
+  goBack,
 }) => {
   const coverUrl = data?.videoModel?.PosterUrl ?? data?.cover_url;
 
@@ -68,26 +68,26 @@ const SliderItem: React.FC<ISliderItemProps> = ({
             id={`swiper-video-container-${index}`}
             className={classNames(style.videoContainer, {
               [style.isLandScapeMode]: isLandScapeMode,
+              [style.isFullScreen]: isFullScreen,
             })}
             onClick={clickCallback}
           >
             <div className="veplayer-cus-gradient-wrapper" />
-            <div
-              className={classNames(style.videoWithRotateBtn, {
-                [style.isLandScapeMode]: isLandScapeMode,
-                [style.isFullScreen]: isFullScreen,
-              })}
-              id={`video-with-rotate-btn-${index}`}
-            >
+            <div className={classNames(style.videoWithRotateBtn)} id={`video-with-rotate-btn-${index}`}>
               {children}
             </div>
           </div>
-          {data.vip && isCssFullScreen && <div className={style.back} onClick={(e) => {
-            e.stopPropagation();
-            goBack()
-          }} >
-            <IconBack />
-          </div>}
+          {data.vip && isCssFullScreen && (
+            <div
+              className={style.back}
+              onClick={e => {
+                e.stopPropagation();
+                goBack();
+              }}
+            >
+              <IconBack />
+            </div>
+          )}
           {otherComponent}
         </>
       )}

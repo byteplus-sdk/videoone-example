@@ -134,7 +134,6 @@ const Ground: React.FC = () => {
   useLayoutEffect(() => {
     const homeLocation = window.sessionStorage.getItem('homeLocation');
     if (homeLocation) {
-      debugger;
       groundRef.current?.scrollTo(0, parseInt(homeLocation));
     }
   }, [data?.response]);

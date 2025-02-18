@@ -4,18 +4,37 @@
   height: 100%;
   transform: translate3d(0, 0, 0);
 
-  &.isChannel {
-    .videoContainer {
+  // 横屏模式下，控制条位置
+  .isLandScapeMode {
+    :global {
+      .xg-controls {
+        bottom: 5px !important;
+      }
+    }
+
+    &.isFullScreen {
       :global {
-        xg-controls {
-          bottom: 42px !important;
+        .xg-controls {
+          bottom: 0 !important;
         }
       }
+    }
+  }
 
-      &.isLandScapeMode {
+  // 非频道模式下，非横屏模式下，控制条位置
+  :global {
+    .xg-controls {
+      bottom: 5px !important;
+    }
+  }
+
+  // 频道模式下，非横屏模式下，控制条位置
+  &.isChannel {
+    .videoContainer {
+      &:not(.isLandScapeMode) {
         :global {
-          xg-controls {
-            bottom: 10px !important;
+          .xg-controls {
+            bottom: 42px !important;
           }
         }
       }
@@ -44,7 +63,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 
     &.isLandScapeMode {
       img {
@@ -86,17 +104,6 @@
     width: 100%;
     height: 100%;
     opacity: 1;
-  }
-
-  .videoWithRotateBtn {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 100%;
 
     :global {
       .xgplayer {
@@ -139,10 +146,21 @@
       :global {
         .xgplayer {
           video {
-            object-fit: contain;
+            object-fit: contain !important;
           }
         }
       }
+    }
+
+    .videoWithRotateBtn {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 100%;
     }
   }
 
