@@ -11,7 +11,7 @@ interface ISliderItemProps extends PropsWithChildren {
   data: IDramaDetailListItem['video_meta'];
   index: number;
   isChannel?: boolean;
-  isLandScapeMode?: boolean;
+  isPortrait?: boolean;
   isFullScreen?: boolean;
   isCssFullScreen?: boolean;
   otherComponent: React.ReactNode;
@@ -29,7 +29,7 @@ const SliderItem: React.FC<ISliderItemProps> = ({
   isChannel,
   index,
   isFullScreen,
-  isLandScapeMode,
+  isPortrait,
   otherComponent,
   children,
   clickCallback,
@@ -42,15 +42,18 @@ const SliderItem: React.FC<ISliderItemProps> = ({
   const shouldRenderContent = useMemo(() => Math.abs(activeIndex - index) <= 2, [activeIndex, index]);
 
   return (
-    <div className={classNames(style.wrapper, { [style.isChannel]: isChannel })}>
+    <div
+      className={classNames(style.wrapper, {
+        [style.isChannel]: isChannel,
+        [style.isPortrait]: isPortrait,
+        [style.isFullScreen]: isFullScreen && !isCssFullScreen,
+        [style.isCssFullScreen]: isCssFullScreen,
+        [style.isIOS]: os.isIos,
+      })}
+    >
       {shouldRenderContent && (
         <>
-          <div
-            className={classNames(style.poster, {
-              [style.isLandScapeMode]: isLandScapeMode && ((os.isIos && !isFullScreen) || os.isAndroid),
-              [style.isContainMode]: os.isIos && isFullScreen,
-            })}
-          >
+          <div className={style.poster}>
             <Viewer
               layout="raw"
               placeholder="skeleton"
@@ -64,16 +67,9 @@ const SliderItem: React.FC<ISliderItemProps> = ({
               }}
             />
           </div>
-          <div
-            id={`swiper-video-container-${index}`}
-            className={classNames(style.videoContainer, {
-              [style.isLandScapeMode]: isLandScapeMode,
-              [style.isFullScreen]: isFullScreen,
-            })}
-            onClick={clickCallback}
-          >
+          <div id={`swiper-video-container-${index}`} className={style.videoContainer} onClick={clickCallback}>
             <div className="veplayer-cus-gradient-wrapper" />
-            <div className={classNames(style.videoWithRotateBtn)} id={`video-with-rotate-btn-${index}`}>
+            <div className={style.videoWithRotateBtn} id={`video-with-rotate-btn-${index}`}>
               {children}
             </div>
           </div>

@@ -47,7 +47,7 @@ interface ILockData {
 }
 
 interface VideoControlsProps {
-  current: any; // Replace with a specific type
+  current: IDramaDetailListItem['video_meta'];
   onCommentClick: (e: React.MouseEvent) => void;
 }
 

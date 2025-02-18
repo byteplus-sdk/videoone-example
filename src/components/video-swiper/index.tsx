@@ -83,7 +83,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     const [playerReady, setPlayerReady] = useState<boolean>(false);
     const [activeIndex, setActiveIndex] = useState<number>(initActiveIndex || 0);
     const currentVideoData = videoDataList?.[activeIndex];
-    const isLandScapeMode = currentVideoData.height < currentVideoData.width;
+    const isPortrait = currentVideoData.height > currentVideoData.width;
     const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
     const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
 
@@ -92,8 +92,8 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     }, [isFullScreen, isCssFullScreen]);
 
     useEffect(() => {
-      dispatch(setIsPortrait(!isLandScapeMode));
-    }, [isLandScapeMode]);
+      dispatch(setIsPortrait(isPortrait));
+    }, [isPortrait]);
 
     useEffect(() => {
       refEndTime.current = 0;
@@ -264,12 +264,12 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
 
     const onSlideChange = useCallback(
       (swiper: SwiperClass) => {
-        if ((isFullScreen || isCssFullScreen) && isLandScapeMode) return;
+        if ((isFullScreen || isCssFullScreen) && !isPortrait) return;
         if (swiper.realIndex !== swiperActiveRef.current) {
           playNext(swiper.realIndex);
         }
       },
-      [playNext, isFullScreen, isLandScapeMode],
+      [playNext, isFullScreen, isPortrait],
     );
 
     const onEnded = useCallback(() => {
@@ -453,7 +453,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
       const playerDom = sdkRef.current?.playerContainer;
       const insertParentNode = document.getElementById(`video-with-rotate-btn-${activeIndex}`);
       if (insertParentNode && playerDom && playerDom.parentNode) {
-        playerDom.parentNode!.style.height = !isLandScapeMode
+        playerDom.parentNode!.style.height = isPortrait
           ? '100%'
           : `calc(${currentVideoData.height / currentVideoData.width} * 100vw)`;
         insertParentNode?.insertBefore(playerDom.parentNode, null);
@@ -518,7 +518,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
                         activeIndex={activeIndex}
                         isFullScreen={isFullScreen}
                         isCssFullScreen={isCssFullScreen}
-                        isLandScapeMode={isLandScapeMode}
+                        isPortrait={isPortrait}
                         otherComponent={otherComponent}
                         getCurrentTime={getCurrentTime}
                         goBack={() => {
@@ -581,6 +581,7 @@ interface IPlayControlProps {
   showUnmuteBtn: boolean;
   isFullScreen: boolean;
 }
+
 const PlayContol: React.FC<IPlayControlProps> = ({
   videoData,
   playerReady,
@@ -611,7 +612,7 @@ const PlayContol: React.FC<IPlayControlProps> = ({
           className={styles.unmute}
           onClick={onUnmuteClick}
           style={{
-            top: isLandScapeMode ? `calc(${videoData.height / videoData.width} * 50vw)` : 0,
+            height: isLandScapeMode ? `calc(${videoData.height / videoData.width} * 100vw)` : '100%',
           }}
         >
           <div className={styles.unmuteBtn}>
