@@ -7,14 +7,14 @@
   // 横屏模式下，控制条位置
   .isLandScapeMode {
     :global {
-      .xg-controls {
+      .xgplayer .xgplayer-controls {
         bottom: 5px !important;
       }
     }
 
     &.isFullScreen {
       :global {
-        .xg-controls {
+        .xgplayer .xgplayer-controls {
           bottom: 0 !important;
         }
       }
@@ -23,7 +23,7 @@
 
   // 非频道模式下，非横屏模式下，控制条位置
   :global {
-    .xg-controls {
+    .xgplayer .xgplayer-controls {
       bottom: 5px !important;
     }
   }
@@ -33,7 +33,7 @@
     .videoContainer {
       &:not(.isLandScapeMode) {
         :global {
-          .xg-controls {
+          .xgplayer .xgplayer-controls {
             bottom: 42px !important;
           }
         }
