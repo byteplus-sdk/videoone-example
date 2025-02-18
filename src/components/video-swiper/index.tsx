@@ -64,7 +64,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
       otherComponent,
       showLockPrompt,
       initActiveIndex,
-      changeNum
+      changeNum,
     },
     ref,
   ) => {
@@ -221,6 +221,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
             showLockPrompt?.();
             return;
           }
+          refVip.current = false;
           setShowSystemCover(false);
 
           setPlayNextStatus('start');
@@ -310,6 +311,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
           vid: currentVideoData.vid,
           startTime,
           autoplay: !isChannel,
+          seekedStatus: 'pause',
           enableDegradeMuteAutoplay: true,
           closeVideoClick: false,
           closeVideoDblclick: true,
@@ -379,6 +381,11 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
         });
         playerSdk.once(Events.PLAY, showUnmute);
         playerSdk.once(Events.AUTOPLAY_PREVENTED, showUnmute);
+        playerSdk.on(Events.TIME_UPDATE, () => {
+          if (refVip.current) {
+            sdkRef.current?.player?.pause();
+          }
+        });
         playerSdk.on(Events.ENDED, onEnded);
         playerSdk.on(Events.PLAY, () => {
           if (refEndTime.current === 0) {
