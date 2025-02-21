@@ -6,7 +6,7 @@
 
   &.isFullScreen {
     border-radius: 0;
-    width: 375px;
+    width: 400px;
     padding-right: env(safe-area-inset-right);
     padding-right: constant(safe-area-inset-bottom);
 
@@ -114,25 +114,28 @@
       .options {
         display: flex;
 
-        .all .title {
-          &::after {
-            content: '60%';
-            background-color: #fe2c55;
-            font-size: 12px;
-            font-weight: 600;
-            line-height: 16px;
-            text-align: center;
-            border-radius: 4px;
-            overflow: hidden;
-            color: #fff;
-            padding: 0 3px;
-            margin-left: 6px;
+        .all {
+          white-space: nowrap;
+
+          .title {
+            &::after {
+              content: '60%';
+              background-color: #fe2c55;
+              font-size: 12px;
+              font-weight: 600;
+              line-height: 16px;
+              text-align: center;
+              border-radius: 4px;
+              overflow: hidden;
+              color: #fff;
+              padding: 0 3px;
+              margin-left: 6px;
+            }
           }
         }
 
         & > div {
-          width: calc((50% - 4px));
-          height: 66px;
+          flex: 1;
           padding: 12px;
           border-radius: 10px;
           background-color: #16182308;
@@ -159,7 +162,11 @@
           }
 
           &:first-child {
-            margin-right: 8px;
+            margin-right: 4px;
+          }
+
+          &:last-child {
+            margin-left: 4px;
           }
         }
       }
