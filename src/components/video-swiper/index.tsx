@@ -314,7 +314,6 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
           vid: currentVideoData.vid,
           startTime,
           autoplay: !isChannel,
-          seekedStatus: 'pause',
           enableDegradeMuteAutoplay: true,
           closeVideoClick: false,
           closeVideoDblclick: true,
