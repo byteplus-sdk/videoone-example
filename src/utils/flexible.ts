@@ -39,6 +39,7 @@ function flexible(window: Window, document: Document) {
       setVh();
     }, 100);
   });
+
   window.addEventListener('pageshow', e => {
     if (e.persisted) {
       setRemUnit();

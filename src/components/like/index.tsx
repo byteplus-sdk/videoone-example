@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle } from 'react';
+import React, { useState, useImperativeHandle, useCallback } from 'react';
 import { useLottie } from 'lottie-react';
 import likeAni from '@/assets/lottie/like.json';
 import unlikeAni from '@/assets/lottie/unLike.json';
@@ -26,14 +26,14 @@ const Like = React.forwardRef<IRef, IProps>((props, ref) => {
     },
   });
 
-  const handleLike = () => {
+  const handleLike = useCallback(() => {
     setLike(!isLike);
     if (isLike) {
       unlikePlay(0, true);
     } else {
       likePlay(0, true);
     }
-  };
+  }, [isLike]);
 
   useImperativeHandle(ref, () => ({
     handleLike,

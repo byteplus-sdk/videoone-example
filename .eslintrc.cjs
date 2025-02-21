@@ -20,17 +20,6 @@ module.exports = {
     'react/prop-types': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     'prettier/prettier': 'error',
-    // '@typescript-eslint/naming-convention': [
-    //   "error",
-    //   {
-    //     "selector": "interface",
-    //     "format": ["PascalCase"],
-    //     "custom": {
-    //       "regex": "^I[A-Z]",
-    //       "match": true
-    //     }
-    //   }
-    // ],
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-empty-function': 'warn',
     '@typescript-eslint/explicit-function-return-type': 'off',

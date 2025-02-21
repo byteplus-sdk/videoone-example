@@ -1,5 +1,5 @@
 import { Dialog, Popup } from 'antd-mobile';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './index.module.less';
 import translation from '@/utils/translation';
 import IconClose from '@/assets/svgr/iconClose.svg?react';
@@ -24,31 +24,51 @@ interface IProps {
   setCommentVisible: (value: boolean) => void;
 }
 
-const Comment: React.FC<IProps> = props => {
+const Comment: React.FC<IProps> = ({
+  list: propList,
+  commentVisible,
+  setCommentVisible,
+  isCssFullScreen,
+  isHorizontal,
+  isFullScreen,
+  isPortrait,
+  loading,
+}) => {
   const [likeMap, setLikeMap] = useState<Map<number, boolean>>(new Map());
-  const [list, setList] = useState<IComment[]>(props.list ?? []);
+  const [list, setList] = useState<IComment[]>(propList ?? []);
+
   useEffect(() => {
-    if (props.list?.length > 0) {
-      setList(props.list);
+    if (propList?.length > 0) {
+      setList(propList);
     }
-  }, [props.list]);
+  }, [propList]);
+
+  const handleAddComment = useCallback((val: string) => {
+    // mock comments
+    setList(prevList => [
+      {
+        content: val,
+        name: 'xshellv',
+        uid: new Date().valueOf(),
+        like: 10,
+        createTime: new Date(),
+      },
+      ...prevList,
+    ]);
+  }, []);
 
   return (
     <Popup
-      visible={props.commentVisible}
+      visible={commentVisible}
       closeOnMaskClick
       bodyStyle={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
       onClose={() => {
-        props.setCommentVisible(false);
+        setCommentVisible(false);
       }}
-      position={(props.isFullScreen || props.isCssFullScreen) && props.isHorizontal ? 'right' : 'bottom'}
-      getContainer={
-        !props.isPortrait && props.isFullScreen && !props.isCssFullScreen
-          ? window.playerSdk?.player?.root
-          : document.body
-      }
+      position={(isFullScreen || isCssFullScreen) && isHorizontal ? 'right' : 'bottom'}
+      getContainer={!isPortrait && isFullScreen && !isCssFullScreen ? window.playerSdk?.player?.root : document.body}
       bodyClassName={classNames(styles.popupLockBodyClass, {
-        [styles.isFullScreen]: (props.isFullScreen || props.isCssFullScreen) && props.isHorizontal,
+        [styles.isFullScreen]: (isFullScreen || isCssFullScreen) && isHorizontal,
       })}
     >
       <div>
@@ -57,14 +77,14 @@ const Comment: React.FC<IProps> = props => {
           <div
             className={styles.close}
             onClick={() => {
-              props.setCommentVisible(false);
+              setCommentVisible(false);
             }}
           >
             <IconClose />
           </div>
         </div>
-        <div className={cn(styles.body, { [styles.isLoading]: props.loading })}>
-          {props.loading ? (
+        <div className={cn(styles.body, { [styles.isLoading]: loading })}>
+          {loading ? (
             <div className={styles.loading}>
               <Loading />
             </div>
@@ -72,17 +92,7 @@ const Comment: React.FC<IProps> = props => {
             <div className={styles.commentContent}>
               <InputBar
                 handleEnter={val => {
-                  // mock comments
-                  setList([
-                    {
-                      content: val,
-                      name: 'xshellv',
-                      uid: new Date().valueOf(),
-                      like: 0,
-                      createTime: new Date(),
-                    },
-                    ...list,
-                  ]);
+                  handleAddComment(val);
                 }}
               />
               {list.map(comment => {
@@ -111,11 +121,11 @@ const Comment: React.FC<IProps> = props => {
                             Dialog.confirm({
                               title: translation('c_delete_confirm'),
                               getContainer:
-                                !props.isPortrait && props.isFullScreen && !props.isCssFullScreen
+                                !isPortrait && isFullScreen && !isCssFullScreen
                                   ? window.playerSdk?.player?.root
                                   : document.body,
                               bodyClassName: classNames(styles.confirmBody, {
-                                [styles.isFullScreen]: props.isFullScreen,
+                                [styles.isFullScreen]: isFullScreen,
                               }),
                               content: translation('c_content_confirm'),
                               cancelText: <span style={{ color: '#161823bf' }}>{translation('c_cancel')}</span>,

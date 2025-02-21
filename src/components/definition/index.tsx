@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './index.module.less';
 import t from '@/utils/translation';
+import { useCallback } from 'react';
+import { IPlayInfoListItem } from '@/@types';
 
 const Definition = () => {
   const definitionDrawerVisible = useSelector((state: RootState) => state.controls.definitionDrawerVisible);
@@ -14,6 +16,12 @@ const Definition = () => {
   const definition = useSelector((state: RootState) => state.controls.definition);
   const currentDetail = useSelector((state: RootState) => state.dramaDetail.currentDetail);
   const dispatch = useDispatch();
+
+  const changeDefinition = useCallback((def: IPlayInfoListItem) => {
+    window.playerSdk?.changeDefinition(def.Definition);
+    dispatch(setDefinition(def.Definition));
+    dispatch(setDefinitionPanelVisible(false));
+  }, []);
 
   return (
     <Popup
@@ -33,9 +41,7 @@ const Definition = () => {
             key={def.Definition}
             className={classNames(styles.item, { [styles.selected]: definition === def.Definition })}
             onClick={() => {
-              window.playerSdk?.changeDefinition(def.Definition);
-              dispatch(setDefinition(def.Definition));
-              dispatch(setDefinitionPanelVisible(false));
+              changeDefinition(def);
             }}
           >
             {def.Definition}

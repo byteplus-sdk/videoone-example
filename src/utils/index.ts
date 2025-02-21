@@ -47,6 +47,7 @@ function getOS(): {
 export const os = getOS();
 
 export function parseModel(videoModel: string): undefined | IVideoModel {
+  if (!videoModel) return;
   try {
     return JSON.parse(videoModel);
   } catch (err) {
@@ -57,17 +58,10 @@ export function parseModel(videoModel: string): undefined | IVideoModel {
 export function isWifi() {
   try {
     let wifi = false;
-    const ua = window.navigator.userAgent;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     const con = window.navigator.connection;
-    // If it is WeChat
-    if (os.isWeixin) {
-      if (ua.indexOf('WIFI') >= 0) {
-        return true;
-      }
-      // If navigator.connection is supported
-    } else if (con) {
+    if (con) {
       const network = con.type;
       if (network === 'wifi') {
         wifi = true;

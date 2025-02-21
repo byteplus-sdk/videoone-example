@@ -1,4 +1,4 @@
-// 待抽离和短剧复用
+// TODO: To be extracted and reused with short dramas
 import React, { useEffect, useRef, useImperativeHandle, useState, useCallback } from 'react';
 import style from './index.module.less';
 import classNames from 'classnames';

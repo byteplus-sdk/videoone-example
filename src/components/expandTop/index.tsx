@@ -5,6 +5,7 @@ import { NavBar } from 'antd-mobile';
 import IconBack from '@/assets/svgr/iconBack.svg?react';
 import { os } from '@/utils';
 import classNames from 'classnames';
+import { useCallback } from 'react';
 
 const ExpandTop = () => {
   const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
@@ -12,16 +13,13 @@ const ExpandTop = () => {
   const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
   const currentDetail = useSelector((state: RootState) => state.dramaDetail.currentDetail);
 
+  const handleBack = useCallback(() => {
+    os.isIos ? window.playerSdk?.player?.exitCssFullscreen() : window.playerSdk?.player?.exitFullscreen();
+  }, []);
+
   return isFullScreen || isCssFullScreen ? (
     <div className={classNames(styles.wrapper, { [styles.isHorizontal]: isHorizontal })}>
-      <NavBar
-        backIcon={<IconBack />}
-        className={styles.head}
-        left={currentDetail.caption}
-        onBack={() => {
-          os.isIos ? window.playerSdk?.player?.exitCssFullscreen() : window.playerSdk?.player?.exitFullscreen();
-        }}
-      />
+      <NavBar backIcon={<IconBack />} className={styles.head} left={currentDetail.caption} onBack={handleBack} />
     </div>
   ) : null;
 };

@@ -3,13 +3,11 @@ import Home from '@/pages/home';
 import TTShow from '@/pages/ttshow';
 import { configure } from 'axios-hooks';
 import Axios from 'axios';
-import { useEffect } from 'react';
 import Drama from './pages/drama';
-import VePlayer from '@byteplus/veplayer';
 import ChannelDetail from './pages/drama/ChannelDetail';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-
+import { useEffect } from 'react';
 const axios = Axios.create({
   baseURL: __API_URL__,
 });
@@ -23,19 +21,24 @@ const router = createBrowserRouter(
       element: <Home />,
     },
     {
-      path: '/ttshow',
+      path: 'ttshow',
       element: <TTShow />,
     },
     {
-      path: '/dramaGround',
+      path: 'dramaGround',
       element: <Drama />,
     },
     {
-      path: '/dramaDetail',
+      path: 'dramaDetail',
       element: <ChannelDetail />,
     },
   ],
-  { basename: '/videoone' },
+  {
+    basename: '/videoone',
+    future: {
+      v7_relativeSplatPath: true,
+    },
+  },
 );
 
 function importVconsole() {
@@ -55,14 +58,8 @@ function importVconsole() {
 function App() {
   useEffect(() => {
     importVconsole();
-    VePlayer.prepare({
-      appId: 597335, // Obtain from the video-on-demand console - VOD SDK - Application Management. Create one if not available.
-      strategies: {
-        preload: true,
-        adaptRange: true,
-      },
-    });
   }, []);
+
   return (
     <Provider store={store}>
       <RouterProvider router={router} />
