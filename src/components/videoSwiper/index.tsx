@@ -1,5 +1,5 @@
 import styles from './index.module.less';
-import SliderItem from '@/components/slider-item';
+import SliderItem from '@/components/sliderItem';
 import React, { useCallback, useEffect, useRef, useState, useImperativeHandle } from 'react';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import VePlayer, { Events, IPlayerConfig, PlayerCore } from '@/player';
@@ -487,6 +487,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
       onSelectClick,
       // Play after unlocking
       playLockVideo: () => {
+        if (!refVip.current) return;
         playNext(swiperActiveRef.current, true);
       },
     }));

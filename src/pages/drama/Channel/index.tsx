@@ -3,7 +3,7 @@ import { Popup } from 'antd-mobile';
 import type { ToastHandler } from 'antd-mobile/es/components/toast/methods';
 import useUrlState from '@ahooksjs/use-url-state';
 import { CHANNEL_MODE, type IDramaDetailListItem } from '@/@types';
-import VideoSwiper from '@/components/video-swiper';
+import VideoSwiper from '@/components/videoSwiper';
 import IconEnter from '@/assets/svgr/iconEnter.svg?react';
 import IconDrama from '@/assets/svgr/iconDrama.svg?react';
 import IconRcm from '@/assets/svgr/iconRcm.svg?react';

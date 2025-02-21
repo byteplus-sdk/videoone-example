@@ -4,7 +4,7 @@ import { Button, Dialog, NavBar, Toast } from 'antd-mobile';
 import { useSelector, useDispatch } from 'react-redux';
 import useUrlState from '@ahooksjs/use-url-state';
 import useAxios from 'axios-hooks';
-import VideoSwiper, { RefVideoSwiper } from '@/components/video-swiper';
+import VideoSwiper, { RefVideoSwiper } from '@/components/videoSwiper';
 import { parseModel } from '@/utils';
 import IconBack from '@/assets/svgr/iconBack.svg?react';
 import IconComment from '@/assets/svgr/iconComment.svg?react';
@@ -185,6 +185,7 @@ function ChannelDetail() {
   }, [lockData?.response]);
 
   const current = useMemo(() => list?.[activeIndex] ?? {}, [activeIndex, list]);
+
   const numArrList = useMemo(() => {
     if (!list.length) return [];
     return chunk(
