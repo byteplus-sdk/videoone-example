@@ -51,7 +51,7 @@ export interface RefVideoSwiper {
 const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
   (
     {
-      isChannel,
+      isChannel = false,
       isChannelActive,
       isSliderMoving,
       startTime = 0,
@@ -77,6 +77,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     const refVip = useRef(false);
     const refStartTime = useRef(0);
     const refEndTime = useRef(0);
+    const refNeedPause = useRef(false);
     const [playNextStatus, setPlayNextStatus] = useState<string>('');
     const [showUnmuteBtn, setShowUnmuteBtn] = useState<boolean>(false);
     const [showSystemCover, setShowSystemCover] = useState<boolean>(false);
@@ -86,6 +87,8 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     const isPortrait = currentVideoData.height > currentVideoData.width;
     const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
     const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
+
+    refNeedPause.current = refVip.current || (!isChannelActive && isChannel);
 
     useEffect(() => {
       swiperRef.current && (swiperRef.current.allowTouchMove = !(isFullScreen || isCssFullScreen));
@@ -382,7 +385,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
         playerSdk.once(Events.PLAY, showUnmute);
         playerSdk.once(Events.AUTOPLAY_PREVENTED, showUnmute);
         playerSdk.on(Events.TIME_UPDATE, () => {
-          if (refVip.current) {
+          if (refNeedPause.current) {
             sdkRef.current?.player?.pause();
           }
         });
