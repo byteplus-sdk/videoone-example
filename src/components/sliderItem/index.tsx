@@ -1,9 +1,8 @@
 import React, { PropsWithChildren, useMemo } from 'react';
-import { Viewer } from '@volcengine/imagex-react';
 import { IDramaDetailListItem } from '@/@types';
 import style from './index.module.less';
 import classNames from 'classnames';
-import { os } from '@/utils';
+import { imgUrl, os } from '@/utils';
 import IconBack from '@/assets/svgr/iconBack.svg?react';
 interface ISliderItemProps extends PropsWithChildren {
   isActive: boolean;
@@ -20,8 +19,6 @@ interface ISliderItemProps extends PropsWithChildren {
   playNextStatus: string;
   goBack: () => void;
 }
-
-const imageSizes = [600, 750, 800, 960];
 
 const SliderItem: React.FC<ISliderItemProps> = ({
   activeIndex,
@@ -54,18 +51,7 @@ const SliderItem: React.FC<ISliderItemProps> = ({
       {shouldRenderContent && (
         <>
           <div className={style.poster}>
-            <Viewer
-              layout="raw"
-              placeholder="skeleton"
-              objectFit="cover"
-              objectPosition="center"
-              loading="eager"
-              src={coverUrl}
-              imageSizes={imageSizes}
-              loader={({ src, format, width, extra }) => {
-                return `//${extra.domain}/${src}~${'tplv-vod-noop'}:${width}:q75.${format}`;
-              }}
-            />
+            <img src={imgUrl(coverUrl)} alt="" />
           </div>
           <div id={`swiper-video-container-${index}`} className={style.videoContainer} onClick={clickCallback}>
             <div className="veplayer-cus-gradient-wrapper" />

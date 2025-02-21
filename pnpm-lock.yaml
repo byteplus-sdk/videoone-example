@@ -14,9 +14,6 @@ importers:
       '@byteplus/veplayer':
         specifier: 1.9.6
         version: 1.9.6
-      '@volcengine/imagex-react':
-        specifier: ^2.1.1
-        version: 2.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       antd-mobile:
         specifier: ^5.38.1
         version: 5.38.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -908,12 +905,6 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0 || ^6.0.0
-
-  '@volcengine/imagex-react@2.1.1':
-    resolution: {integrity: sha512-Liwk4dBsB+Xry8ywzjpnE6+Fjugxx1Yc9LRei0ceNHQl1C1LAJyZJ6ccQnUT3W/nY3mF3fsMtZAAMoAGPCzvzg==}
-    peerDependencies:
-      react: '>=16.10.2'
-      react-dom: '>=16.10.2'
 
   JSONStream@1.3.5:
     resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
@@ -3424,11 +3415,6 @@ snapshots:
       vite: 5.4.11(@types/node@22.10.5)(less@4.2.1)(terser@5.37.0)
     transitivePeerDependencies:
       - supports-color
-
-  '@volcengine/imagex-react@2.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   JSONStream@1.3.5:
     dependencies:

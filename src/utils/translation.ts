@@ -75,7 +75,7 @@ const translation = {
     'zh-CN': '添加评论...',
     en: 'Add comment...',
   },
-  // 短剧
+  // drama
   d_play_now: {
     'zh-CN': '立即播放',
     en: 'Play Now',
