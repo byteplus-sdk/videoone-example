@@ -195,6 +195,10 @@ function ChannelDetail() {
   }, [list.length]);
 
   useEffect(() => {
+    handleLockNumHighlight(activeIndex);
+  }, [activeIndex, numArrList]);
+
+  useEffect(() => {
     dispatch(setDetail(current ?? {}));
 
     if (current.vid) {
@@ -290,6 +294,11 @@ function ChannelDetail() {
     [dispatch],
   );
 
+  const handleLockNumHighlight = (index: number) => {
+    const findIndex = numArrList.findIndex(itemArr => itemArr.includes(index + 1));
+    findIndex > -1 && dispatch(setLockNumPageIndex(findIndex));
+  };
+
   const renderVideoPlayer = () => (
     <VideoSwiper
       startTime={startTime}
@@ -304,9 +313,7 @@ function ChannelDetail() {
       }}
       showLockPrompt={showLockPrompt}
       onChange={index => {
-        const findIndex = numArrList.findIndex(itemArr => itemArr.includes(index + 1));
         setActiveIndex(index);
-        dispatch(setLockNumPageIndex(findIndex));
       }}
       otherComponent={
         !isFullScreen && !isCssFullScreen && <VideoControls current={current} onCommentClick={handleCommentClick} />
