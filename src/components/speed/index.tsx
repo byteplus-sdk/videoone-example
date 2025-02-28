@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './index.module.less';
 import t from '@/utils/translation';
+import { useEffect } from 'react';
 export const playbackRateList = [
   {
     title: '2.0x',
@@ -36,10 +37,16 @@ const Speed = () => {
   const playbackRate = useSelector((state: RootState) => state.controls.playbackRate);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    return () => {
+      dispatch(setPlayBackRatePanelVisible(false));
+    };
+  }, []);
+
   return (
     <Popup
       visible={playbackRatePanelVisible}
-      getContainer={(isCssFullScreen || !isFullScreen) ? document.body : window.playerSdk?.player?.root}
+      getContainer={isCssFullScreen || !isFullScreen ? document.body : window.playerSdk?.player?.root}
       onMaskClick={() => {
         dispatch(setPlayBackRatePanelVisible(false));
       }}
