@@ -122,7 +122,7 @@ const translation = {
   },
   d_unlock_all_episodes: {
     'zh-CN': '解锁全部剧集',
-    en: 'Unlock all',
+    en: 'Unlock all episodes',
   },
   d_episode: {
     'zh-CN': '集',
@@ -154,7 +154,7 @@ const translation = {
   },
   d_pay_for_usd_placeholder: {
     'zh-CN': '付款 $placeholder',
-    en: 'Pay for USD placeholder',
+    en: 'Pay for $placeholder',
   },
   d_usd_placeholder: {
     'zh-CN': '$placeholder',
