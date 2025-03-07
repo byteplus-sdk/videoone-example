@@ -283,7 +283,7 @@ function ChannelDetail() {
 
   const handleBack = useCallback(() => {
     dispatch(resetDetail());
-    navigate('/dramaGround?device_id=001');
+    navigate('/dramaGround');
   }, [dispatch, navigate]);
 
   const handleCommentClick = useCallback(

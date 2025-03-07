@@ -10,7 +10,7 @@ import { imgUrl } from '@/utils';
 
 const MENU_ITEMS = [
   {
-    navigateUrl: '/dramaGround?device_id=001',
+    navigateUrl: '/dramaGround',
     title: t('home_drama_tit'),
     desc: t('home_drama_desc'),
     background: imgUrl(

@@ -152,7 +152,7 @@ const Channel: React.FC<ChannelProps> = ({
   const handleNavigate = React.useCallback(
     (startTime?: number) => {
       const queryStartTime = startTime ? `&startTime=${startTime}` : '';
-      navigate(`/dramaDetail?id=${drama_meta.drama_id}&order=${order}${queryStartTime}&device_id=001`);
+      navigate(`/dramaDetail?id=${drama_meta.drama_id}&order=${order}${queryStartTime}`);
     },
     [drama_meta?.drama_id, order],
   );
@@ -253,7 +253,7 @@ const Channel: React.FC<ChannelProps> = ({
                     const startTime = window.playerSdk?.player?.currentTime || 0;
                     queryStartTime = `&startTime=${startTime}`;
                   }
-                  navigate(`/dramaDetail?id=${item.drama_id}&order=${item.order}${queryStartTime}&device_id=001`);
+                  navigate(`/dramaDetail?id=${item.drama_id}&order=${item.order}${queryStartTime}`);
                 }}
               >
                 <div className={styles.img}>

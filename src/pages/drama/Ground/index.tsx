@@ -49,7 +49,7 @@ const DramaCard: React.FC<DramaItemProps & { type: 'trending' | 'release' | 'rec
       drama-id={drama_id}
       className={classNames(styles[`${type}ItemWrapper`], 'drama')}
       onClick={() => {
-        myNavigate(`/dramaDetail?id=${drama_id}&device_id=001`);
+        myNavigate(`/dramaDetail?id=${drama_id}`);
       }}
     >
       <div className={styles.coverWrapper}>
@@ -220,7 +220,7 @@ const Ground: React.FC = () => {
                         <div
                           className="btn"
                           onClick={() => {
-                            myNavigate(`/dramaDetail?id=${item.drama_id}&device_id=001`);
+                            myNavigate(`/dramaDetail?id=${item.drama_id}`);
                           }}
                         >
                           <IconPlay style={{ marginRight: 6 }} />
@@ -234,7 +234,11 @@ const Ground: React.FC = () => {
             </div>
           )}
           {/* 趋势 */}
-          <div className={classNames(styles.trendingWrapper, { [styles.trendingWrapperHide]: loopData.length <= 0 })}>
+          <div
+            className={classNames(styles.trendingWrapper, {
+              [styles.trendingWrapperHide]: loopData.length <= 0,
+            })}
+          >
             <h1 className={styles.tit}>{t('d_most_trending')} 🔥</h1>
             <div className={styles.trendingContentWrapper}>
               {trending
