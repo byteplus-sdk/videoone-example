@@ -13,7 +13,7 @@ import classNames from 'classnames';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import Ground from './Ground';
 import Channel from './Channel';
-import { IDramaDetailListItem } from '@/@types';
+import type { IDramaDetailListItem } from '@/interface';
 import { parseModel } from '@/utils';
 import t from '@/utils/translation';
 import { useSelector } from 'react-redux';

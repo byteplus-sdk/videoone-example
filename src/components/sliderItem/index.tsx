@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useMemo } from 'react';
-import { IDramaDetailListItem } from '@/@types';
+import type { IDramaDetailListItem } from '@/interface';
 import style from './index.module.less';
 import classNames from 'classnames';
 import { imgUrl, os } from '@/utils';

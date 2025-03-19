@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Popup } from 'antd-mobile';
 import type { ToastHandler } from 'antd-mobile/es/components/toast/methods';
 import useUrlState from '@ahooksjs/use-url-state';
-import { CHANNEL_MODE, type IDramaDetailListItem } from '@/@types';
+import { CHANNEL_MODE, type IDramaDetailListItem } from '@/interface';
 import VideoSwiper from '@/components/videoSwiper';
 import IconEnter from '@/assets/svgr/iconEnter.svg?react';
 import IconDrama from '@/assets/svgr/iconDrama.svg?react';

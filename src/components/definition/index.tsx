@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './index.module.less';
 import t from '@/utils/translation';
 import { useCallback } from 'react';
-import { IPlayInfoListItem } from '@/@types';
+import type { IPlayInfoListItem } from '@/interface';
 
 const Definition = () => {
   const definitionDrawerVisible = useSelector((state: RootState) => state.controls.definitionDrawerVisible);

@@ -11,7 +11,7 @@ import IconComment from '@/assets/svgr/iconComment.svg?react';
 import IconUp from '@/assets/svgr/iconUp.svg?react';
 import IconMenu from '@/assets/svgr/iconMenu.svg?react';
 import type { ToastHandler } from 'antd-mobile/es/components/toast/methods';
-import type { IDramaDetailListItem, IVideoModel } from '@/@types';
+import type { IDramaDetailListItem, IVideoModel } from '@/interface';
 import styles from './index.module.less';
 import 'swiper/less';
 import '@byteplus/veplayer/index.min.css';

@@ -4,7 +4,7 @@ import IconPlaying from '@/assets/svgr/iconPlaying.svg?react';
 import IconLock from '@/assets/svgr/iconLock.svg?react';
 import { Popup, Toast } from 'antd-mobile';
 import styles from './index.module.less';
-import { IDramaDetailListItem } from '@/@types';
+import type { IDramaDetailListItem } from '@/interface';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/type';
 import { setLockNumDrawerVisible, setLockNumPageIndex } from '@/redux/actions/controls';

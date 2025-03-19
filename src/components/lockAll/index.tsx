@@ -8,7 +8,7 @@ import styles from './index.module.less';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/type';
 import t from '@/utils/translation';
-import { IDramaDetailListItem } from '@/@types';
+import type { IDramaDetailListItem } from '@/interface';
 
 interface ILockAll {
   cover_url: string;

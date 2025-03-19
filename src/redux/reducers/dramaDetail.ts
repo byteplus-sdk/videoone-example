@@ -1,4 +1,4 @@
-import { IDramaDetailListItem } from '@/@types';
+import type { IDramaDetailListItem } from '@/interface';
 
 const initialState = {
   list: [] as IDramaDetailListItem['video_meta'][],

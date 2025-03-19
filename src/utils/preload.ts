@@ -1,4 +1,4 @@
-import { IDramaDetailListItem } from '@/@types';
+import type { IDramaDetailListItem } from '@/interface';
 import { selectDef } from './';
 
 export const formatPreloadStreamList = (list: Array<IDramaDetailListItem['video_meta']>, hasSelectedDef?: string) => {

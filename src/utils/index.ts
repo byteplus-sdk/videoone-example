@@ -1,4 +1,4 @@
-import { IPlayInfoListItem, IVideoModel } from '@/@types';
+import type { IPlayInfoListItem, IVideoModel } from '@/interface';
 export * from './preload';
 
 function getOS(): {

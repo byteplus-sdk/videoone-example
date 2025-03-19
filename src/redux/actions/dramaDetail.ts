@@ -1,4 +1,4 @@
-import { IDramaDetailListItem } from '@/@types';
+import type { IDramaDetailListItem } from '@/interface';
 
 export const setList = (list: IDramaDetailListItem['video_meta'][]) => ({
   type: 'SET_LIST',

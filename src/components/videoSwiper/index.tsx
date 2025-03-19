@@ -6,7 +6,7 @@ import VePlayer, { Events, IPlayerConfig, PlayerCore } from '@/player';
 import { formatPreloadStreamList } from '@/utils/preload';
 import IconUnmute from '@/assets/svgr/iconUnmute.svg?react';
 import { Toast } from 'antd-mobile';
-import { IDramaDetailListItem } from '@/@types';
+import type { IDramaDetailListItem } from '@/interface';
 import { bindOrientationEvents, getIsLandscape, os, selectDef } from '@/utils';
 import IconRotate from '@/assets/svgr/iconRotate.svg?react';
 import '@byteplus/veplayer/index.min.css';
