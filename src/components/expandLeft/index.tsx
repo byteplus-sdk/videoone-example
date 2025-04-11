@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import IconOutlineLike from '@/assets/svgr/iconOutlineLike.svg?react';
 import IconOutlineComment from '@/assets/svgr/iconOutlineComment.svg?react';
 import styles from './index.module.less';

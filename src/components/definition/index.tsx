@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import { setDefinition, setDefinitionPanelVisible } from '@/redux/actions/controls';
 import { RootState } from '@/redux/type';
 import { Popup } from 'antd-mobile';

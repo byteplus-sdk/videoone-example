@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import React from 'react';
 import styles from './index.module.less';
 import logo from '@/assets/images/logo.png';

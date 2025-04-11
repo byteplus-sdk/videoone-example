@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import classNames from 'classnames';
 import React from 'react';
 import IconPlaying from '@/assets/svgr/iconPlaying.svg?react';

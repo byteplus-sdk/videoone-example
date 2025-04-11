@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import { createRoot } from 'react-dom/client';
 // @ts-expect-error
 import { Plugin } from '@byteplus/veplayer';

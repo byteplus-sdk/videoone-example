@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import useAxios from 'axios-hooks';
 import { API_PATH } from '@/service/path';

@@ -1,6 +1,8 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import React, { useState } from 'react';
 import Emoji from '@/assets/svgr/iconEmoji.svg?react';
-import style from './index.module.less';
+import styles from './index.module.less';
 import translate from '@/utils/translation';
 
 interface IProps {
@@ -18,7 +20,7 @@ const InputBar: React.FC<IProps> = props => {
   }
 
   return (
-    <div className={style.inputWrapper}>
+    <div className={styles.inputWrapper}>
       <input
         placeholder={translate('c_add')}
         value={val}
@@ -28,7 +30,7 @@ const InputBar: React.FC<IProps> = props => {
         enterKeyHint="send"
         onKeyDown={handleKeyDown}
       />
-      <div className={style.emojiWrapper}>
+      <div className={styles.emojiWrapper}>
         <Emoji />
       </div>
     </div>

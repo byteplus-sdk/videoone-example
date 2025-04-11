@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 export const API_PATH = {
   GetFeedStreamWithPlayAuthToken: '/vod/v1/getFeedStreamWithPlayAuthToken',
   GetVideoComments: '/vod/v1/getVideoComments',

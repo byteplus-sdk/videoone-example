@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import { Dialog, Popup } from 'antd-mobile';
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './index.module.less';
@@ -148,6 +150,7 @@ const CommentItem = ({
       <div className={styles.avatar}>
         <Image
           alt="avatar"
+          className={styles.img}
           src={imgUrl(
             '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/f91bdb13eb83960457760d4f0be0b1e8.png~tplv-j963mrpdmh-image.image',
           )}

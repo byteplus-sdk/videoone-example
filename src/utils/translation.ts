@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 const translation = {
   home_title: {
     'zh-CN': 'VideoOne 体验中心',

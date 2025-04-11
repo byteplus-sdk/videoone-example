@@ -1,6 +1,8 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import React, { PropsWithChildren, useMemo } from 'react';
 import type { IDramaDetailListItem } from '@/interface';
-import style from './index.module.less';
+import styles from './index.module.less';
 import classNames from 'classnames';
 import { imgUrl, os } from '@/utils';
 import IconBack from '@/assets/svgr/iconBack.svg?react';
@@ -41,28 +43,28 @@ const SliderItem: React.FC<ISliderItemProps> = ({
 
   return (
     <div
-      className={classNames(style.wrapper, {
-        [style.isChannel]: isChannel,
-        [style.isPortrait]: isPortrait,
-        [style.isFullScreen]: isFullScreen && !isCssFullScreen,
-        [style.isCssFullScreen]: isCssFullScreen,
-        [style.isIOS]: os.isIos,
+      className={classNames(styles.wrapper, {
+        [styles.isChannel]: isChannel,
+        [styles.isPortrait]: isPortrait,
+        [styles.isFullScreen]: isFullScreen && !isCssFullScreen,
+        [styles.isCssFullScreen]: isCssFullScreen,
+        [styles.isIOS]: os.isIos,
       })}
     >
       {shouldRenderContent && (
         <>
-          <div className={style.poster}>
+          <div className={styles.poster}>
             <Image src={imgUrl(coverUrl)} alt={data.name} />
           </div>
-          <div id={`swiper-video-container-${index}`} className={style.videoContainer} onClick={clickCallback}>
+          <div id={`swiper-video-container-${index}`} className={styles.videoContainer} onClick={clickCallback}>
             <div className="veplayer-cus-gradient-wrapper" />
-            <div className={style.videoWithRotateBtn} id={`video-with-rotate-btn-${index}`}>
+            <div className={styles.videoWithRotateBtn} id={`video-with-rotate-btn-${index}`}>
               {children}
             </div>
           </div>
           {data.vip && isCssFullScreen && (
             <div
-              className={style.back}
+              className={styles.back}
               onClick={e => {
                 e.stopPropagation();
                 goBack();

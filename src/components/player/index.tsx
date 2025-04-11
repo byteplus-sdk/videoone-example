@@ -1,6 +1,7 @@
-// TODO: To be extracted and reused with short dramas
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import React, { useEffect, useRef, useImperativeHandle, useState, useCallback } from 'react';
-import style from './index.module.less';
+import styles from './index.module.less';
 import classNames from 'classnames';
 import { IComment, IPlayer } from '@/interface';
 import IconComment from '@/assets/svgr/iconComment.svg?react';
@@ -63,31 +64,32 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
   }
 
   return (
-    <div className={classNames(style.wrapper, style.swiperItem)}>
-      <Image src={data.coverUrl} className={style.posterShow} />
+    <div className={classNames(styles.wrapper, styles.swiperItem)}>
+      <Image src={data.coverUrl} className={styles.posterShow} />
       {index === 0 ? (
-        <div className={style.veplayerWrapper}>
+        <div className={styles.veplayerWrapper}>
           <div id="veplayer-container" />
         </div>
       ) : (
-        <div className={style.videoDom} id={`swiper-video-container-${index}`}></div>
+        <div className={styles.videoDom} id={`swiper-video-container-${index}`}></div>
       )}
 
-      <div className={style.rightSlider}>
-        <div className={style.btns}>
-          <div className={style.avatar}>
+      <div className={styles.rightSlider}>
+        <div className={styles.btns}>
+          <div className={styles.avatar}>
             <Image
               src={imgUrl(
                 '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/f91bdb13eb83960457760d4f0be0b1e8.png~tplv-j963mrpdmh-image.image',
               )}
               alt="avatar"
+              className={styles.img}
             />
           </div>
-          <div className={style.like}>
+          <div className={styles.like}>
             <Like {...data} ref={likeRef} />
           </div>
           <div
-            className={style.comment}
+            className={styles.comment}
             onClick={e => {
               e.stopPropagation();
               executeGetComments();
@@ -99,12 +101,12 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
           </div>
         </div>
       </div>
-      <div className={style.bottom}>
-        {data.name && <div className={style.name}>@{data.name}</div>}
-        <div id={`title-container-${index}`} className={style.titleContainer}>
+      <div className={styles.bottom}>
+        {data.name && <div className={styles.name}>@{data.name}</div>}
+        <div id={`title-container-${index}`} className={styles.titleContainer}>
           {showMore && (
             <div
-              className={style.boxMore}
+              className={styles.boxMore}
               onClick={e => {
                 e.stopPropagation();
                 setMoreVisible(true);
@@ -113,8 +115,8 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
               {translate('c_more')}
             </div>
           )}
-          <div className={style.titleWrapper}>
-            <div className={style.title} id={`title-${index}`}>
+          <div className={styles.titleWrapper}>
+            <div className={styles.title} id={`title-${index}`}>
               {data.caption}
             </div>
           </div>
@@ -126,12 +128,12 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
           bodyStyle={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
           closeOnMaskClick
           visible={moreVisible}
-          maskClassName={style.popupMask}
+          maskClassName={styles.popupMask}
           onClose={() => {
             setMoreVisible(false);
           }}
         >
-          <div className={style.captionTitle}>{data.caption}</div>
+          <div className={styles.captionTitle}>{data.caption}</div>
         </Popup>
       )}
       <Comment commentVisible={commentVisible} setCommentVisible={setCommentVisible} list={list} loading={loading} />

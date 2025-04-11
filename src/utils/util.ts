@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 export function formatDateTime(date: Date) {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;

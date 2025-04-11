@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 export const setPlayBackRate = (value: number) => ({
   type: 'SET_PLAY_BACK_RATE',
   payload: value,

@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import IconSpeed from '@/assets/svgr/iconLSpeed.svg?react';
 import IconQuality from '@/assets/svgr/iconLQuality.svg?react';
 import IconMenu from '@/assets/svgr/iconLMenu.svg?react';

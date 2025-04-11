@@ -1,10 +1,12 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useAxios from 'axios-hooks';
 import { API_PATH } from '@/service/path';
 import Player from '@/components/player';
 import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react';
 import 'swiper/less';
-import style from './index.module.less';
+import styles from './index.module.less';
 import { IVideo } from '@/interface';
 import Gesture from '@/assets/images/gesture.png';
 import IconNav from '@/assets/svgr/iconNavIcon.svg?react';
@@ -243,32 +245,32 @@ const TTShow: React.FC = () => {
   }
 
   return loading ? (
-    <div className={style.loadingWrapper}>
+    <div className={styles.loadingWrapper}>
       <Loading />
     </div>
   ) : (
     <>
-      <div className={style.topArea}>
+      <div className={styles.topArea}>
         {showUnmuteBtn && (
-          <div className={style.unmute} onClick={onUnmuteClick}>
-            <div className={style.unmuteBt}>{translate('show_unmute')}</div>
+          <div className={styles.unmute} onClick={onUnmuteClick}>
+            <div className={styles.unmuteBt}>{translate('show_unmute')}</div>
           </div>
         )}
-        <div className={style.back} onClick={() => navigate('/')}>
+        <div className={styles.back} onClick={() => navigate('/')}>
           <IconBack />
         </div>
-        <div className={style.infoWrapper}>
+        <div className={styles.infoWrapper}>
           <IconNav />
-          <div className={style.info}>
-            <p className={style.tit}>{translate('show_nav_tit')}</p>
-            <p className={style.desc}>{translate('show_nav_desc')}</p>
+          <div className={styles.info}>
+            <p className={styles.tit}>{translate('show_nav_tit')}</p>
+            <p className={styles.desc}>{translate('show_nav_desc')}</p>
           </div>
         </div>
-        <div className={style.btn} onClick={jumpToApp}>
+        <div className={styles.btn} onClick={jumpToApp}>
           {translate('show_nav_btn')}
         </div>
       </div>
-      <div onClick={handleClick} className={style.mySwiper}>
+      <div onClick={handleClick} className={styles.mySwiper}>
         {list.length > 0 && (
           <Swiper
             onSwiper={swiper => (refSwiper.current = swiper)}
@@ -295,7 +297,7 @@ const TTShow: React.FC = () => {
       </div>
 
       {showGuide && (
-        <div className={style.guide} onClick={handleMaskClose} onTouchMove={handleMaskClose}>
+        <div className={styles.guide} onClick={handleMaskClose} onTouchMove={handleMaskClose}>
           <img src={Gesture} alt="" />
           <span>{translate('show_guide')}</span>
         </div>

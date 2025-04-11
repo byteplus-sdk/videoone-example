@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './index.module.less';

@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import type { IPlayInfoListItem, IVideoModel } from '@/interface';
 export * from './preload';
 

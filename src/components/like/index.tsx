@@ -1,9 +1,11 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import React, { useState, useImperativeHandle, useCallback } from 'react';
 import { useLottie } from 'lottie-react';
 import likeAni from '@/assets/lottie/like.json';
 import unlikeAni from '@/assets/lottie/unLike.json';
 import IconUnLike from '@/assets/svgr/iconUnLike.svg?react';
-import style from './index.module.less';
+import styles from './index.module.less';
 
 export interface IRef {
   handleLike: () => void;
@@ -51,20 +53,20 @@ const Like = React.forwardRef<IRef, IProps>((props, ref) => {
   return (
     <>
       <div
-        className={style.like}
+        className={styles.like}
         onClick={e => {
           e.stopPropagation();
           handleLike();
         }}
       >
-        <div className={style.ani} style={{ display: isLike ? 'block' : 'none' }}>
+        <div className={styles.ani} style={{ display: isLike ? 'block' : 'none' }}>
           {like}
         </div>
-        <div className={style.ani} style={{ display: isLike ? 'none' : 'block' }}>
+        <div className={styles.ani} style={{ display: isLike ? 'none' : 'block' }}>
           {unLike}
         </div>
         {!hide && (
-          <div className={style.staticSvg}>
+          <div className={styles.staticSvg}>
             <IconUnLike />
           </div>
         )}

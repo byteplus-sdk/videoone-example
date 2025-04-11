@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from '@/pages/home';
 import TTShow from '@/pages/ttshow';

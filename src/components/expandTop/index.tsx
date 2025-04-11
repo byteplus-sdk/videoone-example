@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import styles from './index.module.less';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/type';

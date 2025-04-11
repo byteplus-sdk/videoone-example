@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import React, { useState, useRef, useEffect } from 'react';
 import { Popup } from 'antd-mobile';
 import type { ToastHandler } from 'antd-mobile/es/components/toast/methods';

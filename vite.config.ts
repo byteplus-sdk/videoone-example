@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import externalGlobals from 'rollup-plugin-external-globals';

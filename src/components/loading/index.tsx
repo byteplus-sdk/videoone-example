@@ -1,5 +1,7 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import React from 'react';
-import style from './index.module.less';
+import styles from './index.module.less';
 
 interface LoadingProps {
   size?: 'small' | 'medium' | 'large';
@@ -8,13 +10,13 @@ interface LoadingProps {
 
 const Loading: React.FC<LoadingProps> = ({ size = 'medium', text }) => {
   return (
-    <div className={`${style.loading} ${style[size]}`}>
-      <div className={style.spinner}>
-        <div className={style.dot}></div>
-        <div className={style.dot}></div>
-        <div className={style.dot}></div>
+    <div className={`${styles.loading} ${styles[size]}`}>
+      <div className={styles.spinner}>
+        <div className={styles.dot}></div>
+        <div className={styles.dot}></div>
+        <div className={styles.dot}></div>
       </div>
-      {text && <div className={style.text}>{text}</div>}
+      {text && <div className={styles.text}>{text}</div>}
     </div>
   );
 };

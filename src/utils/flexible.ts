@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 function flexible(window: Window, document: Document) {
   const docEl = document.documentElement;
   const dpr = window.devicePixelRatio || 1;

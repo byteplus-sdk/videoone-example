@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 import { combineReducers } from 'redux';
 import controls from './controls';
 import dramaDetail from './dramaDetail';
