@@ -6,6 +6,7 @@ import IconClose from '@/assets/svgr/iconClose.svg?react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/type';
 import classNames from 'classnames';
+import useMountContainer from '@/hooks/useMountContainer';
 
 interface IAd {
   drama_id: string;
@@ -17,9 +18,8 @@ interface IAd {
 const Ad: React.FC<IAd> = ({ onClose, getLockData, visible }) => {
   const [count, setCount] = useState(10);
   const refTimer = useRef<number>();
+  const { getMountContainer } = useMountContainer();
   const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
-  const isPortrait = useSelector((state: RootState) => state.player.isPortrait);
-  const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
   const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const Ad: React.FC<IAd> = ({ onClose, getLockData, visible }) => {
             <img src="//sf16-videoone.ibytedtos.com/obj/bytertc-platfrom-sg/cocacola.gif" alt="" />
           </div>
         </div>,
-        !isPortrait && isFullScreen && !isCssFullScreen ? window.playerSdk?.player?.root : document.body,
+        getMountContainer(),
       )
     : null;
 };

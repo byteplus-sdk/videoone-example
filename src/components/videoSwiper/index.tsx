@@ -18,7 +18,7 @@ import { RootState } from '@/redux/type';
 import ExpandLeftPlugin from '@/plugins/expandLeft';
 import { IPreloadStream, Stream } from '@byteplus/veplayer';
 import { setDefinition } from '@/redux/actions/controls';
-import t from '@/utils/translation';
+import translate from '@/utils/translation';
 import ExpandTopPlugin from '@/plugins/expandTop';
 import SystemCover from '../systemCover';
 
@@ -236,7 +236,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
           if (!nextInfo?.url) {
             Toast.show({
               icon: 'fail',
-              content: t('d_data_error'),
+              content: translate('d_data_error'),
             });
             return;
           }
@@ -278,7 +278,7 @@ const VideoSwiper = React.forwardRef<RefVideoSwiper, IVideoSwiperProps>(
     const onEnded = useCallback(() => {
       if (swiperRef.current?.activeIndex === videoDataList.length - 1) {
         Toast.show({
-          content: t('d_data_over'),
+          content: translate('d_data_over'),
         });
       } else {
         swiperRef.current?.slideNext();
@@ -608,7 +608,7 @@ const PlayContol: React.FC<IPlayControlProps> = ({
         onClick={switchFullScreen}
       >
         <IconRotate />
-        <span>{t('d_full_screen')}</span>
+        <span>{translate('d_full_screen')}</span>
       </div>
       {showUnmuteBtn && !isFullScreen && (
         <div
@@ -620,7 +620,7 @@ const PlayContol: React.FC<IPlayControlProps> = ({
         >
           <div className={styles.unmuteBtn}>
             <IconUnmute className={styles.unmuteIcon} />
-            <span>{t('d_click_to_unmute')}</span>
+            <span>{translate('d_click_to_unmute')}</span>
           </div>
         </div>
       )}

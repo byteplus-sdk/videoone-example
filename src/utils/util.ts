@@ -11,17 +11,12 @@ function pad(num: number) {
 
 export function renderCount(count: number) {
   const lang = window.navigator.language;
-  if (/zh/i.test(lang)) {
-    return count > 9999
-      ? `${parseFloat(`${count / 10000}`)
-          .toFixed(3)
-          .slice(0, -2)}万`
-      : count;
-  }
+  const isZh = /zh/i.test(lang);
+
   return count > 9999
-    ? `${parseFloat(`${count / 1000}`)
+    ? `${parseFloat(`${count / (isZh ? 10000 : 1000)}`)
         .toFixed(3)
-        .slice(0, -2)}k`
+        .slice(0, -2)}${isZh ? '万' : 'k'}`
     : count;
 }
 

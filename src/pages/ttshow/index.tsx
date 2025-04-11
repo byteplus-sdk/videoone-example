@@ -10,7 +10,7 @@ import Gesture from '@/assets/images/gesture.png';
 import IconNav from '@/assets/svgr/iconNavIcon.svg?react';
 import IconBack from '@/assets/svgr/iconBack.svg?react';
 import { useNavigate } from 'react-router-dom';
-import t from '@/utils/translation';
+import translate from '@/utils/translation';
 import Loading from '@/components/loading';
 import VePlayer, { PlayerCore } from '@/player';
 
@@ -251,7 +251,7 @@ const TTShow: React.FC = () => {
       <div className={style.topArea}>
         {showUnmuteBtn && (
           <div className={style.unmute} onClick={onUnmuteClick}>
-            <div className={style.unmuteBt}>{t('show_unmute')}</div>
+            <div className={style.unmuteBt}>{translate('show_unmute')}</div>
           </div>
         )}
         <div className={style.back} onClick={() => navigate('/')}>
@@ -260,12 +260,12 @@ const TTShow: React.FC = () => {
         <div className={style.infoWrapper}>
           <IconNav />
           <div className={style.info}>
-            <p className={style.tit}>{t('show_nav_tit')}</p>
-            <p className={style.desc}>{t('show_nav_desc')}</p>
+            <p className={style.tit}>{translate('show_nav_tit')}</p>
+            <p className={style.desc}>{translate('show_nav_desc')}</p>
           </div>
         </div>
         <div className={style.btn} onClick={jumpToApp}>
-          {t('show_nav_btn')}
+          {translate('show_nav_btn')}
         </div>
       </div>
       <div onClick={handleClick} className={style.mySwiper}>
@@ -297,7 +297,7 @@ const TTShow: React.FC = () => {
       {showGuide && (
         <div className={style.guide} onClick={handleMaskClose} onTouchMove={handleMaskClose}>
           <img src={Gesture} alt="" />
-          <span>{t('show_guide')}</span>
+          <span>{translate('show_guide')}</span>
         </div>
       )}
     </>

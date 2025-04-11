@@ -7,9 +7,10 @@ import { Button, Popup } from 'antd-mobile';
 import styles from './index.module.less';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/type';
-import t from '@/utils/translation';
+import translate from '@/utils/translation';
 import type { IDramaDetailListItem } from '@/interface';
-
+import useMountContainer from '@/hooks/useMountContainer';
+import Image from '../Image';
 interface ILockAll {
   cover_url: string;
   caption: string;
@@ -26,13 +27,13 @@ interface ILockAll {
 const LockAll: React.FC<ILockAll> = React.memo(
   ({ cover_url, caption, count, visible, list, order, loading, setLockAllDrawerOpen, getLockData }) => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const { getMountContainer } = useMountContainer();
     const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
     const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
-    const isPortrait = useSelector((state: RootState) => state.player.isPortrait);
     const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
 
     const [part, all] = useMemo(() => {
-      let part: IDramaDetailListItem['video_meta'][] = [];
+      const part: IDramaDetailListItem['video_meta'][] = [];
       const all = list.filter(item => {
         if (item.vip && part.length < 3 && item.order >= order) {
           part.push(item);
@@ -49,14 +50,14 @@ const LockAll: React.FC<ILockAll> = React.memo(
           setLockAllDrawerOpen(false);
         }}
         position={(isFullScreen || isCssFullScreen) && isHorizontal ? 'right' : 'bottom'}
-        getContainer={!isPortrait && isFullScreen && !isCssFullScreen ? window.playerSdk?.player?.root : document.body}
+        getContainer={getMountContainer()}
         bodyClassName={classNames(styles.popupLockAllBodyClass, {
           [styles.isFullScreen]: (isFullScreen || isCssFullScreen) && isHorizontal,
         })}
       >
         <div className={styles.lockAllWrapper}>
           <div className={styles.header}>
-            <span>{t('d_unlock_multiple_episodes')}</span>
+            <span>{translate('d_unlock_multiple_episodes')}</span>
             <div
               className={styles.close}
               onClick={() => {
@@ -69,21 +70,21 @@ const LockAll: React.FC<ILockAll> = React.memo(
           <div className={styles.content}>
             <div className={styles.caption}>
               <div className={styles.coverImg}>
-                <img src={cover_url} alt="" />
+                <Image src={cover_url} alt="" />
               </div>
               <div className={styles.text}>
                 <h3>{caption}</h3>
-                <div className={styles.count}>{t('d_all_episodes_placeholder', count)}</div>
+                <div className={styles.count}>{translate('d_all_episodes_placeholder', count)}</div>
               </div>
             </div>
             <div className={styles.tags}>
               <div>
                 <IconAllow />
-                {t('d_permanent_viewing')}
+                {translate('d_permanent_viewing')}
               </div>
               <div>
                 <IconNotAllow />
-                {t('d_no_refund')}
+                {translate('d_no_refund')}
               </div>
             </div>
             <div className={styles.options}>
@@ -93,8 +94,8 @@ const LockAll: React.FC<ILockAll> = React.memo(
                 }}
                 className={classNames({ [styles.active]: activeIndex === 0 })}
               >
-                <div>{t('d_placeholder_episodes', part.length)}</div>
-                <div>{t('d_usd_placeholder', 15 * part.length)}</div>
+                <div>{translate('d_placeholder_episodes', part.length)}</div>
+                <div>{translate('d_usd_placeholder', 15 * part.length)}</div>
               </div>
               <div
                 className={classNames(styles.all, { [styles.active]: activeIndex === 1 })}
@@ -102,10 +103,10 @@ const LockAll: React.FC<ILockAll> = React.memo(
                   setActiveIndex(1);
                 }}
               >
-                <div className={styles.title}>{t('d_all_episodes')}</div>
+                <div className={styles.title}>{translate('d_all_episodes')}</div>
                 <div>
-                  {t('d_usd_placeholder', 0.6 * 15 * all.length)}
-                  <span>({t('d_usd_placeholder', 15 * all.length)})</span>
+                  {translate('d_usd_placeholder', 0.6 * 15 * all.length)}
+                  <span>({translate('d_usd_placeholder', 15 * all.length)})</span>
                 </div>
               </div>
             </div>
@@ -119,7 +120,7 @@ const LockAll: React.FC<ILockAll> = React.memo(
                 getLockData(activeIndex === 0 ? part : all);
               }}
             >
-              {t('d_pay_for_usd_placeholder', activeIndex === 0 ? 15 * part.length : 0.6 * 15 * all.length)}
+              {translate('d_pay_for_usd_placeholder', activeIndex === 0 ? 15 * part.length : 0.6 * 15 * all.length)}
             </Button>
           </div>
         </div>

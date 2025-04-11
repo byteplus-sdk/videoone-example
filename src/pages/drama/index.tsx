@@ -15,19 +15,19 @@ import Ground from './Ground';
 import Channel from './Channel';
 import type { IDramaDetailListItem } from '@/interface';
 import { parseModel } from '@/utils';
-import t from '@/utils/translation';
+import translate from '@/utils/translation';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/type';
 
 const Tabs = [
   {
     value: 0,
-    title: t('d_home'),
+    title: translate('d_home'),
     renderIcon: (isSelected: boolean) => (isSelected ? <IconHomeSelected /> : <IconHome />),
   },
   {
     value: 1,
-    title: t('d_for_you'),
+    title: translate('d_for_you'),
     renderIcon: (isSelected: boolean) => (isSelected ? <IconVideoSelected /> : <IconVideo />),
   },
 ];

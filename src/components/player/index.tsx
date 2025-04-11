@@ -4,15 +4,16 @@ import style from './index.module.less';
 import classNames from 'classnames';
 import { IComment, IPlayer } from '@/interface';
 import IconComment from '@/assets/svgr/iconComment.svg?react';
-import CommentComp from '@/components/comment';
-import LikeComp, { IRef } from '../like';
+import Comment from '@/components/comment';
+import Like, { IRef } from '../like';
 import useAxios from 'axios-hooks';
 import { API_PATH } from '@/service/path';
 import { renderCount } from '@/utils/util';
-import translation from '@/utils/translation';
+import translate from '@/utils/translation';
 import { debounce } from 'lodash-es';
 import { Popup } from 'antd-mobile';
 import { imgUrl } from '@/utils';
+import Image from '../Image';
 
 const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
   const likeRef = useRef<IRef>(null);
@@ -44,6 +45,10 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
   useEffect(() => {
     calcCaption();
     window.addEventListener('resize', throttledCalcCaption);
+
+    return () => {
+      window.removeEventListener('resize', throttledCalcCaption);
+    };
   }, []);
 
   function calcCaption() {
@@ -59,7 +64,7 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
 
   return (
     <div className={classNames(style.wrapper, style.swiperItem)}>
-      <img src={data.coverUrl} className={style.posterShow} />
+      <Image src={data.coverUrl} className={style.posterShow} />
       {index === 0 ? (
         <div className={style.veplayerWrapper}>
           <div id="veplayer-container" />
@@ -71,17 +76,15 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
       <div className={style.rightSlider}>
         <div className={style.btns}>
           <div className={style.avatar}>
-            <div>
-              <img
-                src={imgUrl(
-                  '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/f91bdb13eb83960457760d4f0be0b1e8.png~tplv-j963mrpdmh-image.image',
-                )}
-                alt=""
-              />
-            </div>
+            <Image
+              src={imgUrl(
+                '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/f91bdb13eb83960457760d4f0be0b1e8.png~tplv-j963mrpdmh-image.image',
+              )}
+              alt="avatar"
+            />
           </div>
           <div className={style.like}>
-            <LikeComp {...data} ref={likeRef} />
+            <Like {...data} ref={likeRef} />
           </div>
           <div
             className={style.comment}
@@ -107,7 +110,7 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
                 setMoreVisible(true);
               }}
             >
-              {translation('c_more')}
+              {translate('c_more')}
             </div>
           )}
           <div className={style.titleWrapper}>
@@ -131,12 +134,7 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
           <div className={style.captionTitle}>{data.caption}</div>
         </Popup>
       )}
-      <CommentComp
-        commentVisible={commentVisible}
-        setCommentVisible={setCommentVisible}
-        list={list}
-        loading={loading}
-      />
+      <Comment commentVisible={commentVisible} setCommentVisible={setCommentVisible} list={list} loading={loading} />
     </div>
   );
 });

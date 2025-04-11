@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 .loading,
 .loading > div {
   position: relative;
@@ -5,16 +7,36 @@
 }
 
 .loading {
-  & > div {
-    display: inline-block;
-    float: none;
-    background-color: #6d6d6d;
-    border: 0 solid #6d6d6d;
-    width: 10px;
-    height: 10px;
-    margin: 4px;
-    border-radius: 100%;
-    animation: ball-beat 0.7s -0.15s infinite linear;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .spinner {
+    display: flex;
+    gap: 6px;
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background-color: #666;
+      border-radius: 50%;
+      animation: bounce 0.5s ease-in-out infinite;
+
+      &:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+
+      &:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+    }
+  }
+
+  .text {
+    margin-top: 8px;
+    color: #666;
+    font-size: 14px;
   }
 }
 
@@ -26,14 +48,23 @@
   animation-delay: -0.5s;
 }
 
-@keyframes ball-beat {
-  50% {
-    opacity: 0.2;
-    transform: scale(0.75);
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
   }
 
-  100% {
-    opacity: 1;
-    transform: scale(1);
+  50% {
+    transform: translateY(-10px);
   }
+}
+
+.small .dot {
+  width: 6px;
+  height: 6px;
+}
+
+.large .dot {
+  width: 12px;
+  height: 12px;
 }

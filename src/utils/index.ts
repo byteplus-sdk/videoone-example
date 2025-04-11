@@ -143,17 +143,8 @@ export const getIsLandscape = () => {
   return width > height;
 };
 
-// hack
-export const isHitBlackList = () => {
-  const blacklist = ['HeyTapBrowser', 'DingTalk'];
-  return blacklist.some(item => navigator.userAgent.includes(item));
-};
-
 // Screen rotation monitoring
 export const bindOrientationEvents = (isBind: boolean, fn: () => void) => {
-  if (isHitBlackList()) {
-    return;
-  }
   const eventName = window.orientation !== undefined ? 'orientationchange' : 'resize';
   if (isBind) {
     window.addEventListener(eventName, fn);

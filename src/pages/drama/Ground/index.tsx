@@ -12,10 +12,11 @@ import Loading from '@/components/loading';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import classNames from 'classnames';
-import t from '@/utils/translation';
+import translate from '@/utils/translation';
 import { renderCount } from '@/utils/util';
 import { formatPreloadStreamList, os, parseModel } from '@/utils';
 import VePlayer, { IPreloadStream } from '@byteplus/veplayer';
+import Image from '@/components/Image';
 
 interface IData {
   drama_cover_url: string;
@@ -53,7 +54,7 @@ const DramaCard: React.FC<DramaItemProps & { type: 'trending' | 'release' | 'rec
       }}
     >
       <div className={styles.coverWrapper}>
-        <img src={drama_cover_url} alt={drama_title} />
+        <Image src={drama_cover_url} alt={drama_title} />
         {showTopTag &&
           index !== undefined &&
           (index < 3 ? (
@@ -224,7 +225,7 @@ const Ground: React.FC = () => {
                           }}
                         >
                           <IconPlay style={{ marginRight: 6 }} />
-                          {t('d_play_now')}
+                          {translate('d_play_now')}
                         </div>
                       </div>
                     </div>
@@ -239,7 +240,7 @@ const Ground: React.FC = () => {
               [styles.trendingWrapperHide]: loopData.length <= 0,
             })}
           >
-            <h1 className={styles.tit}>{t('d_most_trending')} 🔥</h1>
+            <h1 className={styles.tit}>{translate('d_most_trending')} 🔥</h1>
             <div className={styles.trendingContentWrapper}>
               {trending
                 .filter((_item, index) => index < 6)
@@ -257,7 +258,7 @@ const Ground: React.FC = () => {
           </div>
           {/* 新发 */}
           <div className={styles.releaseWrapper}>
-            <h1 className={styles.tit}>{t('d_new_release')}</h1>
+            <h1 className={styles.tit}>{translate('d_new_release')}</h1>
             <div className={classNames(styles.releaseContentWrapper, 'noSwipingClass')}>
               {release.map(item => (
                 <DramaCard key={item.drama_id} {...item} type="release" myNavigate={myNavigate} />
@@ -266,7 +267,7 @@ const Ground: React.FC = () => {
           </div>
           {/* 推荐 */}
           <div className={styles.recommendWrapper}>
-            <h1 className={styles.tit}>{t('d_recommended')}</h1>
+            <h1 className={styles.tit}>{translate('d_recommended')}</h1>
             <div className={styles.recommendContentWrapper}>
               {recommend
                 .filter((_item, index) => index < 6)

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Emoji from '@/assets/svgr/iconEmoji.svg?react';
 import style from './index.module.less';
-import translation from '@/utils/translation';
+import translate from '@/utils/translation';
 
 interface IProps {
   handleEnter: (val: string) => void;
@@ -20,7 +20,7 @@ const InputBar: React.FC<IProps> = props => {
   return (
     <div className={style.inputWrapper}>
       <input
-        placeholder={translation('c_add')}
+        placeholder={translate('c_add')}
         value={val}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setVal(e.target.value);

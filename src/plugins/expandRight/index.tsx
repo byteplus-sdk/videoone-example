@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-// @ts-ignore
+// @ts-expect-error
 import { Plugin } from '@byteplus/veplayer';
 import ExpandRight from '@/components/expandRight';
 import { Provider } from 'react-redux';
@@ -24,7 +24,7 @@ export default class ExpandRightPlugin extends Plugin {
   }
 
   afterCreate() {
-    // @ts-ignore
+    // @ts-expect-error
     const root = createRoot(this.root);
     root.render(
       <Provider store={store}>

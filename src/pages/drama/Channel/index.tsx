@@ -13,19 +13,20 @@ import styles from './index.module.less';
 import 'swiper/less';
 import '@byteplus/veplayer/index.min.css';
 import Loading from '@/components/loading';
-import LikeComp from '@/components/like';
+import Like from '@/components/like';
 import { formatSecondsToTime, renderCount } from '@/utils/util';
 import IconClose from '@/assets/svgr/iconClose.svg?react';
 import useAxios from 'axios-hooks';
 import { API_PATH } from '@/service/path';
 import classNames from 'classnames';
-import CommentComp from '@/components/comment';
+import Comment from '@/components/comment';
 import { useNavigate } from 'react-router-dom';
-import t from '@/utils/translation';
+import translate from '@/utils/translation';
 import { setDetail } from '@/redux/actions/dramaDetail';
 import { useDispatch, useSelector } from 'react-redux';
 import { imgUrl } from '@/utils';
 import { RootState } from '@/redux/type';
+import Image from '@/components/Image';
 
 interface IRecommend {
   isSliderMoving: boolean;
@@ -53,7 +54,7 @@ const VideoInfo: React.FC<{
       <div className={styles.mode1}>
         <div className={styles.briefWrapper} onClick={() => onNavigate()}>
           <IconDrama />
-          <span className={styles.brief}>{t('d_short_drama_placeholder', drama_meta.drama_title)}</span>
+          <span className={styles.brief}>{translate('d_short_drama_placeholder', drama_meta.drama_title)}</span>
         </div>
         <div className={styles.info}>
           <span className={styles.author}>@{video_meta.name}</span>
@@ -68,7 +69,7 @@ const VideoInfo: React.FC<{
   return (
     <div className={styles.mode2}>
       <div className={styles.info}>
-        <img src={drama_meta.drama_cover_url} />
+        <Image src={drama_meta.drama_cover_url} alt={drama_meta.drama_title} className={styles.cover} />
         <div className={styles.title}>
           <h2>{drama_meta.drama_title}</h2>
           <span className={styles.popularity}>
@@ -84,7 +85,7 @@ const VideoInfo: React.FC<{
           onNavigate(startTime);
         }}
       >
-        {t('d_play_now')}
+        {translate('d_play_now')}
       </div>
     </div>
   );
@@ -98,17 +99,15 @@ const VideoControls: React.FC<{
   <div className={styles.rightLane}>
     <div className={styles.btns}>
       <div className={styles.avatar}>
-        <div>
-          <img
-            src={imgUrl(
-              '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/f91bdb13eb83960457760d4f0be0b1e8.png~tplv-j963mrpdmh-image.image',
-            )}
-            alt=""
-          />
-        </div>
+        <Image
+          src={imgUrl(
+            '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/f91bdb13eb83960457760d4f0be0b1e8.png~tplv-j963mrpdmh-image.image',
+          )}
+          alt="avatar"
+        />
       </div>
       <div className={styles.like}>
-        <LikeComp like={like} />
+        <Like like={like} />
       </div>
       <div className={styles.comment} onClick={onCommentClick}>
         <IconComment />
@@ -211,7 +210,7 @@ const Channel: React.FC<ChannelProps> = ({
         >
           <div className={styles.left}>
             <IconRcm />
-            <span>{t('d_recommend_for_you')}</span>
+            <span>{translate('d_recommend_for_you')}</span>
           </div>
           <IconEnter />
         </div>
@@ -229,7 +228,7 @@ const Channel: React.FC<ChannelProps> = ({
         <div className={styles.head}>
           <div className={styles.title}>
             <IconRcm />
-            <span>{t('d_recommend_for_you')}</span>
+            <span>{translate('d_recommend_for_you')}</span>
           </div>
           <div
             className={styles.close}
@@ -257,7 +256,7 @@ const Channel: React.FC<ChannelProps> = ({
                 }}
               >
                 <div className={styles.img}>
-                  <img src={item.cover_url} alt="" />
+                  <Image src={item.cover_url} alt={item.caption} />
                 </div>
                 <div className={styles.content}>
                   <h2>{item.caption}</h2>
@@ -275,7 +274,7 @@ const Channel: React.FC<ChannelProps> = ({
         </div>
       </Popup>
 
-      <CommentComp
+      <Comment
         commentVisible={commentVisible}
         setCommentVisible={setCommentVisible}
         list={commentsData?.response ?? []}

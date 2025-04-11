@@ -4,6 +4,7 @@ import style from './index.module.less';
 import classNames from 'classnames';
 import { imgUrl, os } from '@/utils';
 import IconBack from '@/assets/svgr/iconBack.svg?react';
+import Image from '../Image';
 interface ISliderItemProps extends PropsWithChildren {
   isActive: boolean;
   activeIndex: number;
@@ -51,7 +52,7 @@ const SliderItem: React.FC<ISliderItemProps> = ({
       {shouldRenderContent && (
         <>
           <div className={style.poster}>
-            <img src={imgUrl(coverUrl)} alt="" />
+            <Image src={imgUrl(coverUrl)} alt={data.name} />
           </div>
           <div id={`swiper-video-container-${index}`} className={style.videoContainer} onClick={clickCallback}>
             <div className="veplayer-cus-gradient-wrapper" />

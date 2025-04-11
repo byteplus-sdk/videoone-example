@@ -17,9 +17,9 @@ import 'swiper/less';
 import '@byteplus/veplayer/index.min.css';
 import { API_PATH } from '@/service/path';
 import Loading from '@/components/loading';
-import LikeComp from '@/components/like';
+import Like from '@/components/like';
 import { renderCount } from '@/utils/util';
-import CommentComp from '@/components/comment';
+import Comment from '@/components/comment';
 import classNames from 'classnames';
 import { DialogShowHandler } from 'antd-mobile/es/components/dialog';
 import LockAll from '@/components/lockAll';
@@ -36,9 +36,10 @@ import { RootState } from '@/redux/type';
 import { resetDetail, setDetail, setList } from '@/redux/actions/dramaDetail';
 import Speed, { playbackRateList } from '@/components/speed';
 import Definition from '@/components/definition';
-import t from '@/utils/translation';
+import translate from '@/utils/translation';
 import { chunk } from 'lodash-es';
-
+import useMountContainer from '@/hooks/useMountContainer';
+import Image from '@/components/Image';
 interface ILockData {
   vid: string;
   order: number;
@@ -56,7 +57,7 @@ const VideoControls: React.FC<VideoControlsProps> = ({ current, onCommentClick }
     <div className={styles.rightLane}>
       <div className={styles.btns}>
         <div className={styles.like}>
-          <LikeComp like={current.like} />
+          <Like like={current.like} />
         </div>
         <div className={styles.comment} onClick={onCommentClick}>
           <IconComment />
@@ -110,6 +111,7 @@ function ChannelDetail() {
   const isPortrait = useSelector((state: RootState) => state.player.isPortrait);
   const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
   const commentDrawerVisible = useSelector((state: RootState) => state.controls.commentDrawerVisible);
+  const { getMountContainer } = useMountContainer();
 
   const list = useSelector((state: RootState) => state.dramaDetail.list);
   const { loading } = useDramaData(urlState);
@@ -211,7 +213,7 @@ function ChannelDetail() {
     } else {
       toastRef.current = Toast.show({
         icon: 'loading',
-        content: t('d_loading'),
+        content: translate('d_loading'),
         duration: 0,
       });
     }
@@ -232,8 +234,10 @@ function ChannelDetail() {
     refDialog.current = Dialog.show({
       header: (
         <div className={styles.alertHeader}>
-          <h3>{t('d_for_free_to_1_episode')}</h3>
-          <img
+          <h3>{translate('d_for_free_to_1_episode')}</h3>
+          <Image
+            hideLoading
+            className={styles.lockHeadImg}
             src={
               '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/ad47910b02441289f1fa91319e73b3d9.png~tplv-j963mrpdmh-image.png'
             }
@@ -242,11 +246,11 @@ function ChannelDetail() {
       ),
       bodyClassName: classNames(styles.lockAlertBody, { [styles.isFullScreen]: isFullScreen || isCssFullScreen }),
       maskClassName: styles.lockAlertMask,
-      getContainer: !isPortrait && isFullScreen && !isCssFullScreen ? window.playerSdk?.player?.root : document.body,
+      getContainer: getMountContainer(),
       content: (
         <div className={styles.alertContent}>
           <div className={styles.title}>
-            <span>{t('d_episode')}</span>
+            <span>{translate('d_episode')}</span>
           </div>
           <div className={styles.btnGroups}>
             <Button
@@ -259,7 +263,7 @@ function ChannelDetail() {
                 setAdVisible(true);
               }}
             >
-              {t('d_watch_an_advertising_video')}
+              {translate('d_watch_an_advertising_video')}
             </Button>
             <Button
               block
@@ -271,7 +275,7 @@ function ChannelDetail() {
                 setLockAllDrawerOpen(true);
               }}
             >
-              {t('d_unlock_all_episodes')}
+              {translate('d_unlock_all_episodes')}
             </Button>
           </div>
         </div>
@@ -365,7 +369,7 @@ function ChannelDetail() {
           </div>
         </div>
       )}
-      <CommentComp
+      <Comment
         isFullScreen={isFullScreen}
         isCssFullScreen={isCssFullScreen}
         isPortrait={isPortrait}

@@ -8,8 +8,9 @@ import type { IDramaDetailListItem } from '@/interface';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/type';
 import { setLockNumDrawerVisible, setLockNumPageIndex } from '@/redux/actions/controls';
-import t from '@/utils/translation';
-
+import translate from '@/utils/translation';
+import useMountContainer from '@/hooks/useMountContainer';
+import Image from '../Image';
 interface ILockNum {
   caption: string;
   cover_url: string;
@@ -25,16 +26,15 @@ const LockNum: React.FC<ILockNum> = React.memo(
     const dispatch = useDispatch();
     const isFullScreen = useSelector((state: RootState) => state.player.fullScreen);
     const isCssFullScreen = useSelector((state: RootState) => state.player.cssFullScreen);
-    const isPortrait = useSelector((state: RootState) => state.player.isPortrait);
     const isHorizontal = useSelector((state: RootState) => state.player.horizontal);
     const pageIndex = useSelector((state: RootState) => state.controls.pageIndex);
     const visible = useSelector((state: RootState) => state.controls.lockNumDrawerVisible);
-
+    const { getMountContainer } = useMountContainer();
     return (
       <Popup
         visible={visible}
         position={(isFullScreen || isCssFullScreen) && isHorizontal ? 'right' : 'bottom'}
-        getContainer={!isPortrait && isFullScreen && !isCssFullScreen ? window.playerSdk?.player?.root : document.body}
+        getContainer={getMountContainer()}
         onMaskClick={() => {
           dispatch(setLockNumDrawerVisible(false));
         }}
@@ -45,11 +45,11 @@ const LockNum: React.FC<ILockNum> = React.memo(
         <div className={styles.head}>
           <div className={styles.title}>
             <div className={styles.coverImg}>
-              <img src={cover_url} alt="" />
+              <Image src={cover_url} alt="" />
             </div>
             <div className={styles.text}>
               <h3>{caption}</h3>
-              <div className={styles.count}>{t('d_all_episodes_placeholder', list.length)}</div>
+              <div className={styles.count}>{translate('d_all_episodes_placeholder', list.length)}</div>
             </div>
           </div>
           <div
@@ -60,15 +60,14 @@ const LockNum: React.FC<ILockNum> = React.memo(
                 setLockAllDrawerOpen(true);
               } else {
                 Toast.show({
-                  getContainer:
-                    !isPortrait && isFullScreen && !isCssFullScreen ? window.playerSdk?.player?.root : document.body,
-                  content: t('d_unlock_all_episodes_placeholder'),
+                  getContainer: getMountContainer(),
+                  content: translate('d_unlock_all_episodes_placeholder'),
                 });
               }
             }}
           >
             <IconLock />
-            <span>{t('d_unlock_all_episodes')}</span>
+            <span>{translate('d_unlock_all_episodes')}</span>
           </div>
         </div>
         <div className={styles.body}>

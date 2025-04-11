@@ -6,3 +6,25 @@ interface Window {
   mySize: any;
   VideooneSlardar?: any;
 }
+
+declare module '*.less' {
+  const content: { [className: string]: string };
+  export default content;
+}
+
+declare module '*.svg?react' {
+  import * as React from 'react';
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
+}
+
+// 如果还需要普通 svg 导入
+declare module '*.svg' {
+  const content: string;
+  export default content;
+}
+
+declare module '*.png' {
+  const content: string;
+  export default content;
+}

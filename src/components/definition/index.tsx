@@ -4,7 +4,7 @@ import { Popup } from 'antd-mobile';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './index.module.less';
-import t from '@/utils/translation';
+import translate from '@/utils/translation';
 import { useCallback } from 'react';
 import type { IPlayInfoListItem } from '@/interface';
 
@@ -34,7 +34,7 @@ const Definition = () => {
       bodyClassName={classNames(styles.popupBodyClass, { [styles.isFullScreen]: isFullScreen && isHorizontal })}
       maskClassName={styles.popupMaskClass}
     >
-      <div className={styles.head}>{t('d_definition')}</div>
+      <div className={styles.head}>{translate('d_definition')}</div>
       <div className={styles.body}>
         {currentDetail?.videoModel?.PlayInfoList?.map(def => (
           <div

@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },

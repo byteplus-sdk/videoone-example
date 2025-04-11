@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-// @ts-ignore
+// @ts-expect-error
 import { Plugin } from '@byteplus/veplayer';
 import ExpandTop from '@/components/expandTop';
 import { Provider } from 'react-redux';
@@ -24,7 +24,7 @@ export default class ExpandTopPlugin extends Plugin {
   }
 
   afterCreate() {
-    // @ts-ignore
+    // @ts-expect-error
     const root = createRoot(this.root);
     root.render(
       <Provider store={store}>

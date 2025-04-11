@@ -4,15 +4,14 @@ import logo from '@/assets/images/logo.png';
 import IconQuality from '@/assets/svgr/iconQuality.svg?react';
 import IconEnter from '@/assets/svgr/iconEnter.svg?react';
 import { useNavigate } from 'react-router-dom';
-
-import t from '@/utils/translation';
+import translate from '@/utils/translation';
 import { imgUrl } from '@/utils';
 
 const MENU_ITEMS = [
   {
     navigateUrl: '/dramaGround',
-    title: t('home_drama_tit'),
-    desc: t('home_drama_desc'),
+    title: translate('home_drama_tit'),
+    desc: translate('home_drama_desc'),
     background: imgUrl(
       '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/36854f7160573ca841fd9a3155ed5dc8.webp~tplv-j963mrpdmh-image.image',
     ),
@@ -22,8 +21,8 @@ const MENU_ITEMS = [
   },
   {
     navigateUrl: '/ttshow',
-    title: t('home_video_tit'),
-    desc: t('home_video_desc'),
+    title: translate('home_video_tit'),
+    desc: translate('home_video_desc'),
     background: imgUrl(
       '//p16-live-sg.ibyteimg.com/tos-alisg-i-j963mrpdmh/1d7941721d915b10b1b63fcc94ba0d75.png~tplv-j963mrpdmh-image.image',
     ),
@@ -99,8 +98,8 @@ const Home: React.FC = () => {
       <div className={styles.logo}>
         <img src={logo} alt="byteplus logo" />
       </div>
-      <h1 className={styles.tit}>{t('home_title')}</h1>
-      <p>{t('home_welcome')}</p>
+      <h1 className={styles.tit}>{translate('home_title')}</h1>
+      <p>{translate('home_welcome')}</p>
 
       {MENU_ITEMS.map(item => (
         <MenuCard key={item.navigateUrl} item={item} onClick={() => navigate(item.navigateUrl)} />

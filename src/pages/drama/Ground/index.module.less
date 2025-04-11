@@ -1,3 +1,5 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
 @font-face {
   font-family: 'DINCond-Black';
   src:
@@ -32,7 +34,7 @@
       color: #ffffff;
       padding-bottom: 12px;
     }
-  
+
     .back {
       width: 20px;
       height: 20px;
@@ -42,27 +44,27 @@
       padding-left: 16px;
       padding-top: 16px;
     }
-  
+
     .carousel {
       width: 100%;
       position: relative;
       margin-bottom: 48px;
       overflow: hidden;
-  
+
       .slickDots {
         display: flex !important;
         justify-content: center;
-  
-        &>li {
+
+        & > li {
           list-style: none;
-  
+
           &::last-child {
             .dotWrapper {
               margin-right: 0;
             }
           }
         }
-  
+
         :global {
           .slick-active {
             .dotWrapper {
@@ -70,7 +72,7 @@
               opacity: 1;
             }
           }
-  
+
           .dotWrapper {
             width: 12px;
             height: 4px;
@@ -82,7 +84,7 @@
           }
         }
       }
-  
+
       :global {
         .carouselItemWrapper {
           position: relative;
@@ -93,7 +95,7 @@
           transform: scale(0.8);
           transition: transform 0.5s ease-in-out;
           border-radius: 10px;
-  
+
           .btn {
             position: absolute;
             left: 50%;
@@ -109,7 +111,7 @@
             font-weight: 500;
             color: #fff;
           }
-  
+
           &::after {
             content: ' ';
             position: absolute;
@@ -118,38 +120,39 @@
             right: -1px;
             top: 0;
             bottom: -1px;
-            background: linear-gradient(to top,
-                rgb(22 24 35) 1%,
-                rgba(0, 0, 0, 0.8),
-                rgba(0, 0, 0, 0.8),
-                rgba(0, 0, 0, 0.8));
+            background: linear-gradient(
+              to top,
+              rgb(22 24 35) 1%,
+              rgba(0, 0, 0, 0.8),
+              rgba(0, 0, 0, 0.8),
+              rgba(0, 0, 0, 0.8)
+            );
             transition: background 0.5s ease-in-out;
           }
         }
-  
+
         .slick-center {
           .carouselItemWrapper {
-  
             // Simulate the effect of the underlying mask
             &::after {
               background: linear-gradient(to top, rgb(22 24 35) 1%, transparent, transparent, transparent);
             }
-  
+
             transform: scale(0.962);
           }
         }
       }
     }
-  
+
     .trendingWrapper {
       padding: 4px 16px;
       background: linear-gradient(165deg, transparent 70%, #521135);
       margin-bottom: 32px;
-  
+
       &.trendingWrapperHide {
         padding-top: 20px;
       }
-  
+
       .trendingContentWrapper {
         display: grid;
         grid-auto-flow: column;
@@ -159,12 +162,12 @@
         grid-template-columns: repeat(2, 1fr);
         /* Each row has 2 */
         column-gap: 5px;
-  
+
         .trendingItemWrapper {
           height: fit-content;
           display: flex;
           margin-bottom: 12px;
-  
+
           .coverWrapper {
             height: 90px;
             width: 67.5px;
@@ -173,7 +176,7 @@
             border-radius: 8px;
             border-top-left-radius: 2px;
             position: relative;
-  
+
             .tagTop {
               position: absolute;
               display: flex;
@@ -195,7 +198,7 @@
               border-bottom-right-radius: 2px;
               overflow: hidden;
             }
-  
+
             .tagNum {
               display: flex;
               align-items: center;
@@ -213,20 +216,20 @@
               top: 0;
               position: absolute;
             }
-  
+
             img {
               width: 100%;
               height: 100%;
               object-fit: cover;
             }
           }
-  
+
           .contentWrapper {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             flex: 1;
-  
+
             h2 {
               line-height: 20px;
               font-size: 14px;
@@ -236,11 +239,11 @@
               -webkit-box-orient: vertical;
               -webkit-line-clamp: 2;
             }
-  
+
             .popularity {
               display: flex;
               align-items: center;
-  
+
               .num {
                 font-size: 12px;
                 line-height: 16px;
@@ -252,27 +255,27 @@
         }
       }
     }
-  
+
     .releaseWrapper {
       padding: 16px;
       margin-bottom: 32px;
-  
+
       .releaseContentWrapper {
         display: flex;
         width: 100%;
         overflow-x: scroll;
-  
+
         .releaseItemWrapper {
           height: fit-content;
           display: flex;
           flex-direction: column;
           margin-right: 16px;
           width: 100px;
-  
+
           &:last-child {
             margin-right: 0;
           }
-  
+
           .coverWrapper {
             width: 100px;
             height: 133px;
@@ -280,20 +283,20 @@
             border-radius: 8px;
             position: relative;
             margin-bottom: 8px;
-  
+
             &::after {
               content: ' ';
               position: absolute;
               inset: 0;
               background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.5));
             }
-  
+
             img {
               width: 100%;
               height: 100%;
               object-fit: cover;
             }
-  
+
             .newTag {
               position: absolute;
               display: flex;
@@ -314,7 +317,7 @@
               border-bottom-right-radius: 8px;
               overflow: hidden;
             }
-  
+
             .playNum {
               position: absolute;
               left: 4px;
@@ -327,13 +330,13 @@
               line-height: 16px;
               color: #ffffff;
               z-index: 1;
-  
+
               span {
                 margin-left: 4px;
               }
             }
           }
-  
+
           .contentWrapper {
             h2 {
               font-size: 14px;
@@ -351,23 +354,23 @@
         }
       }
     }
-  
+
     .recommendWrapper {
       padding: 16px;
-  
+
       .recommendContentWrapper {
         display: flex;
         flex-wrap: wrap;
-  
+
         .recommendItemWrapper {
           margin-bottom: 16px;
           margin-right: 8px;
           width: calc(50% - 4px);
-  
+
           &:nth-child(2n) {
             margin-right: 0;
           }
-  
+
           .coverWrapper {
             width: 166px;
             height: 234px;
@@ -375,14 +378,14 @@
             position: relative;
             overflow: hidden;
             margin-bottom: 10px;
-  
+
             &::after {
               content: ' ';
               position: absolute;
               inset: 0;
               background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.5));
             }
-  
+
             .playNum {
               position: absolute;
               left: 4px;
@@ -395,19 +398,19 @@
               line-height: 18px;
               color: #fff;
               z-index: 1;
-  
+
               span {
                 margin-left: 4px;
               }
             }
-  
+
             img {
               width: 100%;
               height: 100%;
               object-fit: cover;
             }
           }
-  
+
           .contentWrapper {
             h2 {
               color: #ffffff;
