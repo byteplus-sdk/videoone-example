@@ -1,0 +1,70 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
+.loading,
+.loading > div {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .spinner {
+    display: flex;
+    gap: 6px;
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background-color: #666;
+      border-radius: 50%;
+      animation: bounce 0.5s ease-in-out infinite;
+
+      &:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+
+      &:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+    }
+  }
+
+  .text {
+    margin-top: 8px;
+    color: #666;
+    font-size: 14px;
+  }
+}
+
+.loading.la-dark {
+  color: #333;
+}
+
+.loading > div:nth-child(2n-1) {
+  animation-delay: -0.5s;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.small .dot {
+  width: 6px;
+  height: 6px;
+}
+
+.large .dot {
+  width: 12px;
+  height: 12px;
+}

@@ -1,0 +1,25 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
+.wrapper {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  position: relative;
+  height: 48px;
+  background: linear-gradient(rgb(0 0 0 / 30%) 50%, transparent);
+
+  &.isHorizontal {
+    :global {
+      .adm-nav-bar-left {
+        margin-left: 50px;
+      }
+    }
+  }
+
+  :global {
+    .adm-nav-bar-left {
+      margin-left: 20px;
+      white-space: nowrap;
+    }
+  }
+}

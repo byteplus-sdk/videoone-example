@@ -1,0 +1,42 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
+.systemCover {
+  position: absolute;
+  inset: 0;
+  z-index: 111;
+  display: flex;
+  transform: translate3d(0, 0, 0);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+
+  .img {
+    width: unset;
+    height: unset;
+  }
+
+  .back {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media screen and (orientation: portrait) {
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  @media screen and (orientation: landscape) {
+    img {
+      height: 100%;
+    }
+  }
+}

@@ -1,0 +1,143 @@
+// Copyright (c) 2025 BytePlus Pte. Ltd.
+// SPDX-License-Identifier: Apache-2.0
+.wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  &.swiperItem {
+    width: 100%;
+    height: 100%;
+
+    .posterShow {
+      img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: contain;
+        background: #000;
+      }
+    }
+
+    .videoDom {
+      position: absolute;
+      inset: 0;
+    }
+
+    .veplayerWrapper {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 1;
+      background-color: #000;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .rightSlider {
+      position: absolute;
+      bottom: 16%;
+      right: calc(14px + env(safe-area-inset-right));
+      right: calc(14px + constant(safe-area-inset-right));
+      display: flex;
+      z-index: 10000;
+
+      .btns {
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .avatar {
+          border: 2px solid #fff;
+          border-radius: 50%;
+          margin-bottom: 20px;
+
+          & > div {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+          }
+        }
+
+        .like,
+        .comment {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 20px;
+          text-align: center;
+          margin-bottom: 14px;
+        }
+      }
+    }
+
+    .bottom {
+      position: absolute;
+      bottom: calc(20px + constant(safe-area-inset-bottom));
+      bottom: calc(20px + env(safe-area-inset-bottom));
+      left: calc(12px + env(safe-area-inset-left));
+      left: calc(12px + constant(safe-area-inset-left));
+      right: calc(12px + env(safe-area-inset-right));
+      right: calc(12px + constant(safe-area-inset-right));
+      color: #fff;
+
+      .name {
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .boxMore {
+        float: right;
+        clear: both;
+        color: #94c2ff;
+        font-size: 14px;
+        cursor: pointer;
+        padding-left: 5px;
+
+        & + div {
+          line-height: 18px;
+        }
+      }
+
+      .titleContainer {
+        max-height: 50px;
+
+        &::before {
+          content: '';
+          float: right;
+          height: 15px;
+          width: 0;
+        }
+      }
+
+      .titleWrapper {
+        max-height: 35px;
+        overflow: hidden;
+      }
+
+      .title {
+        font-size: 14px;
+        text-align: left;
+        vertical-align: top;
+      }
+    }
+  }
+}
+
+.captionTitle {
+  font-size: 14px;
+  min-height: 300px;
+  padding: 16px 12px 0;
+  line-height: 1.5;
+}

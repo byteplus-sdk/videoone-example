@@ -1,0 +1,24 @@
+<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_10727_555)">
+<path d="M13.7539 9.67163H16.0392C17.1438 9.67163 18.0392 10.5671 18.0392 11.6716V14.755C18.0392 15.8595 17.1438 16.755 16.0392 16.755H13.7539" stroke="white" stroke-opacity="0.34" stroke-width="1.5" stroke-linejoin="round"/>
+<g filter="url(#filter0_d_10727_555)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4.91675 3.33496C3.39797 3.33496 2.16675 4.56617 2.16675 6.08496V14.755C2.16675 16.2737 3.39796 17.505 4.91675 17.505H9.50397C11.0227 17.505 12.254 16.2737 12.254 14.755V6.08496C12.254 4.56618 11.0228 3.33496 9.50397 3.33496H4.91675ZM3.66675 6.08496C3.66675 5.3946 4.22639 4.83496 4.91675 4.83496H5.45827V5.33997C5.45827 5.61611 5.68213 5.83997 5.95827 5.83997H8.46239C8.73853 5.83997 8.96239 5.61611 8.96239 5.33997V4.83496H9.50397C10.1943 4.83496 10.754 5.3946 10.754 6.08496V14.755C10.754 15.4453 10.1943 16.005 9.50397 16.005H4.91675C4.22639 16.005 3.66675 15.4453 3.66675 14.755V6.08496Z" fill="white"/>
+</g>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.876 0.335205C10.4618 0.335205 10.126 0.670992 10.126 1.08521C10.126 1.49942 10.4618 1.83521 10.876 1.83521C12.4681 1.83521 13.7589 3.12591 13.7589 4.71807L13.7589 5.20837C13.7589 5.31897 13.7828 5.42399 13.8258 5.51851C13.8564 5.58584 13.8974 5.64957 13.9489 5.70726C13.9672 5.72787 13.9867 5.74745 14.0072 5.76592C14.0704 5.82284 14.1409 5.86714 14.2155 5.8988C14.2987 5.93424 14.3898 5.95504 14.4852 5.958C14.5025 5.95854 14.5197 5.95849 14.5369 5.95785C14.622 5.95472 14.7034 5.93743 14.779 5.90824C14.8738 5.8717 14.9627 5.81519 15.0392 5.7387L16.7059 4.07203C16.9988 3.77914 16.9988 3.30426 16.7059 3.01137C16.413 2.71848 15.9381 2.71848 15.6452 3.01137L15.1026 3.554C14.5927 1.69842 12.8935 0.335205 10.876 0.335205Z" fill="white" fill-opacity="0.9"/>
+</g>
+<defs>
+<filter id="filter0_d_10727_555" x="0.166748" y="1.33496" width="14.0872" height="18.1699" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="1"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_10727_555"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_10727_555" result="shape"/>
+</filter>
+<clipPath id="clip0_10727_555">
+<rect width="20" height="20" fill="white" transform="translate(0.5)"/>
+</clipPath>
+</defs>
+</svg>
