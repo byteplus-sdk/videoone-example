@@ -67,7 +67,7 @@ const Player: React.FC<IPlayer> = React.forwardRef(({ data, index }, ref) => {
     <div className={classNames(styles.wrapper, styles.swiperItem)}>
       <Image src={data.coverUrl} className={styles.posterShow} />
       {index === 0 ? (
-        <div className={styles.veplayerWrapper}>
+        <div className={styles.veplayerWrapper} id={`swiper-video-container-${index}`}>
           <div id="veplayer-container" />
         </div>
       ) : (
